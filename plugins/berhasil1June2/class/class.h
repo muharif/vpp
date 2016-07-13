@@ -41,9 +41,9 @@ typedef struct {
 
 extern vlib_node_registration_t ip4_classify_node;
 extern vlib_node_registration_t ip6_classify_node;
-extern vlib_node_registration_t ip4_pop_hop_by_hop_node;
-extern vlib_node_registration_t ip4_add_hop_by_hop_node;
-extern vlib_node_registration_t ip4_hop_by_hop_node;
+//extern vlib_node_registration_t ip4_pop_hop_by_hop_node;
+//extern vlib_node_registration_t ip4_add_hop_by_hop_node;
+//extern vlib_node_registration_t ip4_hop_by_hop_node;
 extern vlib_node_registration_t ip4_lookup_node;
 
 

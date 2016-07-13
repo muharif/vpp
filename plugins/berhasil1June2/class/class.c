@@ -1631,7 +1631,6 @@ uword unformat_class2_match (unformat_input_t * input, va_list * args)
   u8 * match = 0;
   u8 * l2 = 0;
   u8 * l3 = 0;
-  u32 proto_val;
 
   if (pool_is_free_index (cm->tables, table_index))
     return 0;
@@ -1821,8 +1820,7 @@ class_gen_command_fn (vlib_main_t * vm,
   u64 opaque_index = ~0;
   u8 * match = 0;
   i32 advance=0;
-  int i, rv;
-
+  int rv;
 
   while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
       {
@@ -1990,7 +1988,6 @@ void check_input2 (unformat_input_t * input)
 	int src = 0, dst = 0;
 	ip4_address_t src_val, dst_val;
 	  int proto;
-	  u32 proto_val;
 
 	  while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
 	    {

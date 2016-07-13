@@ -297,7 +297,7 @@ class_node_fn (vlib_main_t * vm,
 							  goto end;
 						  }
 					  }
-					  next0=14;
+					  next0=11;
 				  }
 			  } else {
 				  if (((e0->src1)+(e0->dst1)+(e0->proto1)) != 1) {

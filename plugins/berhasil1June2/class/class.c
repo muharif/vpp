@@ -1702,7 +1702,7 @@ int class_add_del_session (class_main_t * cm,
   e->advance = advance;
   e->hits = 0;
 
-  if (hit_next_index==14){
+  if (hit_next_index==11){
 	  if ((t->active_elements)>0){
 		  e->hits= (((t->active_elements+1)+(((t->active_elements+1)-1)*(field-1))));
 	  } else {
@@ -1816,7 +1816,7 @@ class_gen_command_fn (vlib_main_t * vm,
   class_main_t * cm = &class_main;
   int is_add = 1;
   u32 table_index = 0;
-  u32 hit_next_index = 14;
+  u32 hit_next_index = 11;
   u64 opaque_index = ~0;
   u8 * match = 0;
   i32 advance=0;

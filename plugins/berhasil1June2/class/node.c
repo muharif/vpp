@@ -106,7 +106,7 @@ class_node_fn (vlib_main_t * vm,
 	                ethernet_buffer_header_size(b0);
 
 	      adj_index0 = vnet_buffer (b0)->ip.adj_index[VLIB_TX];
-	      adj0 = ip_get_adjacency (lm, adj_index0);
+	      //adj0 = ip_get_adjacency (lm, adj_index0);
 	      table_index0 = vnet_buffer(b0)->l2_classify.table_index;
 
 	      t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -245,7 +245,6 @@ class_node_fn (vlib_main_t * vm,
 	          x0=table_index0/field;
 	          x=x0*field;
 	          next_table=0;
-	          next_hop=e0->next;
 
               //Check only the field that want to be checked
 

@@ -77,12 +77,10 @@ class_node_fn (vlib_main_t * vm,
 	  u32 hits = 0;
 	  u32 misses = 0;
 	  u32 chain_hits = 0;
-	  u32 ct;
 	  int field=9;
 	  int x0;
 	  int x;
 	  u32 next_table;
-	  u32 next_hop;
 
 	  if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -98,7 +96,7 @@ class_node_fn (vlib_main_t * vm,
 	      u32 bi0;
 	      u8 * h0;
 	      u32 adj_index0;
-	      ip_adjacency_t * adj0;
+	      //ip_adjacency_t * adj0;
 	      u32 table_index0;
 	      class_table_t * t0;
 
@@ -125,8 +123,6 @@ class_node_fn (vlib_main_t * vm,
 	  next_index = node->cached_next_index;
 	  from = vlib_frame_vector_args (frame);
 	  n_left_from = frame->n_vectors;
-
-	  u32 missing=0;
 
 	  while (n_left_from > 0)
 	    {

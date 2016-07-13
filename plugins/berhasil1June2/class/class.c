@@ -2193,9 +2193,6 @@ vnet_class_init (vlib_main_t * vm)
 
   vlib_node_add_next (vm, ip4_classify_node.index, class_node.index);
   vlib_node_add_next (vm, ip6_classify_node.index, class_node.index);
-  vlib_node_add_next (vm, ip4_pop_hop_by_hop_node.index, class_node.index);
-  vlib_node_add_next (vm, ip4_add_hop_by_hop_node.index, class_node.index);
-  vlib_node_add_next (vm, ip4_hop_by_hop_node.index, class_node.index);
   vlib_node_add_next (vm, ip4_lookup_node.index, class_node.index);
 
 

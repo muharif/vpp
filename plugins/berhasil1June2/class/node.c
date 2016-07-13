@@ -72,7 +72,7 @@ class_node_fn (vlib_main_t * vm,
 	  u32 n_left_from, * from, * to_next;
 	  ip_lookup_next_t next_index;
 	  class_main_t * vcm = &class_main;
-	  ip_lookup_main_t * lm;
+	  //ip_lookup_main_t * lm;
 	  f64 now = vlib_time_now (vm);
 	  u32 hits = 0;
 	  u32 misses = 0;
@@ -82,10 +82,10 @@ class_node_fn (vlib_main_t * vm,
 	  int x;
 	  u32 next_table;
 
-	  if (is_ip4)
+	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
 	  else
-	    lm = &ip6_main.lookup_main;
+	    lm = &ip6_main.lookup_main;*/
 
 	  from = vlib_frame_vector_args (frame);
 	  n_left_from = frame->n_vectors;
@@ -95,7 +95,7 @@ class_node_fn (vlib_main_t * vm,
 	      vlib_buffer_t * b0;
 	      u32 bi0;
 	      u8 * h0;
-	      u32 adj_index0;
+	      //u32 adj_index0;
 	      //ip_adjacency_t * adj0;
 	      u32 table_index0;
 	      class_table_t * t0;
@@ -105,7 +105,7 @@ class_node_fn (vlib_main_t * vm,
 	      h0 = (void *)vlib_buffer_get_current(b0) -
 	                ethernet_buffer_header_size(b0);
 
-	      adj_index0 = vnet_buffer (b0)->ip.adj_index[VLIB_TX];
+	      //adj_index0 = vnet_buffer (b0)->ip.adj_index[VLIB_TX];
 	      //adj0 = ip_get_adjacency (lm, adj_index0);
 	      table_index0 = vnet_buffer(b0)->l2_classify.table_index;
 

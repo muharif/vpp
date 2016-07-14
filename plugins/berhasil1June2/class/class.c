@@ -2012,7 +2012,7 @@ int class_add_del_class (class_main_t * cm,
 
 		  u32 j=0;
 		  if (add==0) {
-			  u32 sementara=e->key[0][3];
+			  u32 sementara=e->key[0][2];
 		  	  for (j=0;j<10;j++) {
 		  		  e->key[0][2] =sementara+((256^3)*j);
 				  for (i = 0; i < t->match_n_vectors; i++) {

@@ -1996,7 +1996,7 @@ int class_add_del_class (class_main_t * cm,
 		  }*/
 
 		  if (add==0) {
-			  for (j=1;j<=255;j++) {
+			  for (j=0;j<=255;j++) {
 					  e->key[0][3]=e->key[0][3]+j;
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];

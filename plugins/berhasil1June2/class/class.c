@@ -2000,11 +2000,14 @@ int class_add_del_class (class_main_t * cm,
 
 			  }
 		  }*/
-		  e->key[1]=e->key[1]+255;
+
 
 		  for (i = 0; i < t->match_n_vectors; i++) {
 			e->key[i] &= t->mask[i];
 		  };
+
+		  for (i=0;i<256;i++)
+			  e->key[1]=e->key[1]+i;
 
 
 		  rv = class_add_del (t, e, is_add,table_index);

@@ -2019,7 +2019,7 @@ class_class_command_fn (vlib_main_t * vm,
   i32 advance=0;
   int i, rv;
   u32 table_index=0;
-  u32 srcmask=0, dstmask=0;
+  u32 srcmask=32, dstmask=32;
   u8 src=1, dst=1, proto=1;
 
   while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
@@ -2037,14 +2037,14 @@ class_class_command_fn (vlib_main_t * vm,
         ;
       else if (unformat (input, "opaque-index %lld", &opaque_index))
         ;
-      else if (unformat (input, "match %U", unformat_class2_match,
-                         cm, &match, table_index))
-    	  ;
       else if (unformat (input, "srcmask %d", &srcmask))
     	  ;
       else if (unformat (input, "dstmask %d", &dstmask))
         ;
       else if (unformat (input, "check %d %d %d", &src, &dst, &proto))
+    	  ;
+      else if (unformat (input, "match %U", unformat_class2_match,
+                         cm, &match, table_index))
     	  ;
       else if (unformat (input, "advance %d", &advance))
         ;
@@ -2064,6 +2064,9 @@ class_class_command_fn (vlib_main_t * vm,
 
   if (match == 0)
     return clib_error_return (0, "Match value required");
+
+  if (src == 0 && dst == 0 && proto == 0)
+	  return clib_error_return (0, "Not checking any field, classification failed");
 
   rv = class_add_del_class (cm, match,
                                       hit_next_index,
@@ -2085,7 +2088,7 @@ VLIB_CLI_COMMAND (class_class, static) = {
     .path = "class-new class",
     .short_help =
     "class-new class [hit-next|l2-hit-next|acl-hit-next <next_index>]"
-    "\n match [hex] [l2] [l3 ip4] [srcmask <mask>] [dstmask <mask>] [check <int> <int> <int>] [opaque-index <index>]",
+    "\n [srcmask <mask>] [dstmask <mask>] [check <int> <int> <int>] match [hex] [l2] [l3 ip4] [opaque-index <index>]",
     .function = class_class_command_fn,
 };
 

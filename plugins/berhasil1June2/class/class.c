@@ -1963,7 +1963,7 @@ for (add=0;add<=(field-1);add=add+1){
 	    e->key[i] &= t->mask[i];
 	  };
 
-	  e->key[1][2]=e->key[1][2]+256;
+	  e->key[1][4]=e->key[1][4]+256;
 
       e->next_index = hit_next_index;
 

@@ -177,7 +177,7 @@ class_node_fn (vlib_main_t * vm,
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
 	            {
-	        	  u32 a=0;
+	        	  //u32 a=0;
 	              loop:
 	        	  hash0 = vnet_buffer(b0)->l2_classify.hash;
 	              t0 = pool_elt_at_index (vcm->tables, table_index0);

@@ -177,6 +177,7 @@ class_node_fn (vlib_main_t * vm,
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
 	            {
+	        	  u32 a=0;
 	              loop:
 	        	  hash0 = vnet_buffer(b0)->l2_classify.hash;
 	              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -196,7 +197,11 @@ class_node_fn (vlib_main_t * vm,
 	            		  table_index0++;
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
+	            		  a++
+						  if (a==1)
 	            			  goto loop;
+						  else
+							  return 0;
 	            	  }
 	              }
 

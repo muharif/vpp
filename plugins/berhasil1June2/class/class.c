@@ -2060,7 +2060,7 @@ int class_add_del_class (class_main_t * cm,
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
 			  } else if (add2==7) {
-				  mult=24-dstmask;
+				  mult=8-dstmask;
 				  u32 temp=e->key[0][3];
 				  for (j=0;j<(2^mult);j++) {
 					  e->key[0][3] =temp+(65536*j);

@@ -1961,10 +1961,9 @@ for (add=0;add<=(field-1);add=add+1){
 
 	  for (i = 0; i < t->match_n_vectors; i++) {
 	    e->key[i] &= t->mask[i];
-	    e->key[i]++;
 	  };
 
-	  //e->key[1][0]=e->key[1][0]+65536;
+	  e->key[0][2]=e->key[0][2]+65536;
 
 
       e->next_index = hit_next_index;

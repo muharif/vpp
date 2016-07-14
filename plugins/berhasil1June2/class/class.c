@@ -2021,7 +2021,8 @@ int class_add_del_class (class_main_t * cm,
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
 			  	  }
-		  } else if (add==1) {
+		  }
+		   } else if (add==1) {
 			  if (add2==4) {
 				  mult=32-dstmask;
 				  u32 temp=e->key[1][0];

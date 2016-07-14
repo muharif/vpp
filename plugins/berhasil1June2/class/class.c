@@ -1914,7 +1914,7 @@ int class_add_del_class (class_main_t * cm,
 		u8 src1=src;
 		u8 dst1=dst;
 		u8 proto1=proto;
-		u32 mult=0;
+		//u32 mult=0;
 
 		if (add==0) {
 			if (src1 !=1)

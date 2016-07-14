@@ -1975,7 +1975,7 @@ int class_add_del_class (class_main_t * cm,
 			  if (add2==0) {
 				  mult=32-srcmask;
 				  u32 temp=e->key[0][3];
-				  for (j=0;j<(2^mult);j++) {
+				  for (j=0;j<(pow(2,mult));j++) {
 					  //e->key[0][3] =temp+(256*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];

@@ -1961,8 +1961,9 @@ for (add=0;add<=(field-1);add=add+1){
 
 	  for (i = 0; i < t->match_n_vectors; i++) {
 	    e->key[i] &= t->mask[i];
-		  e->key[i]++;
 	  };
+
+	  e->key[6]=e->key[6]+2;
 
       e->next_index = hit_next_index;
 

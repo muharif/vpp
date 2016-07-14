@@ -190,7 +190,7 @@ class_node_fn (vlib_main_t * vm,
 	            	  checkempty:
 					  t0 = pool_elt_at_index (vcm->tables, table_index0);
 					  if(!t0)
-						  return -1;
+						  exit(1);
 
 	            	  if (t0->active_elements==0){
 	            		  table_index0++;

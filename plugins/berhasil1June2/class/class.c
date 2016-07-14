@@ -1972,7 +1972,7 @@ int class_add_del_class (class_main_t * cm,
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));
 
-		  //The conditions to expand if netmask is not 32,24 or 8
+		  //The conditions to expand if netmask is not 32,24 or 8 based on user input
 
 		   if (add==0) {
 			  if (add2==0) {

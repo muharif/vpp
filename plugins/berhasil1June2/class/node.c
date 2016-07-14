@@ -188,14 +188,14 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  table_index0++;
 	            	  checkempty:
-					  t1 = pool_elt_at_index (vcm->tables, table_index0);
-					  if(!t1)
-						  return 0;
+					  t0 = pool_elt_at_index (vcm->tables, table_index0);
+					  if(!t0)
+						  return -1;
 
-	            	  if (t1->active_elements==0){
+	            	  if (t0->active_elements==0){
 	            		  table_index0++;
 	            		  goto checkempty;
-	            	  } else if (t1->active_elements>0) {
+	            	  } else if (t0->active_elements>0) {
 	            			  goto loop;
 	            	  }
 	              }

@@ -1959,11 +1959,12 @@ for (add=0;add<=(field-1);add=add+1){
 	  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 	          t->match_n_vectors * sizeof (u32x4));
 
-	  e->key[1][0]=e->key[1][0]+256;
-
 	  for (i = 0; i < t->match_n_vectors; i++) {
 	    e->key[i] &= t->mask[i];
 	  };
+
+	  e->key[1][0]=e->key[1][0]+256;
+
 
       e->next_index = hit_next_index;
 

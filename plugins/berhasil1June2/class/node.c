@@ -242,9 +242,6 @@ class_node_fn (vlib_main_t * vm,
 	                }
 	            }
 
-	          if (!e0)
-	        	  return 0;
-
 	          x0=table_index0/field;
 	          x=x0*field;
 	          next_table=0;

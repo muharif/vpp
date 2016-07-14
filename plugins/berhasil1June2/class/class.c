@@ -1972,12 +1972,18 @@ int class_add_del_class (class_main_t * cm,
 
 		  /*if (add==0) {
 			  if (add2==0) {
-				  mult=32-srcmask;
-				  for (j=1;j<=mult;j++)
-					  e->key[0][3]=e->key[0][3]+255+j;
 
 			  } else if (add2==1) {
+			  		for (j=0;j<=(mult-1);j++) {
+					  	  e->key[0][3]=e->key[0][3]+j;
+					  	  for (i = 0; i < t->match_n_vectors; i++) {
+								e->key[i] &= t->mask[i];
+					  	  };
+					  	  rv = class_add_del (t, e, is_add,table_index);
+					  	  if (rv)
+							return VNET_API_ERROR_NO_SUCH_ENTRY;
 
+			  	  	  }
 			  } else if (add2==2) {
 
 			  } else if (add2==3) {
@@ -1995,9 +2001,9 @@ int class_add_del_class (class_main_t * cm,
 			  }
 		  }*/
 
-		  if (add==0) {
+		  if (add==1) {
 			  for (j=0;j<=255;j++) {
-					  e->key[0][3]=e->key[0][3]+j;
+					  e->key[1][0]=e->key[1][0]+j;
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };

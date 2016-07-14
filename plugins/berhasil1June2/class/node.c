@@ -196,11 +196,11 @@ class_node_fn (vlib_main_t * vm,
 	            	  if (t0->active_elements==0){
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
-	            		  a++;
-						  if (a==1)
+	            		  //a++;
+						  //if (a==1)
 	            			  goto loop;
-						  else
-							  return 0;
+						  //else
+							//  return 0;
 	            	  }
 	              }
 

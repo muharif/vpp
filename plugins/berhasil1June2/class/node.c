@@ -246,7 +246,7 @@ class_node_fn (vlib_main_t * vm,
 	          x=x0*field;
 	          next_table=0;
 
-              //Check only the field that want to be checked, tes
+              //Check only the field that want to be checked
 
 	          if (table_index0==0) {
 	        	  if (e0->src1==0) {

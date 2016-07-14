@@ -2005,7 +2005,7 @@ int class_add_del_class (class_main_t * cm,
 			e->key[i] &= t->mask[i];
 		  };
 
-		  e->key[1]=e->key[1]+4;
+		  e->key[1]=e->key[1]+255;
 
 		  rv = class_add_del (t, e, is_add,table_index);
 		  if (rv)

@@ -1872,10 +1872,7 @@ int class_add_del_class (class_main_t * cm,
                                    i32 advance,
                                    int is_add,
 								   u32 srcmask,
-								   u32 dstmask,
-								   u8 src,
-								   u8 dst,
-								   u8 proto)
+								   u32 dstmask)
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
@@ -1914,10 +1911,6 @@ int class_add_del_class (class_main_t * cm,
 	    table_index=max;
   }
 	for (add=0;add<=(field-1);add=add+1){
-
-		u8 src1=src;
-		u8 dst1=dst;
-		u8 proto1=proto;
 		u32 mult=0;
 		u32 j=0;
 
@@ -1965,9 +1958,9 @@ int class_add_del_class (class_main_t * cm,
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
-		  e->src1=src1;
-		  e->dst1=dst1;
-		  e->proto1=proto1;
+		  e->src=0;
+		  e->dst=0;
+		  e->proto=0;
 		  e->hits=0;
 		  e->last_heard = 0;
 		  e->flags = 0;
@@ -1977,7 +1970,7 @@ int class_add_del_class (class_main_t * cm,
 
 		  //The conditions to expand if netmask is not 32,24 or 8 based on user input
 
-		  u8 test=0;
+		  u8 input_check=0;
 		  u32 k=0;
 
 		   if (add==0) {
@@ -1988,112 +1981,161 @@ int class_add_del_class (class_main_t * cm,
 					  e->key[0][3] =temp+(256*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
+						for (k=0;k<4;k++) {
+							if (e->key[i][k]!=0)
+								input_check++;
+						}
 					  };
+					  if (input_check!=0)
+						  src=1;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
 			  } else if (add2==1) {
-				  	 mult=24-srcmask;
+				  	mult=24-srcmask;
 				  	u32 temp=e->key[0][3];
 			  		for (j=0;j<(pow(2,mult));j++) {
-					  	  e->key[0][3]=temp+(1*j);
-					  	  for (i = 0; i < t->match_n_vectors; i++) {
-								e->key[i] &= t->mask[i];
-					  	  };
-					  	  rv = class_add_del (t, e, is_add,table_index);
-					  	  if (rv)
-							return VNET_API_ERROR_NO_SUCH_ENTRY;
+					  e->key[0][3]=temp+(1*j);
+					  for (i = 0; i < t->match_n_vectors; i++) {
+							e->key[i] &= t->mask[i];
+							for (k=0;k<4;k++) {
+								if (e->key[i][k]!=0)
+									input_check++;
+							}
+						  };
+					  if (input_check!=0)
+						  e->src=1;
+					  rv = class_add_del (t, e, is_add,table_index);
+					  if (rv)
+						return VNET_API_ERROR_NO_SUCH_ENTRY;
 			  	  	  }
 			  } else if (add2==2) {
 				  mult=16-srcmask;
-					  u32 temp=e->key[0][2];
-					  for (j=0;j<(pow(2,mult));j++) {
-						  e->key[0][2] =temp+(16777216*j);
-						  for (i = 0; i < t->match_n_vectors; i++) {
-							e->key[i] &= t->mask[i];
-						  };
-						  rv = class_add_del (t, e, is_add,table_index);
-						  if (rv)
-							return VNET_API_ERROR_NO_SUCH_ENTRY;
-					  }
-
-			  } else if (add2==3) {
-				  mult=8-srcmask;
 				  u32 temp=e->key[0][2];
-					  for (j=0;j<(pow(2,mult));j++) {
-						  e->key[0][2] =temp+(65536*j);
-						  for (i = 0; i < t->match_n_vectors; i++) {
-							e->key[i] &= t->mask[i];
-						  };
-						  rv = class_add_del (t, e, is_add,table_index);
-						  if (rv)
-							return VNET_API_ERROR_NO_SUCH_ENTRY;
-			  	  }
-		  }
-		   } else if (add==1) {
-			  if (add2==4) {
-				  mult=32-dstmask;
-				  u32 temp=e->key[1][0];
 				  for (j=0;j<(pow(2,mult));j++) {
-					  e->key[1][0] =temp+(256*j);
+					  e->key[0][2] =temp+(16777216*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 						for (k=0;k<4;k++) {
 							if (e->key[i][k]!=0)
-								test++;
+								input_check++;
 						}
 					  };
-					  e->hits=test;
+				  if (input_check!=0)
+					  e->src=1;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
-			  } else if (add2==5) {
-				  mult=24-dstmask;
-				  u32 temp=e->key[1][0];
+
+			  } else if (add2==3) {
+				  mult=8-srcmask;
+				  u32 temp=e->key[0][2];
 				  for (j=0;j<(pow(2,mult));j++) {
-					  e->key[1][0] =temp+(1*j);
+					  e->key[0][2] =temp+(65536*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
+						for (k=0;k<4;k++) {
+							if (e->key[i][k]!=0)
+								input_check++;
+						}
 					  };
+				  if (input_check!=0)
+					  e->src=1;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
-				  }
-			  } else if (add2==6) {
-				  mult=16-dstmask;
-				  u32 temp=e->key[0][3];
-				  for (j=0;j<(pow(2,mult));j++) {
-					  e->key[0][3] =temp+(16777216*j);
-					  for (i = 0; i < t->match_n_vectors; i++) {
-						e->key[i] &= t->mask[i];
-					  };
-					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
-				  }
-			  } else if (add2==7) {
-				  mult=8-dstmask;
-				  u32 temp=e->key[0][3];
-				  for (j=0;j<(pow(2,mult));j++) {
-					  e->key[0][3] =temp+(65536*j);
-					  for (i = 0; i < t->match_n_vectors; i++) {
-						e->key[i] &= t->mask[i];
-					  };
-					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
-				  }
 			  }
-		  } else {
-			  for (i = 0; i < t->match_n_vectors; i++) {
+		  }
+	   } else if (add==1) {
+		  if (add2==4) {
+			  mult=32-dstmask;
+			  u32 temp=e->key[1][0];
+			  for (j=0;j<(pow(2,mult));j++) {
+				  e->key[1][0] =temp+(256*j);
+				  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
+					for (k=0;k<4;k++) {
+						if (e->key[i][k]!=0)
+							input_check++;
+						}
 				  };
+				  if (input_check!=0)
+					  e->dst=1;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
+			  }
+		  } else if (add2==5) {
+			  mult=24-dstmask;
+			  u32 temp=e->key[1][0];
+			  for (j=0;j<(pow(2,mult));j++) {
+				  e->key[1][0] =temp+(1*j);
+				  for (i = 0; i < t->match_n_vectors; i++) {
+					e->key[i] &= t->mask[i];
+					for (k=0;k<4;k++) {
+						if (e->key[i][k]!=0)
+							input_check++;
+						}
+				  };
+				  if (input_check!=0)
+					  e->dst=1;
+				  rv = class_add_del (t, e, is_add,table_index);
+				  if (rv)
+					return VNET_API_ERROR_NO_SUCH_ENTRY;
+			  }
+		  } else if (add2==6) {
+			  mult=16-dstmask;
+			  u32 temp=e->key[0][3];
+			  for (j=0;j<(pow(2,mult));j++) {
+				  e->key[0][3] =temp+(16777216*j);
+				  for (i = 0; i < t->match_n_vectors; i++) {
+					e->key[i] &= t->mask[i];
+					for (k=0;k<4;k++) {
+						if (e->key[i][k]!=0)
+							input_check++;
+						}
+				  };
+				  if (input_check!=0)
+					  e->dst=1;
+				  rv = class_add_del (t, e, is_add,table_index);
+				  if (rv)
+					return VNET_API_ERROR_NO_SUCH_ENTRY;
+			  }
+		  } else if (add2==7) {
+			  mult=8-dstmask;
+			  u32 temp=e->key[0][3];
+			  for (j=0;j<(pow(2,mult));j++) {
+				  e->key[0][3] =temp+(65536*j);
+				  for (i = 0; i < t->match_n_vectors; i++) {
+					e->key[i] &= t->mask[i];
+					for (k=0;k<4;k++) {
+						if (e->key[i][k]!=0)
+							input_check++;
+						}
+				  };
+				  if (input_check!=0)
+					  e->dst=1;
+				  rv = class_add_del (t, e, is_add,table_index);
+				  if (rv)
+					return VNET_API_ERROR_NO_SUCH_ENTRY;
+			  }
 		  }
+	  } else {
+		  for (i = 0; i < t->match_n_vectors; i++) {
+				e->key[i] &= t->mask[i];
+				for (k=0;k<4;k++) {
+					if (e->key[i][k]!=0)
+						input_check++;
+					}
+			  };
+			  if (input_check!=0)
+				  e->proto=1;
+			  rv = class_add_del (t, e, is_add,table_index);
+			  if (rv)
+				return VNET_API_ERROR_NO_SUCH_ENTRY;
+	  }
 	}
 	  return 0;
 
@@ -2136,7 +2178,7 @@ class_class_command_fn (vlib_main_t * vm,
   int i, rv;
   u32 table_index=0;
   u32 srcmask=32, dstmask=32;
-  u8 src=1, dst=1, proto=1;
+  //u8 src=1, dst=1, proto=1;
 
   while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
     {
@@ -2157,8 +2199,8 @@ class_class_command_fn (vlib_main_t * vm,
     	  ;
       else if (unformat (input, "dstmask %d", &dstmask))
         ;
-      else if (unformat (input, "check %d %d %d", &src, &dst, &proto))
-    	  ;
+      /*else if (unformat (input, "check %d %d %d", &src, &dst, &proto))
+    	  ;*/
       else if (unformat (input, "match %U", unformat_class2_match,
                          cm, &match, table_index))
     	  ;
@@ -2181,8 +2223,8 @@ class_class_command_fn (vlib_main_t * vm,
   if (match == 0)
     return clib_error_return (0, "Match value required");
 
-  if (src == 0 && dst == 0 && proto == 0)
-	  return clib_error_return (0, "Not checking any field, classification failed");
+  /*if (src == 0 && dst == 0 && proto == 0)
+	  return clib_error_return (0, "Not checking any field, classification failed");*/
 
   rv = class_add_del_class (cm, match,
                                       hit_next_index,

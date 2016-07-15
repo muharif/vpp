@@ -258,7 +258,7 @@ class_node_fn (vlib_main_t * vm,
 					  } else
 						  next_table=x+5;
 	        	  } else
-	        		  next_table=x+1;
+	        		  next_table=1;
 	          } else if ((table_index0-x)<=4 && (table_index0-x)>0) {
 	        	  if (e0->dst1==0){
 	        		  if (e0->proto1==0) {

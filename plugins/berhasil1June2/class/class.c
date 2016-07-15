@@ -1865,6 +1865,38 @@ VLIB_CLI_COMMAND (class_gen, static) = {
     .function = class_gen_command_fn,
 };
 
+class_check_input_t * class_check (class_entry_t * e)
+{
+	class_table_t * t;
+	class_check_input_t * c;
+	u32 i, j;
+	u32 index[2]={1,5,9};
+
+	for (j=0;j<3;j++){
+		t = pool_elt_at_index (cm->tables, index[j]);
+		clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
+					  t->match_n_vectors * sizeof (u32x4));
+		u32 input_check=0;
+		for (i = 0; i < t->match_n_vectors; i++) {
+			e->key[i] &= t->mask[i];
+			for (k=0;k<4;k++){
+				if (e->key[i][k]!=0)
+					input_check++;
+			}
+		};
+		if (input_check!=0) {
+			if (j==0)
+				c->src=1;
+			if (j==1)
+				c->dst=1;
+			if (j==2)
+				c->proto=1;
+		}
+	}
+
+	return c;
+}
+
 int class_add_del_class (class_main_t * cm,
                                    u8 * match,
                                    u32 hit_next_index,
@@ -1880,6 +1912,7 @@ int class_add_del_class (class_main_t * cm,
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
   class_entry_t * e;
+  class_check_input_t * c;
   int i, rv;
   u32 table_index=0;
   u32 next_table_index=0;
@@ -1920,6 +1953,7 @@ int class_add_del_class (class_main_t * cm,
 		u8 proto1=proto;
 		u32 mult=0;
 		u32 j=0;
+
 
 		if (add==0) {
 			if (src1 !=1)
@@ -1962,13 +1996,15 @@ int class_add_del_class (class_main_t * cm,
 
 		  e = (class_entry_t *)&_max_e;
 
+		  c=class_check (e);
+
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
 		  e->src1=src1;
 		  e->dst1=dst1;
 		  e->proto1=proto1;
-		  e->hits=0;
+		  e->hits = (c->src)+(c->dst)+(c->proto);
 		  e->last_heard = 0;
 		  e->flags = 0;
 

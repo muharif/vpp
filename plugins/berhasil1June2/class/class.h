@@ -122,13 +122,13 @@ foreach_size_in_u32x4;
   };
 } class_bucket_t;*/
 
-struct check_input {
+typedef struct {
 	u32 src;
 	u32 dst;
 	int proto;
-};
+}class_check_input_t;
 
-struct check_input check;
+class_check_input_t class_check_input;
 
 typedef struct {
   /* Mask to apply after skipping N vectors */

@@ -81,7 +81,6 @@ class_node_fn (vlib_main_t * vm,
 	  int x0;
 	  int x;
 	  u32 next_table;
-	  u32 test=0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -246,11 +245,6 @@ class_node_fn (vlib_main_t * vm,
 	          x0=table_index0/field;
 	          x=x0*field;
 	          next_table=0;
-
-	          if (test==0)
-	        	  test++;
-	          else
-	        	  test=2;
 
               //Check only the field that want to be checked
 

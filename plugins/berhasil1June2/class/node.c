@@ -81,6 +81,7 @@ class_node_fn (vlib_main_t * vm,
 	  int x0;
 	  int x;
 	  u32 next_table;
+	  u32 test=0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -245,7 +246,6 @@ class_node_fn (vlib_main_t * vm,
 	          x0=table_index0/field;
 	          x=x0*field;
 	          next_table=0;
-	          u32 test;
 
 	          if (test==0)
 	        	  test++;
@@ -325,8 +325,6 @@ class_node_fn (vlib_main_t * vm,
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }
-
-	          test=0;
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,

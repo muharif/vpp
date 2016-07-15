@@ -405,6 +405,9 @@ int class_add_del (class_table_t * t,
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
+          if (add_v->next_index != v->next_index)
+    		  goto expand_again;
+
           if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
               clib_memcpy (v, add_v, sizeof (class_entry_t) +
@@ -420,6 +423,9 @@ int class_add_del (class_table_t * t,
       for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
+
+    	  if (add_v->next_index != v->next_index)
+    		  goto expand_again;
 
           if (class_entry_is_free (v))
             {

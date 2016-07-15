@@ -1982,7 +1982,7 @@ int class_add_del_class (class_main_t * cm,
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;
-		  e->hits =0;
+		  e->hits++;
 		  e->last_heard = 0;
 		  e->flags = 0;
 

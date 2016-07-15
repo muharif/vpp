@@ -131,9 +131,8 @@ typedef struct {
 }class_check_input_t;
 
 typedef struct {
-	u32 src;
-	u32 dst;
-	u32 proto;
+	u32 prev;
+	u32 now;
 }class_temp_t;
 
 class_check_input_t class_check_input;

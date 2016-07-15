@@ -81,6 +81,7 @@ class_node_fn (vlib_main_t * vm,
 	  int x0;
 	  int x;
 	  u32 next_table;
+	  class_temp_t * temp = &class_temp;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -260,9 +261,6 @@ class_node_fn (vlib_main_t * vm,
 	        	  } else
 	        		  next_table=x+1;
 	          } else if ((table_index0-x)<=4 && (table_index0-x)>0) {
-	        	  if (e0->src==1)
-	        		  temp->src=e0->id;
-
 	        	  if (e0->dst==0){
 	        		  if (e0->proto==0) {
 	        			  next_table=0;
@@ -271,24 +269,27 @@ class_node_fn (vlib_main_t * vm,
 	        	  } else
 	        		  next_table=x+5;
 	          } else if ((table_index0-x)<=8 && (table_index0-x)>4) {
-	        	  if (e0->dst==1)
-	        		  temp->dst=e0->id;
-
 	        	  if (e0->proto==0)
 	        		  next_table=0;
 	        	  else
 	        		  next_table=x+field;
-	          } else {
-	        	  if (e0->proto==1)
-	        	  	  temp->proto=e0->id;
 	          }
 
 	          //Deciding next step
 
-	          if (next_table == 0) {
-	        	  if (temp->src != temp->dst || temp->dst != temp->proto)
+	          if (next_table !=0) {
+	        	  vnet_buffer(b0)->l2_classify.table_index=next_table;
+	        	  if (temp->prev==0)
+	        		  temp->prev=e0->id;
+	        	  else if (temp->prev!=e0->id)
 	        		  next0=0;
+	        	  else
+	        		  next0=11;
+	          } else {
+	        	  if (((e0->src)+(e0->dst)+(e0->proto)) != 1)
+	        		  next=0;
 	          }
+
 
 			  /*if (next_table != 0) {
 				  checkempty2:

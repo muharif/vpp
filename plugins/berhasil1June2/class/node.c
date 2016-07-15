@@ -280,8 +280,10 @@ class_node_fn (vlib_main_t * vm,
 
 	        	  vnet_buffer(b0)->l2_classify.table_index=next_table;
 	        	  if (table_index0 !=0){
-					  if (temp->prev==0)
+					  if (temp->prev==0) {
+						  next0=11;
 						  temp->prev=e0->id;
+					  }
 					  else if (temp->prev!=e0->id)
 						  next0=0;
 					  else

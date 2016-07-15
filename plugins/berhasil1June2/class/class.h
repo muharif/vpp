@@ -128,11 +128,11 @@ typedef struct {
 	u32 dst;
 	u32 proto;
 	u32 total;
-}class_check_input_t;
+} class_check_input_t;
 
 typedef struct {
 	u32 prev;
-}class_temp_t;
+} class_temp_t;
 
 class_check_input_t class_check_input;
 class_temp_t class_temp;

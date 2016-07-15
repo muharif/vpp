@@ -245,6 +245,12 @@ class_node_fn (vlib_main_t * vm,
 	          x0=table_index0/field;
 	          x=x0*field;
 	          next_table=0;
+	          u32 test;
+
+	          if (test==0)
+	        	  test=1;
+	          else
+	        	  test=2;
 
               //Check only the field that want to be checked
 
@@ -258,7 +264,7 @@ class_node_fn (vlib_main_t * vm,
 					  } else
 						  next_table=x+5;
 	        	  } else
-	        		  next_table=1;
+	        		  next_table=x+1;
 	          } else if ((table_index0-x)<=4 && (table_index0-x)>0) {
 	        	  if (e0->dst==0){
 	        		  if (e0->proto==0) {
@@ -315,10 +321,12 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->next_index = next0;
+	              t->next_index = test;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }
+
+	          test=0;
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,

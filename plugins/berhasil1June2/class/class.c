@@ -1979,16 +1979,18 @@ int class_add_del_class (class_main_t * cm,
 		  t = pool_elt_at_index (cm->tables, next_table_index);
 		  e = (class_entry_t *)&_max_e;
 		  c = class_check (cm, e, match);
+		  e->src=c->src;
+		  e->dst=c->dst;
+		  e->proto=c->proto;
+		  e->id=c->total;
 
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
-		  e->src=c->src;
-		  e->dst=c->dst;
-		  e->proto=c->proto;
 		  e->last_heard = 0;
 		  e->flags = 0;
 		  e->hits=0;
+
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));

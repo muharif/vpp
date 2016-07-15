@@ -1906,7 +1906,7 @@ int class_add_del_class (class_main_t * cm,
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
   class_entry_t * e;
-  class_check_input_t * c;
+  static class_check_input_t * c;
   int i, rv;
   u32 table_index=0;
   u32 next_table_index=0;
@@ -1983,7 +1983,6 @@ int class_add_del_class (class_main_t * cm,
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;
-		  e->hits=c->total;
 		  e->last_heard = 0;
 		  e->flags = 0;
 

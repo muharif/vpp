@@ -76,6 +76,7 @@ typedef CLIB_PACKED(struct _class_entry {
         u8 src;
         u8 dst;
         u8 proto;
+        u8 id;
     };
   };
 

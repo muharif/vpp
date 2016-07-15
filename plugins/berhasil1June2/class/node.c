@@ -289,8 +289,10 @@ class_node_fn (vlib_main_t * vm,
 	        	  }
 
 	          } else {
-	        	  if (((e0->src)+(e0->dst)+(e0->proto)) != 1)
-	        		  next0=0;
+	        	  if (((e0->src)+(e0->dst)+(e0->proto)) != 1){
+	        		  if (temp->prev != e0->id)
+	        			  next0=0;
+	        	  }
 	          }
 
 

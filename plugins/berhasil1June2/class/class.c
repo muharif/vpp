@@ -2043,7 +2043,7 @@ int class_add_del_class (class_main_t * cm,
 			  	  }
 		  }
 		   } else if (add==1) {
-			   if (e->dst==0)
+			   if (e->dst1==0)
 				   continue;
 
 			  if (add2==4) {

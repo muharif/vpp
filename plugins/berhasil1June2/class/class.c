@@ -2044,6 +2044,7 @@ int class_add_del_class (class_main_t * cm,
 								test++;
 						}
 					  };
+					  e->hits=test;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;

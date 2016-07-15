@@ -1703,13 +1703,16 @@ int class_add_del_session (class_main_t * cm,
   e->advance = advance;
   e->hits = 0;
 
-  if (hit_next_index==11){
+  /*if (hit_next_index==11){
 	  if ((t->active_elements)>0){
 		  e->hits= (((t->active_elements+1)+(((t->active_elements+1)-1)*(field-1))));
 	  } else {
 		  e->hits=(t->active_elements+1);
 	  }
-  }
+  }*/
+
+  e->hits=0;
+
   e->last_heard = 0;
   e->flags = 0;
 

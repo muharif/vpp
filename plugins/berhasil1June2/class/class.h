@@ -125,7 +125,8 @@ foreach_size_in_u32x4;
 typedef struct {
 	u32 src;
 	u32 dst;
-	int proto;
+	u32 proto;
+	u32 total;
 }class_check_input_t;
 
 class_check_input_t class_check_input;

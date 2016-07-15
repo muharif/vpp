@@ -1889,6 +1889,7 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	c->src=src;
 	c->dst=dst;
 	c->proto=proto;
+	c->total++;
 
 	return c;
 }
@@ -1982,7 +1983,7 @@ int class_add_del_class (class_main_t * cm,
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;
-		  e->hits++;
+		  e->hits=c->total;
 		  e->last_heard = 0;
 		  e->flags = 0;
 

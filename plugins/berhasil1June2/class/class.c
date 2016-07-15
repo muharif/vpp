@@ -2040,8 +2040,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  if (e->key[1][0]==zero)
-							test=test+1;
+					  test=memcmp (e->key[1][0],zero, sizeof(zero));
 					  e->test=test;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)

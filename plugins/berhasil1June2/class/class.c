@@ -1989,6 +1989,7 @@ int class_add_del_class (class_main_t * cm,
 		  e->last_heard = 0;
 		  e->flags = 0;
 		  e->hits=0;
+		  e->id=c->total;
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));

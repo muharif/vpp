@@ -1889,7 +1889,7 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	c->src=src;
 	c->dst=dst;
 	c->proto=proto;
-	c->total++;
+	++c->total;
 
 	return c;
 }

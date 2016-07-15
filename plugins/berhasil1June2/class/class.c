@@ -2040,11 +2040,10 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 						for (k=0;k<4;k++) {
-							if (e->key[i][k]==0)
+							if (e->key[i][k]!=0)
 								test++;
 						}
 					  };
-					  e->hits=test;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;

@@ -407,6 +407,8 @@ int class_add_del (class_table_t * t,
 
           if (add_v->next_index != v->next_index)
     		  goto expand_test;
+          else
+        	  goto unlock;
 
           if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
@@ -426,6 +428,8 @@ int class_add_del (class_table_t * t,
 
     	  if (add_v->next_index != v->next_index)
     		  goto expand_test;
+    	  else
+    		  goto unlock;
 
           if (class_entry_is_free (v))
             {

@@ -301,41 +301,6 @@ class_node_fn (vlib_main_t * vm,
 	        	  }
 	          }
 
-
-			  /*if (next_table != 0) {
-				  checkempty2:
-				  t1 = pool_elt_at_index (vcm->tables, next_table);
-				  if (t1) {
-					  if(t1->active_elements==0){
-						  (next_table)++;
-						  goto checkempty2;
-					  }
-				  }
-				  vnet_buffer(b0)->l2_classify.table_index=next_table;
-				  if(table_index0!=0){
-					  if (t0->prev_act==0) {
-						  t1->prev_act=(e0->id);
-					  } else {
-						  if (t0->prev_act==(e0->id)){
-							  t1->prev_act=(t0->prev_act);
-						  } else {
-							  next0=0;
-							  goto end;
-						  }
-					  }
-					  next0=11;
-				  }
-			  } else {
-				  if (((e0->src)+(e0->dst)+(e0->proto)) != 1) {
-					  if (t0->prev_act!=(e0->id)){
-						  next0=0;
-						  goto end;
-					  }
-				  }
-			  }*/
-
-			  //end:
-
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {

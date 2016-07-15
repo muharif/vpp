@@ -1859,7 +1859,7 @@ VLIB_CLI_COMMAND (class_gen, static) = {
 class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * match)
 {
 	class_table_t * t;
-	class_check_input_t * c=&class_check_input;
+	class_check_input_t * c = &class_check_input;
 	u32 i, j, k;
 	u32 index[3]={1,5,9};
 
@@ -1895,10 +1895,7 @@ int class_add_del_class (class_main_t * cm,
                                    i32 advance,
                                    int is_add,
 								   u32 srcmask,
-								   u32 dstmask,
-								   u8 src,
-								   u8 dst,
-								   u8 proto)
+								   u32 dstmask)
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
@@ -1987,15 +1984,15 @@ int class_add_del_class (class_main_t * cm,
 
 		  e = (class_entry_t *)&_max_e;
 
-		  c=class_check (cm, e, match);
+		  c = class_check (cm, e, match);
 
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
-		  e->src1=src1;
-		  e->dst1=dst1;
-		  e->proto1=proto1;
-		  e->hits = (c->src)+(c->dst)+(c->proto);
+		  e->src1=c->src;
+		  e->dst1=c->dst;
+		  e->proto1=c->proto;
+		  e->hits =0;
 		  e->last_heard = 0;
 		  e->flags = 0;
 
@@ -2153,8 +2150,6 @@ class_class_command_fn (vlib_main_t * vm,
     	  ;
       else if (unformat (input, "dstmask %d", &dstmask))
         ;
-      else if (unformat (input, "check %d %d %d", &src, &dst, &proto))
-    	  ;
       else if (unformat (input, "match %U", unformat_class2_match,
                          cm, &match, table_index))
     	  ;
@@ -2177,12 +2172,9 @@ class_class_command_fn (vlib_main_t * vm,
   if (match == 0)
     return clib_error_return (0, "Match value required");
 
-  if (src == 0 && dst == 0 && proto == 0)
-	  return clib_error_return (0, "Not checking any field, classification failed");
-
   rv = class_add_del_class (cm, match,
                                       hit_next_index,
-                                      opaque_index, advance, is_add, srcmask, dstmask, src, dst, proto);
+                                      opaque_index, advance, is_add, srcmask, dstmask);
 
   switch(rv)
     {

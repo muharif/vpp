@@ -1286,6 +1286,15 @@ VLIB_CLI_COMMAND (show_class_table_command, static) = {
   .function = show_class_tables_command_fn,
 };
 
+void check_input ()
+{
+	int src = 0, dst = 0;
+
+	check.src=src;
+	check.dst=dst;
+	check.proto=3;
+}
+
 uword unformat_ip4_match (unformat_input_t * input, va_list * args)
 {
   u8 ** matchp = va_arg (*args, u8 **);
@@ -2080,6 +2089,29 @@ int class_add_del_class (class_main_t * cm,
 	}
 	  return 0;
 
+}
+
+void check_input2 (unformat_input_t * input)
+{
+	int src = 0, dst = 0;
+	ip4_address_t src_val, dst_val;
+	  int proto;
+
+	  while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
+	    {
+	      if (unformat (input, "src %U", unformat_ip4_address, &src_val))
+	        src = 1;
+	      else if (unformat (input, "dst %U", unformat_ip4_address, &dst_val))
+	        dst = 1;
+	      else if (unformat (input, "proto"))
+	        proto = 8;
+	      else
+	    	  break;
+	    }
+
+	check.src=src;
+	check.dst=dst;
+	check.proto=proto;
 }
 
 static clib_error_t *

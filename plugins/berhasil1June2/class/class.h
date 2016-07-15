@@ -170,7 +170,6 @@ typedef struct {
   /* Private allocation arena, protected by the writer lock */
   void * mheap;
   u32 table_index;
-  u32 prev_act;
 
   /* Writer (only) lock for this table */
   volatile u32 * writer_lock;

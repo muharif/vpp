@@ -1690,7 +1690,7 @@ int class_add_del_session (class_main_t * cm,
   class_entry_5_t _max_e __attribute__((aligned (16)));
   class_entry_t * e;
   int i, rv;
-  //u32 field=9;
+  u32 field=9;
 
   if (pool_is_free_index (cm->tables, table_index))
     return VNET_API_ERROR_NO_SUCH_TABLE;
@@ -1703,13 +1703,13 @@ int class_add_del_session (class_main_t * cm,
   e->advance = advance;
   e->hits = 0;
 
-  /*if (hit_next_index==11){
+  if (hit_next_index==11){
 	  if ((t->active_elements)>0){
-		  e->hits= (((t->active_elements+1)+(((t->active_elements+1)-1)*(field-1))));
+		  e->next= (((t->active_elements+1)+(((t->active_elements+1)-1)*(field-1))));
 	  } else {
-		  e->hits=(t->active_elements+1);
+		  e->next=(t->active_elements+1);
 	  }
-  }*/
+  }
 
   e->hits=0;
 
@@ -1909,7 +1909,7 @@ int class_add_del_class (class_main_t * cm,
                                  now);
 
   if(e) {
-	  table_index=e->hits;
+	  table_index=e->next;
   }else {
 	    table_index=max;
   }

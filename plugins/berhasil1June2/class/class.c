@@ -1935,10 +1935,6 @@ int class_add_del_class (class_main_t * cm,
 	    table_index=max;
   }
 	for (add=0;add<=(field-1);add=add+1){
-
-		u8 src1=src;
-		u8 dst1=dst;
-		u8 proto1=proto;
 		u32 mult=0;
 		u32 j=0;
 
@@ -2129,7 +2125,6 @@ class_class_command_fn (vlib_main_t * vm,
   int i, rv;
   u32 table_index=0;
   u32 srcmask=32, dstmask=32;
-  u8 src=1, dst=1, proto=1;
 
   while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
     {

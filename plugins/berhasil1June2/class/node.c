@@ -275,7 +275,6 @@ class_node_fn (vlib_main_t * vm,
 	          }
 
 	          //Deciding next step
-	          u32 id=e0->id;
 
 			  if (next_table != 0) {
 				  checkempty2:
@@ -289,9 +288,9 @@ class_node_fn (vlib_main_t * vm,
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  if(table_index0!=0){
 					  if (t0->prev_act==0) {
-						  t1->prev_act=id;
+						  t1->prev_act=next0;
 					  } else {
-						  if (t0->prev_act==id){
+						  if (t0->prev_act==next0){
 							  t1->prev_act=(t0->prev_act);
 						  } else {
 							  next0=0;
@@ -302,7 +301,7 @@ class_node_fn (vlib_main_t * vm,
 				  }
 			  } else {
 				  if (((e0->src)+(e0->dst)+(e0->proto)) != 1) {
-					  if (t0->prev_act!=id){
+					  if (t0->prev_act!=next0){
 						  next0=0;
 						  goto end;
 					  }
@@ -316,7 +315,7 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->next_index = e0->id;
+	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }

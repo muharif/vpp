@@ -1862,6 +1862,7 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	class_check_input_t * c = &class_check_input;
 	u32 i, j, k;
 	u32 index[3]={1,5,9};
+	c=0;
 
 	for (j=0;j<3;j++){
 		t = pool_elt_at_index (cm->tables, index[j]);
@@ -1968,9 +1969,7 @@ int class_add_del_class (class_main_t * cm,
 			next_table_index=(table_index+add2);
 
 		  t = pool_elt_at_index (cm->tables, next_table_index);
-
 		  e = (class_entry_t *)&_max_e;
-
 		  c = class_check (cm, e, match);
 
 		  e->next_index = hit_next_index;
@@ -2038,14 +2037,14 @@ int class_add_del_class (class_main_t * cm,
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
 			  	  }
-		  }
+			   }
 		   } else if (add==1 && e->dst==1) {
 
 			  if (add2==4) {
 				  mult=32-dstmask;
 				  u32 temp=e->key[1][0];
 				  for (j=0;j<(pow(2,mult));j++) {
-					  e->key[1][0] =temp+(256*j);
+					  e->key[1][0] = temp+(256*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };

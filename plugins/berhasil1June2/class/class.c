@@ -1889,7 +1889,6 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	c->src=src;
 	c->dst=dst;
 	c->proto=proto;
-	c->total++;
 
 	return c;
 }
@@ -1940,6 +1939,7 @@ int class_add_del_class (class_main_t * cm,
   }else {
 	    table_index=max;
   }
+  c->total++;
 	for (add=0;add<=(field-1);add=add+1){
 		u32 mult=0;
 		u32 j=0;

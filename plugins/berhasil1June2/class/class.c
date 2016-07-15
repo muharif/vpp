@@ -407,11 +407,7 @@ int class_add_del (class_table_t * t,
 
           if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
-
-        	  if (add_v->next_index != v->next_index)
-        		  goto expand_again;
-
-        	  clib_memcpy (v, add_v, sizeof (class_entry_t) +
+              clib_memcpy (v, add_v, sizeof (class_entry_t) +
                       t->match_n_vectors * sizeof(u32x4));
               v->flags &= ~(CLASS_ENTRY_FREE);
 
@@ -427,9 +423,6 @@ int class_add_del (class_table_t * t,
 
           if (class_entry_is_free (v))
             {
-        	  if (add_v->next_index != v->next_index)
-        		  goto expand_again;
-
               clib_memcpy (v, add_v, sizeof (class_entry_t) +
                       t->match_n_vectors * sizeof(u32x4));
               v->flags &= ~(CLASS_ENTRY_FREE);

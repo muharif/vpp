@@ -1940,9 +1940,6 @@ int class_add_del_class (class_main_t * cm,
 
 
 		if (add==0) {
-			if (src1 !=1)
-				continue;
-
 			if (srcmask<=32 && srcmask >24)
 				add2=0;
 			else if (srcmask<=24 && srcmask >16)
@@ -1954,9 +1951,6 @@ int class_add_del_class (class_main_t * cm,
 			else
 				continue;
 		} else if (add==1) {
-			if (dst1 !=1)
-				continue;
-
 			if (dstmask<=32 && dstmask >24)
 				add2=4;
 			else if (dstmask<=24 && dstmask >16)
@@ -1968,9 +1962,6 @@ int class_add_del_class (class_main_t * cm,
 			else
 				continue;
 		} else {
-			if (proto1 !=1)
-				continue;
-
 			add2=8;
 		}
 

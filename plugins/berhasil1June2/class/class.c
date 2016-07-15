@@ -1905,7 +1905,7 @@ int class_add_del_class (class_main_t * cm,
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
   class_entry_t * e;
-  class_check_input_t * c= &class_check_input;
+  class_check_input_t * c = &class_check_input;
   int i, rv;
   u32 table_index=0;
   u32 next_table_index=0;
@@ -1939,7 +1939,10 @@ int class_add_del_class (class_main_t * cm,
   }else {
 	    table_index=max;
   }
-c->total++;
+  	//increment for the identifier
+
+  	c->total++;
+
 	for (add=0;add<=(field-1);add=add+1){
 		u32 mult=0;
 		u32 j=0;
@@ -1985,7 +1988,7 @@ c->total++;
 		  e->proto=c->proto;
 		  e->last_heard = 0;
 		  e->flags = 0;
-		  e->hits=c->total;
+		  e->hits=0;
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));

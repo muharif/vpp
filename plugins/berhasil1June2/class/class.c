@@ -406,23 +406,22 @@ int class_add_del (class_table_t * t,
           v = class_entry_at_index (t, save_v, value_index + i);
 
           if (add_v->next_index != v->next_index)
-    		  goto expand_test;
+    		  goto add_duplicate;
           else
         	  goto unlock;
 
-          if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
+          /*if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
               clib_memcpy (v, add_v, sizeof (class_entry_t) +
                       t->match_n_vectors * sizeof(u32x4));
               v->flags &= ~(CLASS_ENTRY_FREE);
 
               CLIB_MEMORY_BARRIER();
-              /* Restore the previous (k,v) pairs */
               b->as_u64 = t->saved_bucket.as_u64;
               goto unlock;
-            }
+            }*/
         }
-      for (i = 0; i < t->entries_per_page; i++)
+      /*for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
@@ -441,7 +440,7 @@ int class_add_del (class_table_t * t,
               t->active_elements ++;
               goto unlock;
             }
-        }
+        }*/
       /* no room at the inn... split case... */
     }
   else
@@ -465,7 +464,7 @@ int class_add_del (class_table_t * t,
       b->as_u64 = t->saved_bucket.as_u64;
       goto unlock;
     }
-  expand_test:
+  add_duplicate:
   	  new_log2_pages = t->saved_bucket.log2_pages + 1;
 
  expand_again:

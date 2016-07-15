@@ -1911,7 +1911,7 @@ int class_add_del_class (class_main_t * cm,
   u32 next_table_index=0;
   u64 hash0;
   f64 now = 0.00;
-  u32 max=145;
+  u32 max=37;
   u32 field=3;
   u32 add=0;
   u32 add2=0;

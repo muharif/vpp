@@ -1862,7 +1862,7 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	class_check_input_t * c = &class_check_input;
 	u32 i, j, k;
 	u32 index[3]={1,5,9};
-	c=0;
+	u32 src=0, dst=0, proto=0;
 
 	for (j=0;j<3;j++){
 		t = pool_elt_at_index (cm->tables, index[j]);
@@ -1878,13 +1878,17 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 		};
 		if (input_check!=0) {
 			if (j==0)
-				c->src=1;
+				src=1;
 			if (j==1)
-				c->dst=1;
+				dst=1;
 			if (j==2)
-				c->proto=1;
+				proto=1;
 		}
 	}
+
+	c->src=src;
+	c->dst=dst;
+	c->proto=proto;
 
 	return c;
 }

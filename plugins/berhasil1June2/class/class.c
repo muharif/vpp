@@ -1989,6 +1989,9 @@ int class_add_del_class (class_main_t * cm,
 		  //The conditions to expand if netmask is not 32,24 or 8 based on user input
 
 		   if (add==0) {
+			   if (e->src1==0)
+				   continue;
+
 			  if (add2==0) {
 				  mult=32-srcmask;
 				  u32 temp=e->key[0][3];
@@ -2040,6 +2043,9 @@ int class_add_del_class (class_main_t * cm,
 			  	  }
 		  }
 		   } else if (add==1) {
+			   if (e->dst==0)
+				   continue;
+
 			  if (add2==4) {
 				  mult=32-dstmask;
 				  u32 temp=e->key[1][0];
@@ -2090,6 +2096,9 @@ int class_add_del_class (class_main_t * cm,
 				  }
 			  }
 		  } else {
+			   if (e->proto1==0)
+				   continue;
+
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };

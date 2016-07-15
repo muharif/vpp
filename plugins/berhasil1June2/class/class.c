@@ -2039,9 +2039,9 @@ int class_add_del_class (class_main_t * cm,
 					  e->key[1][0] =temp+(256*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
-						if (e->key[i]==zero)
-							test=test+1;
 					  };
+					  if (e->key[1][0]==zero)
+							test=test+1;
 					  e->test=test;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)

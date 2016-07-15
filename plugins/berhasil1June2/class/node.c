@@ -320,6 +320,8 @@ class_node_fn (vlib_main_t * vm,
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }
 
+	          test=0;
+
 	          /* verify speculative enqueue, maybe switch current next frame */
 		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,

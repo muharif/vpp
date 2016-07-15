@@ -73,6 +73,7 @@ typedef CLIB_PACKED(struct _class_entry {
     u64 opaque_count;
     u32 next;
     struct {
+    	u8 test;
         u8 src1;
         u8 dst1;
         u8 proto1;

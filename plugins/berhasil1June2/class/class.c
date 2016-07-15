@@ -1977,6 +1977,8 @@ int class_add_del_class (class_main_t * cm,
 
 		  //The conditions to expand if netmask is not 32,24 or 8 based on user input
 
+		  u8 test=0;
+
 		   if (add==0) {
 			  if (add2==0) {
 				  mult=32-srcmask;
@@ -2036,7 +2038,10 @@ int class_add_del_class (class_main_t * cm,
 					  e->key[1][0] =temp+(256*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
+						if (e->key[i]=={0,0,0,0,0,0,0,0})
+							test=test+1;
 					  };
+					  e->test=test;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;

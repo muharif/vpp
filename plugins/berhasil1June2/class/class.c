@@ -406,7 +406,7 @@ int class_add_del (class_table_t * t,
           v = class_entry_at_index (t, save_v, value_index + i);
 
           if (add_v->next_index != v->next_index)
-    		  goto expand_again;
+    		  goto expand_test;
 
           if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
@@ -425,7 +425,7 @@ int class_add_del (class_table_t * t,
           v = class_entry_at_index (t, save_v, value_index + i);
 
     	  if (add_v->next_index != v->next_index)
-    		  goto expand_again;
+    		  goto expand_test;
 
           if (class_entry_is_free (v))
             {
@@ -461,8 +461,8 @@ int class_add_del (class_table_t * t,
       b->as_u64 = t->saved_bucket.as_u64;
       goto unlock;
     }
-
-  new_log2_pages = t->saved_bucket.log2_pages + 1;
+  expand_test:
+  	  new_log2_pages = t->saved_bucket.log2_pages + 1;
 
  expand_again:
   working_copy = t->working_copies[cpu_number];

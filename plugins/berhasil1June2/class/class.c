@@ -1982,7 +1982,6 @@ int class_add_del_class (class_main_t * cm,
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;
-		  e->id=c->total;
 
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;

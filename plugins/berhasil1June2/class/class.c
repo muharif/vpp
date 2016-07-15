@@ -535,7 +535,7 @@ static u8 * format_class_entry (u8 * s, va_list * args)
 
   s = format
     (s, "[%u]: session_id %d next_index %d advance %d opaque %d\n",
-     e->id, class_get_offset (t, e), e->next_index, e->advance,
+     class_get_offset (t, e), e->id, e->next_index, e->advance,
      e->opaque_index);
 
 

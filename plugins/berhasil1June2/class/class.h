@@ -130,7 +130,14 @@ typedef struct {
 	u32 total;
 }class_check_input_t;
 
+typedef struct {
+	u32 src;
+	u32 dst;
+	u32 proto;
+}class_temp_t;
+
 class_check_input_t class_check_input;
+class_temp_t class_temp;
 
 typedef struct {
   /* Mask to apply after skipping N vectors */

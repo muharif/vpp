@@ -277,13 +277,17 @@ class_node_fn (vlib_main_t * vm,
 	          //Deciding next step
 
 	          if (next_table !=0) {
+
 	        	  vnet_buffer(b0)->l2_classify.table_index=next_table;
-	        	  if (temp->prev==0)
-	        		  temp->prev=e0->id;
-	        	  else if (temp->prev!=e0->id)
-	        		  next0=0;
-	        	  else
-	        		  next0=11;
+	        	  if (table_index0 !=0){
+					  if (temp->prev==0)
+						  temp->prev=e0->id;
+					  else if (temp->prev!=e0->id)
+						  next0=0;
+					  else
+						  next0=11;
+	        	  }
+
 	          } else {
 	        	  if (((e0->src)+(e0->dst)+(e0->proto)) != 1)
 	        		  next0=0;

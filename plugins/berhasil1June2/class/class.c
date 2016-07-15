@@ -1860,8 +1860,8 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 {
 	class_table_t * t;
 	class_check_input_t * c;
-	u32 i, j;
-	u32 index[2]={1,5,9};
+	u32 i, j, k;
+	u32 index[3]={1,5,9};
 
 	for (j=0;j<3;j++){
 		t = pool_elt_at_index (cm->tables, index[j]);

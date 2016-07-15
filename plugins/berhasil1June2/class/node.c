@@ -249,9 +249,9 @@ class_node_fn (vlib_main_t * vm,
               //Check only the field that want to be checked
 
 	          if (table_index0==0) {
-	        	  if (e0->src==0) {
-	        		  if (e0->dst==0){
-						  if (e0->proto==0) {
+	        	  if (e0->src1==0) {
+	        		  if (e0->dst1==0){
+						  if (e0->proto1==0) {
 							  next_table=0;
 						  } else
 							  next_table=x+field;
@@ -260,15 +260,15 @@ class_node_fn (vlib_main_t * vm,
 	        	  } else
 	        		  next_table=1;
 	          } else if ((table_index0-x)<=4 && (table_index0-x)>0) {
-	        	  if (e0->dst==0){
-	        		  if (e0->proto==0) {
+	        	  if (e0->dst1==0){
+	        		  if (e0->proto1==0) {
 	        			  next_table=0;
 	        		  } else
 	        			  next_table=x+field;
 	        	  } else
 	        		  next_table=x+5;
 	          } else if ((table_index0-x)<=8 && (table_index0-x)>4) {
-	        	  if (e0->proto==0)
+	        	  if (e0->proto1==0)
 	        		  next_table=0;
 	        	  else
 	        		  next_table=x+field;
@@ -300,7 +300,7 @@ class_node_fn (vlib_main_t * vm,
 					  next0=11;
 				  }
 			  } else {
-				  if (((e0->src)+(e0->dst)+(e0->proto)) != 1) {
+				  if (((e0->src1)+(e0->dst1)+(e0->proto1)) != 1) {
 					  if (t0->prev_act!=next0){
 						  next0=0;
 						  goto end;
@@ -315,7 +315,7 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->next_index = e0->proto;
+	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }

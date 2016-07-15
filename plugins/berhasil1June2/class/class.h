@@ -73,9 +73,10 @@ typedef CLIB_PACKED(struct _class_entry {
     u64 opaque_count;
     u32 next;
     struct {
-        u8 src;
-        u8 dst;
-        u8 proto;
+    	u8 test;
+        u8 src1;
+        u8 dst1;
+        u8 proto1;
     };
   };
 
@@ -121,14 +122,6 @@ foreach_size_in_u32x4;
     u64 as_u64;
   };
 } class_bucket_t;*/
-
-struct check_input {
-	u32 src;
-	u32 dst;
-	int proto;
-};
-
-struct check_input check;
 
 typedef struct {
   /* Mask to apply after skipping N vectors */

@@ -288,9 +288,9 @@ class_node_fn (vlib_main_t * vm,
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  if(table_index0!=0){
 					  if (t0->prev_act==0) {
-						  t1->prev_act=next0;
+						  t1->prev_act=(e0->total);
 					  } else {
-						  if (t0->prev_act==next0){
+						  if (t0->prev_act==(e0->total)){
 							  t1->prev_act=(t0->prev_act);
 						  } else {
 							  next0=0;
@@ -301,7 +301,7 @@ class_node_fn (vlib_main_t * vm,
 				  }
 			  } else {
 				  if (((e0->src)+(e0->dst)+(e0->proto)) != 1) {
-					  if (t0->prev_act!=next0){
+					  if (t0->prev_act!=(e0->total)){
 						  next0=0;
 						  goto end;
 					  }

@@ -397,7 +397,7 @@ class_find_entry_inline (class_table_t * t,
 
       if (u32x4_zero_byte_mask (result.as_u32x4) == 0xffff) {
         if (PREDICT_TRUE(now)) {
-          //v->hits++;
+          v->hits++;
           v->last_heard = now;
         }
         return (v);
@@ -441,7 +441,7 @@ class_find_entry_inline (class_table_t * t,
 
       if (result.as_u64[0] == 0 && result.as_u64[1] == 0) {
         if (PREDICT_TRUE(now)) {
-          //v->hits++;
+          v->hits++;
           v->last_heard = now;
         }
         return (v);

@@ -138,7 +138,7 @@ class_node_fn (vlib_main_t * vm,
 	          vlib_buffer_t * b0;
 	          u32 next0 = IP_LOOKUP_NEXT_MISS;
 	          u32 table_index0;
-	          class_table_t * t0, * t1;
+	          class_table_t * t0;
 	          class_entry_t * e0;
 	          u64 hash0;
 	          u8 * h0;
@@ -287,7 +287,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  next0=11;
 	          } else {
 	        	  if (((e0->src)+(e0->dst)+(e0->proto)) != 1)
-	        		  next=0;
+	        		  next0=0;
 	          }
 
 
@@ -323,7 +323,7 @@ class_node_fn (vlib_main_t * vm,
 				  }
 			  }*/
 
-			  end:
+			  //end:
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))

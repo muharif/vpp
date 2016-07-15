@@ -1859,7 +1859,7 @@ VLIB_CLI_COMMAND (class_gen, static) = {
 class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * match)
 {
 	class_table_t * t;
-	class_check_input_t * c;
+	class_check_input_t * c=&class_check_input;
 	u32 i, j, k;
 	u32 index[3]={1,5,9};
 

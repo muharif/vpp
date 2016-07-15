@@ -1979,6 +1979,8 @@ int class_add_del_class (class_main_t * cm,
 					  };
 					  if (input_check!=0)
 						  e->src=1;
+					  else
+						  continue;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -1997,6 +1999,8 @@ int class_add_del_class (class_main_t * cm,
 						  };
 					  if (input_check!=0)
 						  e->src=1;
+					  else
+						  continue;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2015,6 +2019,8 @@ int class_add_del_class (class_main_t * cm,
 					  };
 				  if (input_check!=0)
 					  e->src=1;
+				  else
+					  continue;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2034,9 +2040,11 @@ int class_add_del_class (class_main_t * cm,
 					  };
 				  if (input_check!=0)
 					  e->src=1;
-					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
+				  else
+					  continue;
+				  rv = class_add_del (t, e, is_add,table_index);
+				  if (rv)
+					return VNET_API_ERROR_NO_SUCH_ENTRY;
 			  }
 		  }
 	   } else if (add==1) {
@@ -2054,6 +2062,8 @@ int class_add_del_class (class_main_t * cm,
 				  };
 				  if (input_check!=0)
 					  e->dst=1;
+				  else
+					  continue;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2072,6 +2082,8 @@ int class_add_del_class (class_main_t * cm,
 				  };
 				  if (input_check!=0)
 					  e->dst=1;
+				  else
+					  continue;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2090,6 +2102,8 @@ int class_add_del_class (class_main_t * cm,
 				  };
 				  if (input_check!=0)
 					  e->dst=1;
+				  else
+					  continue;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2108,6 +2122,8 @@ int class_add_del_class (class_main_t * cm,
 				  };
 				  if (input_check!=0)
 					  e->dst=1;
+				  else
+					  continue;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2123,6 +2139,8 @@ int class_add_del_class (class_main_t * cm,
 			  };
 			  if (input_check!=0)
 				  e->proto=1;
+			  else
+				  continue;
 			  rv = class_add_del (t, e, is_add,table_index);
 			  if (rv)
 				return VNET_API_ERROR_NO_SUCH_ENTRY;

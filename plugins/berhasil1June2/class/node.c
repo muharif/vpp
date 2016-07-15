@@ -248,7 +248,7 @@ class_node_fn (vlib_main_t * vm,
 	          u32 test;
 
 	          if (test==0)
-	        	  test=1;
+	        	  test++;
 	          else
 	        	  test=2;
 

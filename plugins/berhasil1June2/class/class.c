@@ -1690,7 +1690,7 @@ int class_add_del_session (class_main_t * cm,
   class_entry_5_t _max_e __attribute__((aligned (16)));
   class_entry_t * e;
   int i, rv;
-  u32 field=9;
+  //u32 field=9;
 
   if (pool_is_free_index (cm->tables, table_index))
     return VNET_API_ERROR_NO_SUCH_TABLE;

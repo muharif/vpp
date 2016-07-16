@@ -2129,7 +2129,7 @@ int class_add_del_class (class_main_t * cm,
 
 		   end_loop:
 
-		   if (add==3 && duplicate == ((e->src)+(e->dst)+(e->proto))) {
+		   if (add==2 && duplicate == ((e->src)+(e->dst)+(e->proto))) {
 			   goto begin;
 		   }
 	}

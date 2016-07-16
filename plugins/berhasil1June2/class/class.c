@@ -1907,8 +1907,7 @@ int class_add_del_class (class_main_t * cm,
 								   u32 srcmask,
 								   u32 dstmask)
 {
-  begin:
-  class_table_t * t, * t1;
+  class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
   class_entry_t * e, * e2;
   class_check_input_t * c = &class_check_input;
@@ -1923,6 +1922,7 @@ int class_add_del_class (class_main_t * cm,
   u32 add2=0;
   u32 duplicate = 0;
 
+  begin:
   e = (class_entry_t *)&_max_e;
   t = pool_elt_at_index (cm->tables, table_index);
 
@@ -1940,9 +1940,6 @@ int class_add_del_class (class_main_t * cm,
 
   e = class_find_entry (t, (u8 *) h0, hash0,
                                  now);
-
-  e1=e;
-  t1=t;
 
   if(e) {
 	  table_index=e->next;

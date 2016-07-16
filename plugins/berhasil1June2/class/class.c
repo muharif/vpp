@@ -2251,7 +2251,7 @@ int class_add_del_class (class_main_t * cm,
 					  };
 
 					  test = class_check_avail (t,e);
-					  u32 hits = test;
+					  e->hits = test;
 
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)

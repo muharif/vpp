@@ -132,6 +132,7 @@ typedef struct {
 
 typedef struct {
 	u32 prev;
+	u32 duplicate;
 } class_temp_t;
 
 class_check_input_t class_check_input;

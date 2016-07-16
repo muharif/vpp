@@ -1964,7 +1964,7 @@ int class_add_del_class (class_main_t * cm,
 			else if (srcmask<=8 && srcmask >0)
 				add2=3;
 			else
-				continue;
+				goto end_loop;
 		} else if (add==1) {
 			if (dstmask<=32 && dstmask >24)
 				add2=4;
@@ -1975,7 +1975,7 @@ int class_add_del_class (class_main_t * cm,
 			else if (dstmask<=8 && dstmask >0)
 				add2=7;
 			else
-				continue;
+				goto end_loop;
 		} else {
 			add2=8;
 		}
@@ -2054,7 +2054,6 @@ int class_add_del_class (class_main_t * cm,
 			  	  }
 			   }
 		   } else if (add==1 && e->dst==1) {
-
 			  if (add2==4) {
 				  mult=32-dstmask;
 				  u32 temp=e->key[1][0];
@@ -2112,7 +2111,7 @@ int class_add_del_class (class_main_t * cm,
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
-			  continue;
+			  goto end_loop;
 
 		   h0 = (u8 *) e->key;
 		   h0 -= t->skip_n_vectors * sizeof (u32x4);
@@ -2123,12 +2122,14 @@ int class_add_del_class (class_main_t * cm,
 		   if (e2->id < e->id && e2->next_index == e->next_index && e2->src == e->src
 				   && e2->dst == e->dst && e2->proto == e->proto)
 			   duplicate++;
-	}
 
-	if (duplicate == ((e->src)+(e->dst)+(e->proto))) {
-		rv = class_add_del (t, e, 0,table_index);
-		if (rv)
-			return VNET_API_ERROR_NO_SUCH_ENTRY;
+		   end_loop;
+
+		   if (add==3 && duplicate == ((e->src)+(e->dst)+(e->proto))) {
+			   rv = class_add_del (t, e, 0,table_index);
+			   		if (rv)
+			   			return VNET_API_ERROR_NO_SUCH_ENTRY;
+		   }
 	}
 
 	  return 0;

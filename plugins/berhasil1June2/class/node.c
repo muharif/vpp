@@ -275,7 +275,6 @@ class_node_fn (vlib_main_t * vm,
 	        		  next_table=x+field;
 	          }
 
-
 	          //Deciding next step
 
 	          if (next_table !=0) {

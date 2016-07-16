@@ -1915,7 +1915,7 @@ int class_check_avail (class_table_t * t, class_entry_t * e1)
 	  e = class_find_entry (t, (u8 *) h0, hash0,
 	                                 now);
 
-	  return (e->id);
+	  return 1;
 }
 
 /*int class_add_del_class (class_main_t * cm,

@@ -401,12 +401,11 @@ int class_add_del (class_table_t * t,
        * replace an existing key, then look for an empty slot.
        */
 
+	  goto expand_test;
+
       for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
-
-          if (v)
-        	  continue;
 
           if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
@@ -422,9 +421,6 @@ int class_add_del (class_table_t * t,
       for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
-
-          if (v)
-        	  continue;
 
           if (class_entry_is_free (v))
             {
@@ -460,6 +456,8 @@ int class_add_del (class_table_t * t,
       b->as_u64 = t->saved_bucket.as_u64;
       goto unlock;
     }
+
+  expand_test:
 
   new_log2_pages = t->saved_bucket.log2_pages + 1;
 

@@ -1923,9 +1923,6 @@ int class_add_del_class (class_main_t * cm,
   u32 duplicate = 0;
 
   begin:
-  if (duplicate > 0)
-	  is_add=0;
-
   e = (class_entry_t *)&_max_e;
   t = pool_elt_at_index (cm->tables, table_index);
 
@@ -2129,7 +2126,8 @@ int class_add_del_class (class_main_t * cm,
 
 		   end_loop:
 
-		   if (add==2 && duplicate == ((e->src)+(e->dst)+(e->proto))) {
+		   if (add==2 && duplicate == ((e->src)+(e->dst)+(e->proto)) && is_add==1) {
+			   is_add=0;
 			   goto begin;
 		   }
 	}

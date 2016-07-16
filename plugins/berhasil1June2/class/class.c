@@ -1903,7 +1903,9 @@ int class_check_avail (class_table_t * t, class_entry_t * e1)
 	  u8 * h0;
 	  u64 hash0;
 	  f64 now = 0.00;
+	  class_entry_5_t _max_e __attribute__((aligned (16)));
 	  class_entry_t * e;
+	  e = (class_entry_t *)&_max_e;
 
 	  h0 = (u8 *) e1->key;
 	  h0 -= t->skip_n_vectors * sizeof (u32x4);

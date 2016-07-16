@@ -1910,7 +1910,7 @@ int class_check_avail (class_table_t * t, class_entry_t * entry)
 	                                 now);
 
 	  if (e && e->next_index == entry->next_index)
-		   rv = e->id;
+		   rv = entry->id;
 	  else
 		  rv = c->total;
 

@@ -2008,15 +2008,12 @@ int class_add_del_class (class_main_t * cm,
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
-		  e->id=c->total;
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;
 		  e->last_heard = 0;
 		  e->flags = 0;
 		  e->hits=0;
-
-		  u32 test;
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));
@@ -2032,8 +2029,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  test=class_check_avail (t,e);
-					  e->hits=test;
+					  e->id=class_check_avail (t,e);
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2046,6 +2042,7 @@ int class_add_del_class (class_main_t * cm,
 					  	  for (i = 0; i < t->match_n_vectors; i++) {
 								e->key[i] &= t->mask[i];
 					  	  };
+						  e->id=class_check_avail (t,e);
 					  	  rv = class_add_del (t, e, is_add,table_index);
 					  	  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2058,6 +2055,7 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
+						  e->id=class_check_avail (t,e);
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2071,6 +2069,7 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
+						  e->id=class_check_avail (t,e);
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2086,6 +2085,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id=class_check_avail (t,e);
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2098,6 +2098,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id=class_check_avail (t,e);
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2110,6 +2111,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id=class_check_avail (t,e);
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2122,6 +2124,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id=class_check_avail (t,e);
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2131,6 +2134,7 @@ int class_add_del_class (class_main_t * cm,
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
+			  	  e->id=class_check_avail (t,e);
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;

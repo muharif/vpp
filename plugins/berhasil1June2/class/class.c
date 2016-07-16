@@ -1907,9 +1907,10 @@ int class_add_del_class (class_main_t * cm,
 								   u32 srcmask,
 								   u32 dstmask)
 {
+  begin:
   class_table_t * t, * t1;
   class_entry_5_t _max_e __attribute__((aligned (16)));
-  class_entry_t * e1, * e, * e2;
+  class_entry_t * e, * e2;
   class_check_input_t * c = &class_check_input;
   int i, rv;
   u32 table_index=0;
@@ -2129,9 +2130,8 @@ int class_add_del_class (class_main_t * cm,
 		   end_loop:
 
 		   if (add==3 && duplicate == ((e->src)+(e->dst)+(e->proto))) {
-			   rv = class_add_del (t1, e1, 0,table_index);
-			   		if (rv)
-			   			return VNET_API_ERROR_NO_SUCH_ENTRY;
+			   is_add=0;
+			   goto begin;
 		   }
 	}
 

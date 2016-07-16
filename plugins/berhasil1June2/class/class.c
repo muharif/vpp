@@ -2237,7 +2237,7 @@ int class_add_del_class (class_main_t * cm,
 		  e->flags = 0;
 		  e->hits=0;
 
-		  u32 test;
+		  //u32 test;
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));
@@ -2254,8 +2254,8 @@ int class_add_del_class (class_main_t * cm,
 						e->key[i] &= t->mask[i];
 					  };
 
-					  test = class_check_avail (t,e);
-					  e->hits = test;
+					  //test = class_check_avail (t,e);
+					  //e->hits = test;
 
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)

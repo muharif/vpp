@@ -349,6 +349,7 @@ int class_add_del (class_table_t * t,
   u32 new_log2_pages;
   u32 cpu_number = os_get_cpu_number();
   u8 * key_minus_skip;
+  class_temp_t * temp = &class_temp;
 
 
   ASSERT ((add_v->flags & CLASS_ENTRY_FREE) == 0);
@@ -400,47 +401,50 @@ int class_add_del (class_table_t * t,
        * For obvious (in hindsight) reasons, see if we're supposed to
        * replace an existing key, then look for an empty slot.
        */
+	  if (t->table_index == 0) {
+		  for (i = 0; i < t->entries_per_page; i++)
+		          {
+		            v = class_entry_at_index (t, save_v, value_index + i);
 
-      for (i = 0; i < t->entries_per_page; i++)
-        {
-          v = class_entry_at_index (t, save_v, value_index + i);
+		            /*if (add_v->next_index != v->next_index)
+		      		  goto add_duplicate;
+		            else
+		          	  goto unlock;*/
 
-          if (add_v->next_index != v->next_index)
-    		  goto add_duplicate;
-          else
-        	  goto unlock;
+		            if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
+		              {
+		                clib_memcpy (v, add_v, sizeof (class_entry_t) +
+		                        t->match_n_vectors * sizeof(u32x4));
+		                v->flags &= ~(CLASS_ENTRY_FREE);
 
-          /*if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
-            {
-              clib_memcpy (v, add_v, sizeof (class_entry_t) +
-                      t->match_n_vectors * sizeof(u32x4));
-              v->flags &= ~(CLASS_ENTRY_FREE);
+		                CLIB_MEMORY_BARRIER();
+		                b->as_u64 = t->saved_bucket.as_u64;
+		                goto unlock;
+		              }
+		          }
+		        for (i = 0; i < t->entries_per_page; i++)
+		          {
+		            v = class_entry_at_index (t, save_v, value_index + i);
 
-              CLIB_MEMORY_BARRIER();
-              b->as_u64 = t->saved_bucket.as_u64;
-              goto unlock;
-            }*/
-        }
-      /*for (i = 0; i < t->entries_per_page; i++)
-        {
-          v = class_entry_at_index (t, save_v, value_index + i);
+		            if (class_entry_is_free (v))
+		              {
+		                clib_memcpy (v, add_v, sizeof (class_entry_t) +
+		                        t->match_n_vectors * sizeof(u32x4));
+		                v->flags &= ~(CLASS_ENTRY_FREE);
+		                CLIB_MEMORY_BARRIER();
+		                b->as_u64 = t->saved_bucket.as_u64;
+		                t->active_elements ++;
+		                goto unlock;
+		              }
+		          }
+	  } else {
+		  v = class_entry_at_index (t, save_v, value_index + i);
+		  if (v != 0) {
+			  temp->duplicate++;
+			  goto add_duplicate;
+		  }
 
-    	  if (add_v->next_index != v->next_index)
-    		  goto expand_test;
-    	  else
-    		  goto unlock;
-
-          if (class_entry_is_free (v))
-            {
-              clib_memcpy (v, add_v, sizeof (class_entry_t) +
-                      t->match_n_vectors * sizeof(u32x4));
-              v->flags &= ~(CLASS_ENTRY_FREE);
-              CLIB_MEMORY_BARRIER();
-              b->as_u64 = t->saved_bucket.as_u64;
-              t->active_elements ++;
-              goto unlock;
-            }
-        }*/
+	  }
       /* no room at the inn... split case... */
     }
   else

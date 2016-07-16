@@ -407,13 +407,14 @@ int class_add_del (class_table_t * t,
 
           if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
-              clib_memcpy (v, add_v, sizeof (class_entry_t) +
+              /*clib_memcpy (v, add_v, sizeof (class_entry_t) +
                       t->match_n_vectors * sizeof(u32x4));
               v->flags &= ~(CLASS_ENTRY_FREE);
 
               CLIB_MEMORY_BARRIER();
-              b->as_u64 = t->saved_bucket.as_u64;
-              goto unlock;
+              b->as_u64 = t->saved_bucket.as_u64;*/
+        	  if (v->next_index == add_v->next_index)
+        		  goto unlock;
             }
         }
       for (i = 0; i < t->entries_per_page; i++)

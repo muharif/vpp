@@ -349,8 +349,6 @@ int class_add_del (class_table_t * t,
   u32 new_log2_pages;
   u32 cpu_number = os_get_cpu_number();
   u8 * key_minus_skip;
-  class_temp_t * temp = &class_temp;
-
 
   ASSERT ((add_v->flags & CLASS_ENTRY_FREE) == 0);
 

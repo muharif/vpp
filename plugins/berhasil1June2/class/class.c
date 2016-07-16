@@ -1898,12 +1898,14 @@ class_check_input_t * class_input_check (class_main_t * cm, class_entry_t * e, u
 	return c;
 }
 
-int class_check_avail (class_table_t * t, class_entry_t * e)
+int class_check_avail (class_table_t * t, class_entry_t * e1)
 {
 	  u8 * h0;
 	  u64 hash0;
 	  f64 now = 0.00;
-	  h0 = (u8 *) e->key;
+	  class_entry_t * e;
+
+	  h0 = (u8 *) e1->key;
 	  h0 -= t->skip_n_vectors * sizeof (u32x4);
 
 	  hash0 = class_hash_packet (t, h0);

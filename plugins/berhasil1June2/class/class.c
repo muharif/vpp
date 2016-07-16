@@ -401,7 +401,7 @@ int class_add_del (class_table_t * t,
        * replace an existing key, then look for an empty slot.
        */
 
-	  for (i = 0; i < t->entries_per_page; i++)
+      for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
@@ -412,8 +412,9 @@ int class_add_del (class_table_t * t,
               v->flags &= ~(CLASS_ENTRY_FREE);
 
               CLIB_MEMORY_BARRIER();
+              /* Restore the previous (k,v) pairs */
               b->as_u64 = t->saved_bucket.as_u64;
-        		  goto unlock;
+              goto unlock;
             }
         }
       for (i = 0; i < t->entries_per_page; i++)
@@ -454,7 +455,8 @@ int class_add_del (class_table_t * t,
       b->as_u64 = t->saved_bucket.as_u64;
       goto unlock;
     }
-  	  new_log2_pages = t->saved_bucket.log2_pages + 1;
+
+  new_log2_pages = t->saved_bucket.log2_pages + 1;
 
  expand_again:
   working_copy = t->working_copies[cpu_number];
@@ -1891,42 +1893,6 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	return c;
 }
 
-int class_check_avail (class_table_t * t, class_entry_t * entry)
-{
-	  u64 hash0;
-	  f64 now = 0.00;
-	  u8 * h0;
-	  class_entry_t * e;
-	  class_entry_5_t _max_e __attribute__((aligned (16)));
-	  class_check_input_t * c = &class_check_input;
-	  u32 rv;
-
-
-	  e = (class_entry_t *)&_max_e;
-	  h0 = (u8 *) entry->key;
-	  h0 -= t->skip_n_vectors * sizeof (u32x4);
-	  hash0 = class_hash_packet (t, h0);
-	  e = class_find_entry (t, (u8 *) h0, hash0,
-	                                 now);
-
-	  if (e /*&& e->next_index == entry->next_index*/)
-		   rv = e->id;
-	  else
-		  rv = c->total;
-
-	  return rv;
-
-
-}
-
-void reset_next (class_next_t * n)
-{
-	n->src=0;
-	n->dst=0;
-	n->proto=0;
-	n->next=0;
-}
-
 int class_add_del_class (class_main_t * cm,
                                    u8 * match,
                                    u32 hit_next_index,
@@ -1940,7 +1906,6 @@ int class_add_del_class (class_main_t * cm,
   class_entry_5_t _max_e __attribute__((aligned (16)));
   class_entry_t * e;
   class_check_input_t * c = &class_check_input;
-  //class_next_t * n = &class_next;
   int i, rv;
   u32 table_index=0;
   u32 next_table_index=0;
@@ -2040,8 +2005,6 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  /*e->id=class_check_avail (t,e);
-					  n->src=e->id;*/
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2054,8 +2017,6 @@ int class_add_del_class (class_main_t * cm,
 					  	  for (i = 0; i < t->match_n_vectors; i++) {
 								e->key[i] &= t->mask[i];
 					  	  };
-						  /*e->id=class_check_avail (t,e);
-						  n->src=e->id;*/
 					  	  rv = class_add_del (t, e, is_add,table_index);
 					  	  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2068,8 +2029,6 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
-						  /*e->id=class_check_avail (t,e);
-						  n->src=e->id;*/
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2083,8 +2042,6 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
-						  /*e->id=class_check_avail (t,e);
-						  n->src=e->id;*/
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2100,8 +2057,6 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  /*e->id=class_check_avail (t,e);
-					  n->dst=e->id;*/
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2114,8 +2069,6 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  /*e->id=class_check_avail (t,e);
-					  n->src=e->id;*/
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2128,8 +2081,6 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  /*e->id=class_check_avail (t,e);
-					  n->src=e->id;*/
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2142,8 +2093,6 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  /*e->id=class_check_avail (t,e);
-					  n->src=e->id;*/
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2153,17 +2102,12 @@ int class_add_del_class (class_main_t * cm,
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
-				  /*e->id=class_check_avail (t,e);
-				  n->src=e->id;*/
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
 			  continue;
-
-		   //n->next = e->next_index;
 	}
-
 	  return 0;
 
 }

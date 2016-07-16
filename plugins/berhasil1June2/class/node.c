@@ -190,10 +190,8 @@ class_node_fn (vlib_main_t * vm,
 	            	  table_index0++;
 	            	  checkempty:
 					  t0 = pool_elt_at_index (vcm->tables, table_index0);
-					  if(!t0) {
-						  temp->prev=0;
+					  if(!t0)
 						  return 0;
-					  }
 
 	            	  if (t0->active_elements==0){
 	            		  table_index0++;
@@ -309,7 +307,6 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->id = e0->id;
 	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;

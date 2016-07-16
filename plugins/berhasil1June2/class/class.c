@@ -1861,7 +1861,7 @@ VLIB_CLI_COMMAND (class_gen, static) = {
     .function = class_gen_command_fn,
 };
 
-class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * match)
+class_check_input_t * class_check_input (class_main_t * cm, class_entry_t * e, u8 * match)
 {
 	class_table_t * t;
 	class_check_input_t * c = &class_check_input;
@@ -1896,6 +1896,20 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	c->proto=proto;
 
 	return c;
+}
+
+int class_check_avail (class_table_t * t, class_entry_t * e)
+{
+	  u8 * h0;
+	  h0 = (u8 *) e->key;
+	  h0 -= t->skip_n_vectors * sizeof (u32x4);
+
+	  hash0 = class_hash_packet (t, h0);
+
+	  e = class_find_entry (t, (u8 *) h0, hash0,
+	                                 now);
+
+	  return (e->id);
 }
 
 /*int class_add_del_class (class_main_t * cm,
@@ -2204,7 +2218,7 @@ int class_add_del_class (class_main_t * cm,
 
 		  t = pool_elt_at_index (cm->tables, next_table_index);
 		  e = (class_entry_t *)&_max_e;
-		  c = class_check (cm, e, match);
+		  c = class_check_input (cm, e, match);
 
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;
@@ -2216,6 +2230,8 @@ int class_add_del_class (class_main_t * cm,
 		  e->last_heard = 0;
 		  e->flags = 0;
 		  e->hits=0;
+
+		  u32 test;
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));
@@ -2231,7 +2247,10 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  e->hits=1;
+
+					  test = class_check_avail (t,e);
+					  u32 hits = test;
+
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;

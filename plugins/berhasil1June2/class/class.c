@@ -2121,9 +2121,8 @@ int class_add_del_class (class_main_t * cm,
 
 			   e2 = class_find_entry (t, (u8 *) h0, hash0,
 			                                  now);
-			   if (e2->id < e->id && e2->next_index == e->next_index && e2->src == e->src
-					   && e2->dst == e->dst && e2->proto == e->proto)
-				   duplicate++;
+			   if (e2->id < e->id && e2->next_index == e->next_index && e2->src == e->src && e2->dst == e->dst && e2->proto == e->proto)
+				   duplicate=1;
 			   e->hits=duplicate;
 		   }
 

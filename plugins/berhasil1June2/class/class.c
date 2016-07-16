@@ -413,7 +413,8 @@ int class_add_del (class_table_t * t,
 
               CLIB_MEMORY_BARRIER();
               b->as_u64 = t->saved_bucket.as_u64;*/
-              goto unlock;
+        	  if (v->next_index == add_v->next_index)
+        		  goto unlock;
             }
         }
       for (i = 0; i < t->entries_per_page; i++)

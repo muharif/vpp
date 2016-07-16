@@ -2167,6 +2167,7 @@ int class_add_del_class (class_main_t * cm,
 	t->next=n;
 	reset_next(n);
 
+
 	  return 0;
 
 }

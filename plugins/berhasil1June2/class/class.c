@@ -2123,7 +2123,7 @@ int class_add_del_class (class_main_t * cm,
 				   && e2->dst == e->dst && e2->proto == e->proto)
 			   duplicate++;
 
-		   end_loop;
+		   end_loop:
 
 		   if (add==3 && duplicate == ((e->src)+(e->dst)+(e->proto))) {
 			   rv = class_add_del (t, e, 0,table_index);

@@ -1920,7 +1920,6 @@ int class_add_del_class (class_main_t * cm,
   u32 field=3;
   u32 add=0;
   u32 add2=0;
-  //u32 duplicate=0;
 
   e = (class_entry_t *)&_max_e;
   t = pool_elt_at_index (cm->tables, table_index);
@@ -2095,21 +2094,6 @@ int class_add_del_class (class_main_t * cm,
 				  rv = class_add_del (t, e, is_add,table_index);
 		  } else
 			  continue;
-
-		   /*if (is_add == 1) {
-			   //h0 = (u8 *) e->key;
-			   //h0 -= t->skip_n_vectors * sizeof (u32x4);
-			   //hash0 = class_hash_packet (t, h0);
-
-			   //e2 = class_find_entry (t, (u8 *) h0, hash0,
-			    //                              now);
-
-			   //if (e2->next_index == e->next_index && e2->src == e->src && e2->dst == e->dst && e2->proto == e->proto)
-				   duplicate=1;
-			   e->hits=duplicate;
-		   }*/
-
-		   e->hits=12;
 
 			  if (rv)
 				return VNET_API_ERROR_NO_SUCH_ENTRY;

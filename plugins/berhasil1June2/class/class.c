@@ -445,7 +445,7 @@ int class_add_del (class_table_t * t,
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
-          if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)) && (v->id == add_v->id))
+          if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
               memset (v, 0xff, sizeof (class_entry_t) +
                       t->match_n_vectors * sizeof(u32x4));
@@ -454,8 +454,7 @@ int class_add_del (class_table_t * t,
               b->as_u64 = t->saved_bucket.as_u64;
               t->active_elements --;
               goto unlock;
-            } else
-            	continue;
+            }
         }
       rv = -3;
       b->as_u64 = t->saved_bucket.as_u64;

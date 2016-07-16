@@ -2054,6 +2054,7 @@ int class_add_del_class (class_main_t * cm,
 			  	  }
 			   }
 		   } else if (add==1 && e->dst==1) {
+
 			  if (add2==4) {
 				  mult=32-dstmask;
 				  u32 temp=e->key[1][0];
@@ -2112,24 +2113,6 @@ int class_add_del_class (class_main_t * cm,
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
 			  continue;
-
-		   if (is_add == 1) {
-			   h0 = (u8 *) e->key;
-			   h0 -= t->skip_n_vectors * sizeof (u32x4);
-			   hash0 = class_hash_packet (t, h0);
-
-			   e2 = class_find_entry (t, (u8 *) h0, hash0,
-			                                  now);
-			   if (e2->id < e->id && e2->next_index == e->next_index && e2->src == e->src
-					   && e2->dst == e->dst && e2->proto == e->proto)
-				   duplicate++;
-			   e->hits=duplicate;
-		   }
-
-		   /*if (add==2 && duplicate == ((e->src)+(e->dst)+(e->proto)) && is_add==1) {
-			   is_add=0;
-			   goto begin;
-		   }*/
 	}
 
 	  return 0;

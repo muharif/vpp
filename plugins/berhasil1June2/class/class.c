@@ -402,14 +402,14 @@ int class_add_del (class_table_t * t,
 
 	  goto add_duplicate;
 
-      for (i = 0; i < t->entries_per_page; i++)
+      /*for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
-          /*if (add_v->next_index != v->next_index)
+          if (add_v->next_index != v->next_index)
     		  goto add_duplicate;
           else
-        	  goto unlock;*/
+        	  goto unlock;
 
           if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
@@ -436,7 +436,7 @@ int class_add_del (class_table_t * t,
               t->active_elements ++;
               goto unlock;
             }
-        }
+        }*/
       /* no room at the inn... split case... */
     }
   else
@@ -1909,7 +1909,7 @@ int class_add_del_class (class_main_t * cm,
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
-  class_entry_t * e;
+  class_entry_t * e, * e2;
   class_check_input_t * c = &class_check_input;
   int i, rv;
   u32 table_index=0;
@@ -1920,6 +1920,7 @@ int class_add_del_class (class_main_t * cm,
   u32 field=3;
   u32 add=0;
   u32 add2=0;
+  u32 duplicate = 0;
 
   e = (class_entry_t *)&_max_e;
   t = pool_elt_at_index (cm->tables, table_index);
@@ -2010,7 +2011,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  rv = class_add_del (t, e, is_add,table_index);
+					  rv = class_add_del (t, e, is_add, table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
@@ -2112,7 +2113,24 @@ int class_add_del_class (class_main_t * cm,
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
 			  continue;
+
+		   h0 = (u8 *) e->key;
+		   h0 -= t->skip_n_vectors * sizeof (u32x4);
+		   hash0 = class_hash_packet (t, h0);
+
+		   e2 = class_find_entry (t, (u8 *) h0, hash0,
+		                                  now);
+		   if (e2->id < e->id && e2->next_index == e->next_index && e2->src == e->src
+				   && e2->dst == e->dst && e2->proto == e->proto)
+			   duplicate++;
 	}
+
+	if (duplicate == ((e->src)+(e->dst)+(e->proto))) {
+		rv = class_add_del (t, e, 0,table_index);
+		if (rv)
+			return VNET_API_ERROR_NO_SUCH_ENTRY;
+	}
+
 	  return 0;
 
 }

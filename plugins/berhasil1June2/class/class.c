@@ -1920,7 +1920,7 @@ int class_add_del_class (class_main_t * cm,
   u32 field=3;
   u32 add=0;
   u32 add2=0;
-  u32 duplicate=0;
+  //u32 duplicate=0;
 
   e = (class_entry_t *)&_max_e;
   t = pool_elt_at_index (cm->tables, table_index);

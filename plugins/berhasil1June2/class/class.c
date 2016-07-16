@@ -1909,7 +1909,7 @@ int class_add_del_class (class_main_t * cm,
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
-  class_entry_t * e, * e2;
+  class_entry_t * e;
   class_check_input_t * c = &class_check_input;
   int i, rv;
   u32 table_index=0;
@@ -2115,12 +2115,12 @@ int class_add_del_class (class_main_t * cm,
 			  continue;
 
 		   if (is_add == 1) {
-			   h0 = (u8 *) e->key;
+			  /* h0 = (u8 *) e->key;
 			   h0 -= t->skip_n_vectors * sizeof (u32x4);
 			   hash0 = class_hash_packet (t, h0);
 
 			   e2 = class_find_entry (t, (u8 *) h0, hash0,
-			                                  now);
+			                                  now); */
 
 			   //if (e2->next_index == e->next_index && e2->src == e->src && e2->dst == e->dst && e2->proto == e->proto)
 				   duplicate=1;

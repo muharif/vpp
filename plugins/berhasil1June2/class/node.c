@@ -191,7 +191,7 @@ class_node_fn (vlib_main_t * vm,
 	            	  checkempty:
 					  t0 = pool_elt_at_index (vcm->tables, table_index0);
 					  if(!t0) {
-						  temp->prev=0;
+						  //temp->prev=0;
 						  return 0;
 					  }
 

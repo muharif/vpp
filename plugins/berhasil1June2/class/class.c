@@ -401,7 +401,7 @@ int class_add_del (class_table_t * t,
        * replace an existing key, then look for an empty slot.
        */
 
-      for (i = 0; i < t->entries_per_page; i++)
+      /*for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
@@ -412,7 +412,6 @@ int class_add_del (class_table_t * t,
               v->flags &= ~(CLASS_ENTRY_FREE);
 
               CLIB_MEMORY_BARRIER();
-              /* Restore the previous (k,v) pairs */
               b->as_u64 = t->saved_bucket.as_u64;
               goto unlock;
             }
@@ -431,7 +430,7 @@ int class_add_del (class_table_t * t,
               t->active_elements ++;
               goto unlock;
             }
-        }
+        }*/
       /* no room at the inn... split case... */
     }
   else

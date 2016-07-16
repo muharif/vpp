@@ -1922,7 +1922,6 @@ int class_add_del_class (class_main_t * cm,
   u32 add2=0;
   u32 duplicate = 0;
 
-  begin:
   e = (class_entry_t *)&_max_e;
   t = pool_elt_at_index (cm->tables, table_index);
 
@@ -1965,7 +1964,7 @@ int class_add_del_class (class_main_t * cm,
 			else if (srcmask<=8 && srcmask >0)
 				add2=3;
 			else
-				goto end_loop;
+				continue;
 		} else if (add==1) {
 			if (dstmask<=32 && dstmask >24)
 				add2=4;
@@ -1976,7 +1975,7 @@ int class_add_del_class (class_main_t * cm,
 			else if (dstmask<=8 && dstmask >0)
 				add2=7;
 			else
-				goto end_loop;
+				continue;
 		} else {
 			add2=8;
 		}
@@ -2112,7 +2111,7 @@ int class_add_del_class (class_main_t * cm,
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
-			  goto end_loop;
+			  continue;
 
 		   if (is_add == 1) {
 			   h0 = (u8 *) e->key;
@@ -2126,9 +2125,6 @@ int class_add_del_class (class_main_t * cm,
 				   duplicate++;
 			   e->id=duplicate;
 		   }
-
-
-		   end_loop:
 
 		   /*if (add==2 && duplicate == ((e->src)+(e->dst)+(e->proto)) && is_add==1) {
 			   is_add=0;

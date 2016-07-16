@@ -404,9 +404,8 @@ int class_add_del (class_table_t * t,
       for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
-          //To make sure that no entries will be replaced, add new if same entry but diff next index otherwise stop
 
-          if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)) && (v->id == add_v->id))
+          if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
               clib_memcpy (v, add_v, sizeof (class_entry_t) +
                       t->match_n_vectors * sizeof(u32x4));

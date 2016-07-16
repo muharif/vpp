@@ -454,7 +454,8 @@ int class_add_del (class_table_t * t,
               b->as_u64 = t->saved_bucket.as_u64;
               t->active_elements --;
               goto unlock;
-            }
+            } else
+            	continue;
         }
       rv = -3;
       b->as_u64 = t->saved_bucket.as_u64;

@@ -400,9 +400,6 @@ int class_add_del (class_table_t * t,
        * For obvious (in hindsight) reasons, see if we're supposed to
        * replace an existing key, then look for an empty slot.
        */
-
-	  goto expand_test;
-
       for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
@@ -456,8 +453,6 @@ int class_add_del (class_table_t * t,
       b->as_u64 = t->saved_bucket.as_u64;
       goto unlock;
     }
-
-  expand_test:
 
   new_log2_pages = t->saved_bucket.log2_pages + 1;
 

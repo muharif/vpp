@@ -275,8 +275,8 @@ class_node_fn (vlib_main_t * vm,
 	        	  else
 	        		  next_table=x+field;
 	          }
-
-	          t1=pool_elt_at_index (vcm->tables, 0);
+	          u32 in=0;
+	          t1=pool_elt_at_index (vcm->tables, in);
 	          n=pool_elt_at_index (t1->next, e0->id);
 
 

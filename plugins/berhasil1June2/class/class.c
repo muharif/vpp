@@ -401,7 +401,7 @@ int class_add_del (class_table_t * t,
        * replace an existing key, then look for an empty slot.
        */
 
-      /*for (i = 0; i < t->entries_per_page; i++)
+      for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
@@ -416,7 +416,7 @@ int class_add_del (class_table_t * t,
               goto unlock;
             }
         }
-      for (i = 0; i < t->entries_per_page; i++)
+      /*for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 

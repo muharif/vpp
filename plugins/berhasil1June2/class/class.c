@@ -404,22 +404,31 @@ int class_add_del (class_table_t * t,
       for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
+          //To make sure that no entries will be replaced, add new if same entry but diff next index otherwise stop
+          if (add_v->next_index != v->next_index)
+    		  goto add_duplicate;
+          else
+        	  goto unlock;
 
-          if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
+          /*if (!memcmp (v->key, add_v->key, t->match_n_vectors * sizeof (u32x4)))
             {
               clib_memcpy (v, add_v, sizeof (class_entry_t) +
                       t->match_n_vectors * sizeof(u32x4));
               v->flags &= ~(CLASS_ENTRY_FREE);
 
               CLIB_MEMORY_BARRIER();
-              /* Restore the previous (k,v) pairs */
               b->as_u64 = t->saved_bucket.as_u64;
               goto unlock;
-            }
+            }*/
         }
-      for (i = 0; i < t->entries_per_page; i++)
+      /*for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
+
+    	  if (add_v->next_index != v->next_index)
+    		  goto expand_test;
+    	  else
+    		  goto unlock;
 
           if (class_entry_is_free (v))
             {
@@ -431,7 +440,7 @@ int class_add_del (class_table_t * t,
               t->active_elements ++;
               goto unlock;
             }
-        }
+        }*/
       /* no room at the inn... split case... */
     }
   else
@@ -455,8 +464,8 @@ int class_add_del (class_table_t * t,
       b->as_u64 = t->saved_bucket.as_u64;
       goto unlock;
     }
-
-  new_log2_pages = t->saved_bucket.log2_pages + 1;
+  add_duplicate:
+  	  new_log2_pages = t->saved_bucket.log2_pages + 1;
 
  expand_again:
   working_copy = t->working_copies[cpu_number];
@@ -535,7 +544,7 @@ static u8 * format_class_entry (u8 * s, va_list * args)
 
   s = format
     (s, "[%u]: session_id %d next_index %d advance %d opaque %d\n",
-     e->id, class_get_offset (t, e), e->next_index, e->advance,
+     class_get_offset (t, e), e->id, e->next_index, e->advance,
      e->opaque_index);
 
 

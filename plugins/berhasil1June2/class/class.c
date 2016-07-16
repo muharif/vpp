@@ -412,9 +412,9 @@ int class_add_del (class_table_t * t,
               v->flags &= ~(CLASS_ENTRY_FREE);
 
               CLIB_MEMORY_BARRIER();
-              b->as_u64 = t->saved_bucket.as_u64;*/
+              b->as_u64 = t->saved_bucket.as_u64;
         	  if (v->next_index == add_v->next_index)
-        		  goto unlock;
+        		  goto unlock;*/
             }
         }
       for (i = 0; i < t->entries_per_page; i++)
@@ -2166,7 +2166,6 @@ int class_add_del_class (class_main_t * cm,
 	t = pool_elt_at_index (cm->tables, 0);
 	t->next=n;
 	reset_next(n);
-
 
 	  return 0;
 

@@ -134,8 +134,15 @@ typedef struct {
 	u32 prev;
 } class_temp_t;
 
+typedef struct {
+	u32 id;
+	u32 next;
+} class_next_t;
+
 class_check_input_t class_check_input;
 class_temp_t class_temp;
+class_next_t class_next;
+
 
 typedef struct {
   /* Mask to apply after skipping N vectors */
@@ -143,6 +150,7 @@ typedef struct {
   /* Buckets and entries */
   vnet_classify_bucket_t * buckets;
   class_entry_t * entries;
+  class_next_t * next;
 
   /* Config parameters */
   u32 match_n_vectors;

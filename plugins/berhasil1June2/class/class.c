@@ -1898,7 +1898,7 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	return c;
 }
 
-int class_add_del_class (class_main_t * cm,
+/*int class_add_del_class (class_main_t * cm,
                                    u8 * match,
                                    u32 hit_next_index,
                                    u32 opaque_index,
@@ -2010,6 +2010,228 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  rv = class_add_del (t, e, is_add,table_index);
+					  if (rv)
+						return VNET_API_ERROR_NO_SUCH_ENTRY;
+				  }
+			  } else if (add2==1) {
+				  	 mult=24-srcmask;
+				  	u32 temp=e->key[0][3];
+			  		for (j=0;j<(pow(2,mult));j++) {
+					  	  e->key[0][3]=temp+(1*j);
+					  	  for (i = 0; i < t->match_n_vectors; i++) {
+								e->key[i] &= t->mask[i];
+					  	  };
+					  	  rv = class_add_del (t, e, is_add,table_index);
+						  if (rv)
+							return VNET_API_ERROR_NO_SUCH_ENTRY;
+			  	  	  }
+			  } else if (add2==2) {
+				  mult=16-srcmask;
+					  u32 temp=e->key[0][2];
+					  for (j=0;j<(pow(2,mult));j++) {
+						  e->key[0][2] =temp+(16777216*j);
+						  for (i = 0; i < t->match_n_vectors; i++) {
+							e->key[i] &= t->mask[i];
+						  };
+						  rv = class_add_del (t, e, is_add,table_index);
+						  if (rv)
+							return VNET_API_ERROR_NO_SUCH_ENTRY;
+					  }
+
+			  } else if (add2==3) {
+				  mult=8-srcmask;
+				  u32 temp=e->key[0][2];
+					  for (j=0;j<(pow(2,mult));j++) {
+						  e->key[0][2] =temp+(65536*j);
+						  for (i = 0; i < t->match_n_vectors; i++) {
+							e->key[i] &= t->mask[i];
+						  };
+						  rv = class_add_del (t, e, is_add,table_index);
+						  if (rv)
+							return VNET_API_ERROR_NO_SUCH_ENTRY;
+			  	  }
+			   }
+		   } else if (add==1 && e->dst==1) {
+
+			  if (add2==4) {
+				  mult=32-dstmask;
+				  u32 temp=e->key[1][0];
+				  for (j=0;j<(pow(2,mult));j++) {
+					  e->key[1][0] = temp+(256*j);
+					  for (i = 0; i < t->match_n_vectors; i++) {
+						e->key[i] &= t->mask[i];
+					  };
+					  rv = class_add_del (t, e, is_add,table_index);
+					  if (rv)
+						return VNET_API_ERROR_NO_SUCH_ENTRY;
+				  }
+			  } else if (add2==5) {
+				  mult=24-dstmask;
+				  u32 temp=e->key[1][0];
+				  for (j=0;j<(pow(2,mult));j++) {
+					  e->key[1][0] =temp+(1*j);
+					  for (i = 0; i < t->match_n_vectors; i++) {
+						e->key[i] &= t->mask[i];
+					  };
+					  rv = class_add_del (t, e, is_add,table_index);
+					  if (rv)
+						return VNET_API_ERROR_NO_SUCH_ENTRY;
+				  }
+			  } else if (add2==6) {
+				  mult=16-dstmask;
+				  u32 temp=e->key[0][3];
+				  for (j=0;j<(pow(2,mult));j++) {
+					  e->key[0][3] =temp+(16777216*j);
+					  for (i = 0; i < t->match_n_vectors; i++) {
+						e->key[i] &= t->mask[i];
+					  };
+					  rv = class_add_del (t, e, is_add,table_index);
+					  if (rv)
+						return VNET_API_ERROR_NO_SUCH_ENTRY;
+				  }
+			  } else if (add2==7) {
+				  mult=8-dstmask;
+				  u32 temp=e->key[0][3];
+				  for (j=0;j<(pow(2,mult));j++) {
+					  e->key[0][3] =temp+(65536*j);
+					  for (i = 0; i < t->match_n_vectors; i++) {
+						e->key[i] &= t->mask[i];
+					  };
+					  rv = class_add_del (t, e, is_add,table_index);
+					  if (rv)
+						return VNET_API_ERROR_NO_SUCH_ENTRY;
+				  }
+			  }
+		  } else if (add==2 && e->proto==1){
+			  for (i = 0; i < t->match_n_vectors; i++) {
+					e->key[i] &= t->mask[i];
+				  };
+				  rv = class_add_del (t, e, is_add,table_index);
+				  if (rv)
+					return VNET_API_ERROR_NO_SUCH_ENTRY;
+		  } else
+			  continue;
+
+
+	}
+	  return 0;
+
+}*/
+
+int class_add_del_class (class_main_t * cm,
+                                   u8 * match,
+                                   u32 hit_next_index,
+                                   u32 opaque_index,
+                                   i32 advance,
+                                   int is_add,
+								   u32 srcmask,
+								   u32 dstmask)
+{
+  class_table_t * t;
+  class_entry_5_t _max_e __attribute__((aligned (16)));
+  class_entry_t * e;
+  class_check_input_t * c = &class_check_input;
+  int i, rv;
+  u32 table_index=0;
+  u32 next_table_index=0;
+  u64 hash0;
+  f64 now = 0.00;
+  u32 max=4;
+  u32 field=3;
+  u32 add=0;
+  u32 add2=0;
+
+  e = (class_entry_t *)&_max_e;
+  t = pool_elt_at_index (cm->tables, table_index);
+
+  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
+          t->match_n_vectors * sizeof (u32x4));
+
+  for (i = 0; i < t->match_n_vectors; i++)
+    e->key[i] &= t->mask[i];
+
+  u8 * h0;
+  h0 = (u8 *) e->key;
+  h0 -= t->skip_n_vectors * sizeof (u32x4);
+
+  hash0 = class_hash_packet (t, h0);
+
+  e = class_find_entry (t, (u8 *) h0, hash0,
+                                 now);
+
+  if(e) {
+	  table_index=e->next;
+  }else {
+	    table_index=max;
+  }
+  	//increment for the identifier
+
+  	c->total++;
+
+	for (add=0;add<=(field-1);add=add+1){
+		u32 mult=0;
+		u32 j=0;
+
+
+		if (add==0) {
+			if (srcmask<=32 && srcmask >24)
+				add2=0;
+			else if (srcmask<=24 && srcmask >16)
+				add2=1;
+			else if (srcmask<=16 && srcmask >8)
+				add2=2;
+			else if (srcmask<=8 && srcmask >0)
+				add2=3;
+			else
+				continue;
+		} else if (add==1) {
+			if (dstmask<=32 && dstmask >24)
+				add2=4;
+			else if (dstmask<=24 && dstmask >16)
+				add2=5;
+			else if (dstmask<=16 && dstmask >8)
+				add2=6;
+			else if (dstmask<=8 && dstmask >0)
+				add2=7;
+			else
+				continue;
+		} else {
+			add2=8;
+		}
+
+			next_table_index=(table_index+add2);
+
+		  t = pool_elt_at_index (cm->tables, next_table_index);
+		  e = (class_entry_t *)&_max_e;
+		  c = class_check (cm, e, match);
+
+		  e->next_index = hit_next_index;
+		  e->opaque_index=opaque_index;
+		  e->advance = advance;
+		  e->id=c->total;
+		  e->src=c->src;
+		  e->dst=c->dst;
+		  e->proto=c->proto;
+		  e->last_heard = 0;
+		  e->flags = 0;
+		  e->hits=0;
+
+		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
+				  t->match_n_vectors * sizeof (u32x4));
+
+		  //The conditions to expand if netmask is not 32,24 or 8 based on user input
+
+		   if (add==0 && e->src==1) {
+			  if (add2==0) {
+				  mult=32-srcmask;
+				  u32 temp=e->key[0][3];
+				  for (j=0;j<(pow(2,mult));j++) {
+					  e->key[0][3] =temp+(256*j);
+					  for (i = 0; i < t->match_n_vectors; i++) {
+						e->key[i] &= t->mask[i];
+					  };
+					  e->hits=1;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;

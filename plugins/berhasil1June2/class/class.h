@@ -150,7 +150,7 @@ typedef struct {
   /* Buckets and entries */
   vnet_classify_bucket_t * buckets;
   class_entry_t * entries;
-  class_next_t * next;
+  //class_next_t * next;
 
   /* Config parameters */
   u32 match_n_vectors;

@@ -421,11 +421,6 @@ int class_add_del (class_table_t * t,
         {
           v = class_entry_at_index (t, save_v, value_index + i);
 
-    	  if (add_v->next_index != v->next_index)
-    		  goto expand_test;
-    	  else
-    		  goto unlock;
-
           if (class_entry_is_free (v))
             {
               clib_memcpy (v, add_v, sizeof (class_entry_t) +
@@ -460,7 +455,6 @@ int class_add_del (class_table_t * t,
       b->as_u64 = t->saved_bucket.as_u64;
       goto unlock;
     }
-  add_duplicate:
   	  new_log2_pages = t->saved_bucket.log2_pages + 1;
 
  expand_again:

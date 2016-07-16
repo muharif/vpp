@@ -139,7 +139,7 @@ class_node_fn (vlib_main_t * vm,
 	          vlib_buffer_t * b0;
 	          u32 next0 = IP_LOOKUP_NEXT_MISS;
 	          u32 table_index0;
-	          class_table_t * t0, *t1;
+	          class_table_t * t0;
 	          class_entry_t * e0;
 	          u64 hash0;
 	          u8 * h0;
@@ -275,9 +275,6 @@ class_node_fn (vlib_main_t * vm,
 	        	  else
 	        		  next_table=x+field;
 	          }
-	          u32 in=0;
-	          t1=pool_elt_at_index (vcm->tables, in);
-	          n=pool_elt_at_index (t1->next, e0->id);
 
 
 	          //Deciding next step

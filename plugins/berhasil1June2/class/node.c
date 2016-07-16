@@ -143,7 +143,6 @@ class_node_fn (vlib_main_t * vm,
 	          class_entry_t * e0;
 	          u64 hash0;
 	          u8 * h0;
-	          class_next_t * n;
 
 	          /* Stride 3 seems to work best */
 	          if (PREDICT_TRUE (n_left_from > 3))
@@ -310,7 +309,7 @@ class_node_fn (vlib_main_t * vm,
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = e0->id;
-	              t->next_index = n->src;
+	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }

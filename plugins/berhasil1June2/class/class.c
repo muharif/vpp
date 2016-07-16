@@ -441,10 +441,10 @@ int class_add_del (class_table_t * t,
 		  for (i = 0; i < t->entries_per_page; i++)
 		      {
 				  v = class_entry_at_index (t, save_v, value_index + i);
-				  if (v != 0) {
+				  //if (v != 0) {
 					  temp->duplicate++;
 					  goto add_duplicate;
-				  }
+				  //}
 		  }
 
 	  }

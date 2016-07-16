@@ -2114,15 +2114,15 @@ int class_add_del_class (class_main_t * cm,
 		  } else
 			  continue;
 
-		   if (is_add == 1) {
-			  /* h0 = (u8 *) e->key;
+		   if (is_add !=0) {
+			   h0 = (u8 *) e->key;
 			   h0 -= t->skip_n_vectors * sizeof (u32x4);
 			   hash0 = class_hash_packet (t, h0);
 
 			   e2 = class_find_entry (t, (u8 *) h0, hash0,
-			                                  now); */
+			                                  now);
 
-			   //if (e2->next_index == e->next_index && e2->src == e->src && e2->dst == e->dst && e2->proto == e->proto)
+			   if (e2->next_index == e->next_index && e2->src == e->src && e2->dst == e->dst && e2->proto == e->proto)
 				   duplicate=1;
 			   e->hits=duplicate;
 		   }

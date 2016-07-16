@@ -1920,6 +1920,14 @@ int class_check_avail (class_table_t * t, class_entry_t * entry)
 
 }
 
+void reset_next (class_next_t * n)
+{
+	n->src=0;
+	n->dst=0;
+	n->proto=0;
+	n->next=0;
+}
+
 int class_add_del_class (class_main_t * cm,
                                    u8 * match,
                                    u32 hit_next_index,
@@ -2157,6 +2165,7 @@ int class_add_del_class (class_main_t * cm,
 	}
 	t = pool_elt_at_index (cm->tables, 0);
 	t->next=n;
+	reset_next(n);
 
 	  return 0;
 

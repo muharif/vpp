@@ -2124,6 +2124,7 @@ int class_add_del_class (class_main_t * cm,
 			   if (e2->id < e->id && e2->next_index == e->next_index && e2->src == e->src
 					   && e2->dst == e->dst && e2->proto == e->proto)
 				   duplicate++;
+			   e->id=duplicate;
 		   }
 
 

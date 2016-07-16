@@ -1861,7 +1861,7 @@ VLIB_CLI_COMMAND (class_gen, static) = {
     .function = class_gen_command_fn,
 };
 
-class_check_input_t * class_check_input (class_main_t * cm, class_entry_t * e, u8 * match)
+class_check_input_t * class_input_check (class_main_t * cm, class_entry_t * e, u8 * match)
 {
 	class_table_t * t;
 	class_check_input_t * c = &class_check_input;
@@ -1901,6 +1901,8 @@ class_check_input_t * class_check_input (class_main_t * cm, class_entry_t * e, u
 int class_check_avail (class_table_t * t, class_entry_t * e)
 {
 	  u8 * h0;
+	  u64 hash0;
+	  f64 now = 0.00;
 	  h0 = (u8 *) e->key;
 	  h0 -= t->skip_n_vectors * sizeof (u32x4);
 
@@ -2218,7 +2220,7 @@ int class_add_del_class (class_main_t * cm,
 
 		  t = pool_elt_at_index (cm->tables, next_table_index);
 		  e = (class_entry_t *)&_max_e;
-		  c = class_check_input (cm, e, match);
+		  c = class_input_check (cm, e, match);
 
 		  e->next_index = hit_next_index;
 		  e->opaque_index=opaque_index;

@@ -437,14 +437,14 @@ int class_add_del (class_table_t * t,
 		                goto unlock;
 		              }
 		          }
-	  } else {
+	  } else if (t->table_index > 0) {
 		  for (i = 0; i < t->entries_per_page; i++)
 		      {
-				  v = class_entry_at_index (t, save_v, value_index + i);
-				  if (v->id !=  add_v->id) {
+				  //v = class_entry_at_index (t, save_v, value_index + i);
+				  //if (v->id !=  add_v->id) {
 					  temp->duplicate++;
 					  goto add_duplicate;
-				  }
+				  //}
 		  }
 
 	  }

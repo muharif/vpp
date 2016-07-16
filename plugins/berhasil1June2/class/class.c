@@ -415,7 +415,7 @@ int class_add_del (class_table_t * t,
               b->as_u64 = t->saved_bucket.as_u64;
         		  goto unlock;
             }
-        }*/
+        }
       for (i = 0; i < t->entries_per_page; i++)
         {
           v = class_entry_at_index (t, save_v, value_index + i);
@@ -430,7 +430,7 @@ int class_add_del (class_table_t * t,
               t->active_elements ++;
               goto unlock;
             }
-        }
+        }*/
       /* no room at the inn... split case... */
     }
   else

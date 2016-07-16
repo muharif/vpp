@@ -2123,8 +2123,8 @@ int class_add_del_class (class_main_t * cm,
 			    //                              now);
 
 			   //if (e2->next_index == e->next_index && e2->src == e->src && e2->dst == e->dst && e2->proto == e->proto)
-				   duplicate=1;
-			   e->hits=duplicate;
+			   duplicate=1;
+			   e->hits=1;
 		   }
 
 	}

@@ -2165,7 +2165,7 @@ int class_add_del_class (class_main_t * cm,
 	}
 	u32 in;
 	t = pool_elt_at_index (cm->tables, in);
-	memcpy(&t->next, &n, sizeof(n))
+	memcpy(&t->next, &n, sizeof(n));
 	reset_next(n);
 
 	  return 0;

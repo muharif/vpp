@@ -1995,7 +1995,7 @@ int class_add_del_class (class_main_t * cm,
 		  e->proto=c->proto;
 		  e->last_heard = 0;
 		  e->flags = 0;
-		  e->hits=0;
+		  e->hits=is_add;
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));
@@ -2123,8 +2123,8 @@ int class_add_del_class (class_main_t * cm,
 			    //                              now);
 
 			   //if (e2->next_index == e->next_index && e2->src == e->src && e2->dst == e->dst && e2->proto == e->proto)
-			   duplicate=1;
-			   e->hits=1;
+				   duplicate=1;
+			   e->hits=duplicate;
 		   }
 
 	}

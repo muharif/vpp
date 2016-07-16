@@ -2012,8 +2012,6 @@ int class_add_del_class (class_main_t * cm,
 						e->key[i] &= t->mask[i];
 					  };
 					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
 			  } else if (add2==1) {
 				  	 mult=24-srcmask;
@@ -2024,8 +2022,6 @@ int class_add_del_class (class_main_t * cm,
 								e->key[i] &= t->mask[i];
 					  	  };
 					  	  rv = class_add_del (t, e, is_add,table_index);
-					  	  if (rv)
-							return VNET_API_ERROR_NO_SUCH_ENTRY;
 			  	  	  }
 			  } else if (add2==2) {
 				  mult=16-srcmask;
@@ -2036,8 +2032,6 @@ int class_add_del_class (class_main_t * cm,
 							e->key[i] &= t->mask[i];
 						  };
 						  rv = class_add_del (t, e, is_add,table_index);
-						  if (rv)
-							return VNET_API_ERROR_NO_SUCH_ENTRY;
 					  }
 
 			  } else if (add2==3) {
@@ -2049,8 +2043,6 @@ int class_add_del_class (class_main_t * cm,
 							e->key[i] &= t->mask[i];
 						  };
 						  rv = class_add_del (t, e, is_add,table_index);
-						  if (rv)
-							return VNET_API_ERROR_NO_SUCH_ENTRY;
 			  	  }
 			   }
 		   } else if (add==1 && e->dst==1) {
@@ -2064,8 +2056,6 @@ int class_add_del_class (class_main_t * cm,
 						e->key[i] &= t->mask[i];
 					  };
 					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
 			  } else if (add2==5) {
 				  mult=24-dstmask;
@@ -2076,8 +2066,6 @@ int class_add_del_class (class_main_t * cm,
 						e->key[i] &= t->mask[i];
 					  };
 					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
 			  } else if (add2==6) {
 				  mult=16-dstmask;
@@ -2088,8 +2076,6 @@ int class_add_del_class (class_main_t * cm,
 						e->key[i] &= t->mask[i];
 					  };
 					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
 			  } else if (add2==7) {
 				  mult=8-dstmask;
@@ -2100,8 +2086,6 @@ int class_add_del_class (class_main_t * cm,
 						e->key[i] &= t->mask[i];
 					  };
 					  rv = class_add_del (t, e, is_add,table_index);
-					  if (rv)
-						return VNET_API_ERROR_NO_SUCH_ENTRY;
 				  }
 			  }
 		  } else if (add==2 && e->proto==1){
@@ -2109,8 +2093,6 @@ int class_add_del_class (class_main_t * cm,
 					e->key[i] &= t->mask[i];
 				  };
 				  rv = class_add_del (t, e, is_add,table_index);
-				  if (rv)
-					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
 			  continue;
 
@@ -2128,6 +2110,9 @@ int class_add_del_class (class_main_t * cm,
 		   }*/
 
 		   e->hits=12;
+
+			  if (rv)
+				return VNET_API_ERROR_NO_SUCH_ENTRY;
 
 	}
 	  return 0;

@@ -1893,7 +1893,7 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 
 int class_check_avail (class_table_t * t, class_entry_t * entry)
 {
-	  u64 hash0;
+	  /*u64 hash0;
 	  f64 now = 0.00;
 	  u8 * h0;
 	  class_entry_t * e;
@@ -1906,7 +1906,8 @@ int class_check_avail (class_table_t * t, class_entry_t * entry)
 	  e = class_find_entry (t, (u8 *) h0, hash0,
 	                                 now);
 
-	  return (e->id);
+	  return (e->id);*/
+	return 23;
 
 
 }

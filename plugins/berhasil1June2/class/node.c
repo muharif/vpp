@@ -272,7 +272,7 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 				  id=0;
-				  if (!(temp->srcid > 0))
+				  if (temp->srcid == ~0)
 					  temp->srcid == 0;
 
 				  if (!(temp->dstid > 0))

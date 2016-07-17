@@ -2075,7 +2075,7 @@ int class_add_del_class (class_main_t * cm,
 		  action=e->next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
-		  e->next = next_table_index
+		  e->next = next_table_index;
 		  //e->id=c->total;
 		  e->src=c->src;
 		  e->dst=c->dst;

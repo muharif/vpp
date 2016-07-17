@@ -1896,7 +1896,7 @@ class_new_action (class_main_t *cm)
 {
 	class_next_t * n;
 
-  pool_get_aligned (cm->entry, n, CLIB_CACHE_LINE_BYTES);
+  pool_get_aligned (cm->next, n, CLIB_CACHE_LINE_BYTES);
   memset(n, 0, sizeof (*n));
 
   return (n);
@@ -1907,16 +1907,16 @@ void class_delete_action_index (class_main_t *cm,
                                        u32 index)
 {
   class_next_t * n;
-  if (pool_is_free_index (cm->entry, index))
+  if (pool_is_free_index (cm->next, index))
     return;
 
-  t = pool_elt_at_index (cm->entry, index);
+  t = pool_elt_at_index (cm->next, index);
 
   vec_free (n->src);
   vec_free (n->dst);
   vec_free (n->proto);
 
-  pool_put (cm->entry, n);
+  pool_put (cm->next, n);
 }
 
 int class_add_action (class_main_t * cm,
@@ -2092,7 +2092,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  e->id = check_avail(t,e);
+					  e->id = class_check_avail(t,e);
 					  srcid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
@@ -2106,7 +2106,7 @@ int class_add_del_class (class_main_t * cm,
 					  	  for (i = 0; i < t->match_n_vectors; i++) {
 								e->key[i] &= t->mask[i];
 					  	  };
-						  e->id = check_avail(t,e);
+						  e->id = class_check_avail(t,e);
 						  srcid=e->id;
 					  	  rv = class_add_del (t, e, is_add,table_index);
 					  	  if (rv)
@@ -2120,7 +2120,7 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
-						  e->id = check_avail(t,e);
+						  e->id = class_check_avail(t,e);
 						  srcid=e->id;
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
@@ -2135,7 +2135,7 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
-						  e->id = check_avail(t,e);
+						  e->id = class_check_avail(t,e);
 						  srcid=e->id;
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
@@ -2152,7 +2152,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  e->id = check_avail(t,e);
+					  e->id = class_check_avail(t,e);
 					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
@@ -2166,7 +2166,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  e->id = check_avail(t,e);
+					  e->id = class_check_avail(t,e);
 					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
@@ -2180,7 +2180,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  e->id = check_avail(t,e);
+					  e->id = class_check_avail(t,e);
 					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
@@ -2194,7 +2194,7 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
-					  e->id = check_avail(t,e);
+					  e->id = class_check_avail(t,e);
 					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
@@ -2205,7 +2205,7 @@ int class_add_del_class (class_main_t * cm,
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
-				  e->id = check_avail(t,e);
+				  e->id = class_check_avail(t,e);
 				  dstid=e->id;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
@@ -2214,7 +2214,7 @@ int class_add_del_class (class_main_t * cm,
 			  continue;
 	}
 
-	class_add_action (cm, srcid, dstid, protoid, &index, is_add)
+	class_add_action (cm, srcid, dstid, protoid, action, &index, is_add);
 	  return 0;
 
 }

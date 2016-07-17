@@ -276,7 +276,7 @@ class_node_fn (vlib_main_t * vm,
 	          }
 
 	          class_next_index * n;
-	          n=pool_elt_at_index (cm->entry, 1);
+	          n=pool_elt_at_index (cm->next, 1);
 
 	          //Deciding next step
 

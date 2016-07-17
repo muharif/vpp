@@ -267,7 +267,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  e0=0;
+				  id=0;
 				  temp->proto = 0;
 				  next_table = 0;
 			  } else {
@@ -286,6 +286,7 @@ class_node_fn (vlib_main_t * vm,
 		        	  }
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
+				  id=e0->id;
 			  }
 
 			  if (next_table == 0) {
@@ -367,10 +368,9 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->id = e0->id;
+	              t->id = id;
 	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
-	              //t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

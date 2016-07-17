@@ -206,12 +206,9 @@ class_node_fn (vlib_main_t * vm,
 
 	              if (!e0) {
 	            	  checkempty:
-	            	  table_index0++;
-
-
 	            	  if ((table_index0 - x) > field)
 	            		  goto process;
-
+	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 		              if (t0->active_elements==0){
 	            		  goto checkempty;
@@ -308,6 +305,7 @@ class_node_fn (vlib_main_t * vm,
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
 						  clear_temp (temp);
+						  n=0
 						  goto end;
 					  } else {
 						  next0 = 0;

@@ -253,6 +253,7 @@ class_node_fn (vlib_main_t * vm,
 			  // check identifier
 
 			  next_table = 0;
+			  temp->proto = 12;
 
 			  if (e0) {
 				  if (table_index0 == 0) {

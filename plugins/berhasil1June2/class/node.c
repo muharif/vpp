@@ -306,13 +306,12 @@ class_node_fn (vlib_main_t * vm,
 					  test = n->proto;
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  clear_temp (temp);
 						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
 				  }
-				  clear_temp (temp);
+				  //clear_temp (temp);
 			  } else {
 				  next0 = 11;
 			  }

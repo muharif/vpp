@@ -1932,8 +1932,7 @@ int class_add_action (class_main_t * cm,
   if (is_add)
     {
       *index = ~0;
-      n = class_new_action (cm, srcid, dstid, protoid,
-        action);
+      n = class_new_action (cm);
       n->src=srcid;
       n->dst=dstid;
       n->proto=protoid;

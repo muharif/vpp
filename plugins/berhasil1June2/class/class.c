@@ -2220,7 +2220,7 @@ int class_add_del_class (class_main_t * cm,
 			  continue;
 	}
 
-	class_add_action (cm, srcid, dstid, protoid, action, &index, is_add);
+	//class_add_action (cm, srcid, dstid, protoid, action, &index, is_add);
 	  return 0;
 
 }

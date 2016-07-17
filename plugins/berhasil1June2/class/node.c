@@ -176,8 +176,7 @@ class_node_fn (vlib_main_t * vm,
 	          e0 = 0;
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
-	          x0=table_index0/field;
-	          x=x0*field;
+
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
 	            {
@@ -186,6 +185,8 @@ class_node_fn (vlib_main_t * vm,
 	              t0 = pool_elt_at_index (vcm->tables, table_index0);
 	              e0 = class_find_entry (t0, (u8 *) h0, hash0,
 	                                             now);
+		          x0=table_index0/field;
+		          x=x0*field;
 
 	              //Check next table if entry can't be found
 
@@ -249,6 +250,8 @@ class_node_fn (vlib_main_t * vm,
 	                }
 	            }
 	          process:
+	          x0=table_index0/field;
+	          x=x0*field;
 
 			  // check identifier
 

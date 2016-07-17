@@ -250,8 +250,6 @@ class_node_fn (vlib_main_t * vm,
 	            }
 	          process:
 
-			  if
-
 			  // check identifier
 			  if (e0) {
 	        	  if ((table_index0-x)<=4 && (table_index0-x)>0) {

@@ -282,19 +282,11 @@ class_node_fn (vlib_main_t * vm,
 
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
-					  /*if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->protoid)) {
-						  next0 = n->action;
-						  asu =10;
-					  } else {
-						  asu =3;
-						  next0 = 0;
-					  }*/
-
-					  if (n->src == 1) {
+					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->protoid)) {
 						  next0 = n->action;
 						  break;
 					  } else {
-						  next0=0;
+						  next0 = 0;
 					  }
 				  }
 				  //clear_temp (temp);

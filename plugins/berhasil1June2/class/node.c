@@ -313,7 +313,6 @@ class_node_fn (vlib_main_t * vm,
 						  next0 = 0;
 						  n=0;
 						  clear_temp (temp);
-						  goto end;
 					  }
 				  }
 

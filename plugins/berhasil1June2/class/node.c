@@ -200,14 +200,15 @@ class_node_fn (vlib_main_t * vm,
 	              e0 = class_find_entry (t0, (u8 *) h0, hash0,
 	                                             now);
 
-				  if((table_index0-x)>=8)
-					  goto process;
-
 	              //Check next table if entry can't be found
 
 	              if (!e0) {
 	            	  checkempty:
 	            	  table_index0++;
+
+	            	  if ((table_index0 - x) > field)
+
+		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 
 	            	  if (t0->active_elements==0){
 	            		  goto checkempty;

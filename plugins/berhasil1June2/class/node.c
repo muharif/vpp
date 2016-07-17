@@ -96,6 +96,7 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
+	  u32 test;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -302,7 +303,7 @@ class_node_fn (vlib_main_t * vm,
 				  i=0;
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
-					  u32 protoc = temp->proto;
+					  test = temp->proto;
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
 						  clear_temp (temp);
@@ -383,7 +384,7 @@ class_node_fn (vlib_main_t * vm,
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = id;
-	              t->next_index = protoc;
+	              t->next_index = test;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	            }
 

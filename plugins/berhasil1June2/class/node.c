@@ -276,6 +276,10 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->srcid = 0;
 	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
+	        	  } else {
+	        		  temp->srcid = 0;
+	        		  temp->dstid = 0;
+	        		  temp->proto = 0;
 	        	  }
 
 				  next_table = 0;

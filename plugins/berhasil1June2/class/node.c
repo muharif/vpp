@@ -211,7 +211,7 @@ class_node_fn (vlib_main_t * vm,
 
 
 	            	  if (((t0->table_index) - x) > 8)
-	            		  return 0;
+	            		  goto process;
 
 
 	            	  if (t0->active_elements==0){
@@ -262,7 +262,7 @@ class_node_fn (vlib_main_t * vm,
 	                    }
 	                }
 	            }
-	          //process:
+	          process:
 
 	          x0=table_index0/field;
 	          x=x0*field;

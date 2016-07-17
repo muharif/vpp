@@ -80,9 +80,10 @@ class_node_fn (vlib_main_t * vm,
 	  u32 chain_hits = 0;
 	  int field=9;
 	  int x0;
-	  int x;
+	  int x, i;
 	  u32 next_table;
 	  class_temp_t * temp = &class_temp;
+	  class_next_t * n;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -175,6 +176,8 @@ class_node_fn (vlib_main_t * vm,
 	          e0 = 0;
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
+	          x0=table_index0/field;
+	          x=x0*field;
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
 	            {
@@ -192,6 +195,9 @@ class_node_fn (vlib_main_t * vm,
 					  t0 = pool_elt_at_index (vcm->tables, table_index0);
 					  if(!t0)
 						  return 0;
+
+					  if (table_index0 == x+field)
+						  goto process;
 
 	            	  if (t0->active_elements==0){
 	            		  table_index0++;
@@ -242,14 +248,48 @@ class_node_fn (vlib_main_t * vm,
 	                    }
 	                }
 	            }
+	          process:
 
-	          x0=table_index0/field;
-	          x=x0*field;
-	          next_table=0;
+			  // check identifier
+			  if (e0) {
+	        	  if ((table_index0-x)<=4 && (table_index0-x)>0) {
+	        		  temp->srcid = e0->id;
+	        		  next_table = x+5;
+	        	  }
+	        	  else if ((table_index0-x)<=8 && (table_index0-x)>4) {
+	        		  temp->dstid = e0->id;
+	        		  next_table = x+field;
+	        	  }
+	        	  else {
+	        		  temp->protoid = e0->id;
+	        		  next_table = 0;
+	        	  }
+			  } else {
+				  temp->protoid = 0;
+				  next_table = 0;
+			  }
+			  vnet_buffer(b0)->l2_classify.table_index=next_table;
+
+			  if (next_table == 0) {
+				  for (i=1;i<=100;i++) {
+					  n = pool_elt_at_index (vcm->next, i);
+					  if (n->src == temp->srcid && n->dst == temp->dstid && n->proto == temp->protoid) {
+						  next0 = n->action;
+						  break;
+					  } else
+						  next0 = 0;
+				  }
+			  } else {
+				  next0 = 11;
+			  }
+
+
+
+
 
               //Check only the field that want to be checked
 
-	          if (table_index0==0) {
+	          /*if (table_index0==0) {
 	        	  if (e0->src==0) {
 	        		  if (e0->dst==0){
 						  if (e0->proto==0) {
@@ -273,14 +313,11 @@ class_node_fn (vlib_main_t * vm,
 	        		  next_table=0;
 	        	  else
 	        		  next_table=x+field;
-	          }
-
-	          class_next_t * n;
-	          n=pool_elt_at_index (vcm->next, 1);
+	          }*/
 
 	          //Deciding next step
 
-	          if (next_table !=0) {
+	          /*if (next_table !=0) {
 
 	        	  vnet_buffer(b0)->l2_classify.table_index=next_table;
 	        	  if (table_index0 !=0){
@@ -303,21 +340,17 @@ class_node_fn (vlib_main_t * vm,
 	        			  next0=0;
 	        		  	  temp->prev=0;
 	        	  }
-	          }
+	          }*/
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              /*t->id = e0->id;
+	              t->id = e0->id;
 	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
-	              t->entry_index = e0 ? e0 - t0->entries : ~0;*/
-	              t->id = n->src;
-				  t->next_index = n->proto;
-				  t->table_index = n->proto;
-				  t->entry_index = n->action;
+	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

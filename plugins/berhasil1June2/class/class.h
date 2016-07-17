@@ -139,7 +139,9 @@ typedef struct {
 } class_next_t;
 
 typedef struct {
-	u32 prev;
+	u32 srcid;
+	u32 dstid;
+	u32 protoid;
 } class_temp_t;
 
 class_check_input_t class_check_input;

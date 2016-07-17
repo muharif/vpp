@@ -264,7 +264,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->protoid = e0->id;
 	        		  next_table = 0;
 	        	  } else {
-	        		  next_table = e0->next;
+	        		  next_table = x+1;
 	        	  }
 			  } else {
 				  temp->protoid = 0;

@@ -275,6 +275,9 @@ class_node_fn (vlib_main_t * vm,
 	        		  next_table=x+field;
 	          }
 
+	          class_next_index * n;
+	          n=pool_elt_at_index (cm->entry, 1);
+
 	          //Deciding next step
 
 	          if (next_table !=0) {
@@ -308,7 +311,7 @@ class_node_fn (vlib_main_t * vm,
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = e0->id;
-	              t->next_index = next0;
+	              t->next_index = n->src;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }

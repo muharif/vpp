@@ -1891,6 +1891,91 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	return c;
 }
 
+class_next_t *
+class_new_action (class_main_t *cm)
+{
+	class_next_t * n;
+
+  pool_get_aligned (cm->entry, n, CLIB_CACHE_LINE_BYTES);
+  memset(n, 0, sizeof (*n));
+
+  return (n);
+}
+
+
+void class_delete_action_index (class_main_t *cm,
+                                       u32 index)
+{
+  class_next_t * n;
+  if (pool_is_free_index (cm->entry, index))
+    return;
+
+  t = pool_elt_at_index (cm->entry, index);
+
+  vec_free (n->src);
+  vec_free (n->dst);
+  vec_free (n->proto);
+
+  pool_put (cm->entry, n);
+}
+
+int class_add_action (class_main_t * cm,
+                                 u32 srcid,
+                                 u32 dstid,
+								 u32 protoid,
+								 u32 action,
+                                 u32 * index,
+                                 int is_add)
+{
+  class_next_t * n;
+
+  if (is_add)
+    {
+      *index = ~0;
+      n = class_new_action (cm, srcid, dstid, protoid,
+        action);
+      n->src=srcid;
+      n->dst=dstid;
+      n->proto=protoid;
+      n->action=action;
+      *index = n - cm->next;
+
+      return 0;
+    }
+
+
+  class_delete_action_index (cm, *index);
+  return 0;
+}
+
+int class_check_avail (class_table_t * t, class_entry_t * entry)
+{
+	  u64 hash0;
+	  f64 now = 0.00;
+	  u8 * h0;
+	  class_entry_t * e;
+	  class_entry_5_t _max_e __attribute__((aligned (16)));
+	  class_check_input_t * c = &class_check_input;
+	  u32 rv;
+
+
+	  e = (class_entry_t *)&_max_e;
+	  h0 = (u8 *) entry->key;
+	  h0 -= t->skip_n_vectors * sizeof (u32x4);
+	  hash0 = class_hash_packet (t, h0);
+	  e = class_find_entry (t, (u8 *) h0, hash0,
+	                                 now);
+
+	  if (e /*&& e->next_index == entry->next_index*/)
+		   rv = e->id;
+	  else
+		  rv = c->total;
+
+	  return rv;
+
+
+}
+
 int class_add_del_class (class_main_t * cm,
                                    u8 * match,
                                    u32 hit_next_index,
@@ -1906,6 +1991,7 @@ int class_add_del_class (class_main_t * cm,
   class_check_input_t * c = &class_check_input;
   int i, rv;
   u32 table_index=0;
+  u32 index = ~0;
   u32 next_table_index=0;
   u64 hash0;
   f64 now = 0.00;
@@ -1913,6 +1999,8 @@ int class_add_del_class (class_main_t * cm,
   u32 field=3;
   u32 add=0;
   u32 add2=0;
+  u32 srcid=0, dstid=0, protoid=0, action=0;
+
 
   e = (class_entry_t *)&_max_e;
   t = pool_elt_at_index (cm->tables, table_index);
@@ -1979,9 +2067,10 @@ int class_add_del_class (class_main_t * cm,
 		  c = class_check (cm, e, match);
 
 		  e->next_index = hit_next_index;
+		  action=e->next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
-		  e->id=c->total;
+		  //e->id=c->total;
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;
@@ -2003,6 +2092,8 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id = check_avail(t,e);
+					  srcid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2015,6 +2106,8 @@ int class_add_del_class (class_main_t * cm,
 					  	  for (i = 0; i < t->match_n_vectors; i++) {
 								e->key[i] &= t->mask[i];
 					  	  };
+						  e->id = check_avail(t,e);
+						  srcid=e->id;
 					  	  rv = class_add_del (t, e, is_add,table_index);
 					  	  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2027,6 +2120,8 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
+						  e->id = check_avail(t,e);
+						  srcid=e->id;
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2040,6 +2135,8 @@ int class_add_del_class (class_main_t * cm,
 						  for (i = 0; i < t->match_n_vectors; i++) {
 							e->key[i] &= t->mask[i];
 						  };
+						  e->id = check_avail(t,e);
+						  srcid=e->id;
 						  rv = class_add_del (t, e, is_add,table_index);
 						  if (rv)
 							return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2055,6 +2152,8 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id = check_avail(t,e);
+					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2067,6 +2166,8 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id = check_avail(t,e);
+					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2079,6 +2180,8 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id = check_avail(t,e);
+					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2091,6 +2194,8 @@ int class_add_del_class (class_main_t * cm,
 					  for (i = 0; i < t->match_n_vectors; i++) {
 						e->key[i] &= t->mask[i];
 					  };
+					  e->id = check_avail(t,e);
+					  dstid=e->id;
 					  rv = class_add_del (t, e, is_add,table_index);
 					  if (rv)
 						return VNET_API_ERROR_NO_SUCH_ENTRY;
@@ -2100,12 +2205,16 @@ int class_add_del_class (class_main_t * cm,
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
+				  e->id = check_avail(t,e);
+				  dstid=e->id;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
 			  continue;
 	}
+
+	class_add_action (cm, srcid, dstid, protoid, &index, is_add)
 	  return 0;
 
 }

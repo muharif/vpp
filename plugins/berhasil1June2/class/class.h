@@ -131,11 +131,20 @@ typedef struct {
 } class_check_input_t;
 
 typedef struct {
+	u32 index;
+	u32 src;
+	u32 dst;
+	u32 proto;
+	u32 action;
+} class_next_t;
+
+typedef struct {
 	u32 prev;
 } class_temp_t;
 
 class_check_input_t class_check_input;
 class_temp_t class_temp;
+class_next_t class_next;
 
 typedef struct {
   /* Mask to apply after skipping N vectors */
@@ -178,6 +187,7 @@ typedef struct {
 struct _class_main {
   /* Table pool */
   class_table_t * tables;
+  class_next_t * next;
 
   /* Registered next-index, opaque unformat fcns */
   unformat_function_t ** unformat_l2_next_index_fns;

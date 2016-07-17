@@ -280,7 +280,7 @@ class_node_fn (vlib_main_t * vm,
 				  if (!e0)
 					  return 0;
 
-				  for (i=1;i<=100;i++) {
+				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
 					  if (n->src == temp->srcid && n->dst == temp->dstid && n->proto == temp->protoid) {
 						  next0 = n->action;

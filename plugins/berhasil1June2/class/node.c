@@ -269,11 +269,11 @@ class_node_fn (vlib_main_t * vm,
         		  next_table = 0;
         	  }
 
-			  if (e0) {
-			  } else {
+			  if (!e0) {
 				  temp->protoid = 0;
 				  next_table = 0;
 			  }
+
 			  vnet_buffer(b0)->l2_classify.table_index=next_table;
 
 			  if (next_table == 0) {

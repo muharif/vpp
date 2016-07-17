@@ -210,7 +210,7 @@ class_node_fn (vlib_main_t * vm,
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 
 
-	            	  if (((t0->table_index) - x) > 9)
+	            	  if (((t0->table_index) - x) > 8)
 	            		  return 0;
 
 

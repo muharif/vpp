@@ -1891,6 +1891,12 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	return c;
 }
 
+void clear_temp (class_temp_t * temp) {
+	temp->srcid = 0;
+	temp->dstid = 0;
+	temp->protoid = 0;
+}
+
 class_next_t *
 class_new_action (class_main_t *cm)
 {

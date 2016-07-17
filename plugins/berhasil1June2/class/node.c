@@ -254,23 +254,22 @@ class_node_fn (vlib_main_t * vm,
 
 			  next_table = 0;
 
-			  if ((table_index0-x) == field) {
-        		  temp->proto = 11;
-        		  next_table = 0;
-        	  }
-
 			  if (e0) {
+				  temp->proto = 10;
 				  if (table_index0 == 0) {
 					  next_table = 1;
+				  } else {
+					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
+		        		  temp->srcid = e0->id;
+		        		  next_table = x+5;
+		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
+		        		  temp->dstid = e0->id;
+		        		  next_table = x+field;
+		        	  } else {
+		        		  temp->proto = 11;
+		        		  next_table = 0;
+		        	  }
 				  }
-
-				  if ((table_index0-x) <=4 && (table_index0-x)>0) {
-	        		  temp->srcid = e0->id;
-	        		  next_table = x+5;
-	        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
-	        		  temp->dstid = e0->id;
-	        		  next_table = x+field;
-	        	  }
 			  } else {
 				  temp->proto = 10;
 				  next_table = 0;

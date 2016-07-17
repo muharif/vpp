@@ -1807,7 +1807,6 @@ class_gen_command_fn (vlib_main_t * vm,
                              vlib_cli_command_t * cmd)
 {
   class_main_t * cm = &class_main;
-  class_temp_t * temp = &class_temp;
   int is_add = 1;
   u32 table_index = 0;
   u32 hit_next_index = 11;
@@ -1834,8 +1833,6 @@ class_gen_command_fn (vlib_main_t * vm,
   rv = class_add_del_session (cm, table_index, match,
                                       hit_next_index,
                                       opaque_index, advance, is_add);
-
-  clear_temp (temp);
 
   switch(rv)
     {

@@ -209,7 +209,7 @@ class_node_fn (vlib_main_t * vm,
 	            	  table_index0++;
 
 
-	            	  if ((table_index0 - x) == 8)
+	            	  if ((table_index0 - x) == 9)
 	            		  goto process;
 
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -273,12 +273,12 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=0;
 
-				  if (temp->srcid == ~0 && temp->dstid == ~0 && temp->proto == ~0)
+				  /*if (temp->srcid == ~0 && temp->dstid == ~0 && temp->proto == ~0)
 					  return 0;
 				  else if (temp->dstid == ~0 && temp->proto == ~0) {
 					  temp->dstid = 0;
 					  temp->proto = 0;
-				  }
+				  }*/
 
 
 				  next_table = 0;

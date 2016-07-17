@@ -275,8 +275,8 @@ class_node_fn (vlib_main_t * vm,
 	        		  next_table=x+field;
 	          }
 
-	          class_next_index * n;
-	          n=pool_elt_at_index (cm->next, 1);
+	          class_next_t * n;
+	          n=pool_elt_at_index (vcm->next, 1);
 
 	          //Deciding next step
 

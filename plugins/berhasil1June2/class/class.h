@@ -141,7 +141,7 @@ typedef struct {
 typedef struct {
 	u32 srcid;
 	u32 dstid;
-	u32 protoid;
+	u32 proto;
 } class_temp_t;
 
 class_check_input_t class_check_input;

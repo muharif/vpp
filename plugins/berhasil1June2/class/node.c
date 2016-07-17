@@ -302,6 +302,7 @@ class_node_fn (vlib_main_t * vm,
 				  i=0;
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
+					  u32 protoc = temp->proto;
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
 						  clear_temp (temp);
@@ -382,7 +383,7 @@ class_node_fn (vlib_main_t * vm,
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = id;
-	              t->next_index = next0;
+	              t->next_index = protoc;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	            }
 

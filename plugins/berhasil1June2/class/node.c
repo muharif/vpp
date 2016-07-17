@@ -285,13 +285,10 @@ class_node_fn (vlib_main_t * vm,
 		        		  next_table = 0;
 		        	  }
 				  }
+				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 			  }
 
-			  vnet_buffer(b0)->l2_classify.table_index=next_table;
-
 			  if (next_table == 0) {
-				  //if (!e0)
-				//	  return 0;
 
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);

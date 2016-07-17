@@ -265,7 +265,9 @@ class_node_fn (vlib_main_t * vm,
 	        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 	        		  temp->dstid = e0->id;
 	        		  next_table = x+field;
-	        	  } else if ((table_index0-x) == field) {
+	        	  }
+
+				  if ((table_index0-x) == field) {
 	        		  temp->protoid = e0->id;
 	        		  next_table = 0;
 	        	  }

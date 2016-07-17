@@ -272,7 +272,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  next_table = x+field;
 	        	  }
 			  } else {
-				  temp->protoid = 10;
+				  temp->proto = 10;
 				  next_table = 0;
 			  }
 

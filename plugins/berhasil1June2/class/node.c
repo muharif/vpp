@@ -261,9 +261,11 @@ class_node_fn (vlib_main_t * vm,
 					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 		        		  temp->srcid = e0->id;
 		        		  next_table = x+5;
+		        		  goto no_trace;
 		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
+		        		  goto no_trace;
 		        	  } else {
 		        		  temp->proto = e0->id;
 		        		  next_table = 0;
@@ -362,6 +364,8 @@ class_node_fn (vlib_main_t * vm,
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }
+
+	          no_trace:
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,

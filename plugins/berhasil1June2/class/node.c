@@ -265,7 +265,7 @@ class_node_fn (vlib_main_t * vm,
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
 		        	  } else {
-		        		  temp->proto = e->id;
+		        		  temp->proto = e0->id;
 		        		  next_table = 0;
 		        	  }
 				  }

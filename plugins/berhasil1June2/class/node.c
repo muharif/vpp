@@ -284,7 +284,7 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  if (n->src == temp->srcid && n->dst == temp->dstid && n->proto == temp->protoid) {
 						  next0 = n->action;
-						  break;
+						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
@@ -294,6 +294,7 @@ class_node_fn (vlib_main_t * vm,
 				  next0 = 11;
 			  }
 
+			  end:
 
 
 

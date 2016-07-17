@@ -286,7 +286,7 @@ class_node_fn (vlib_main_t * vm,
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->protoid)) {
 						  next0 = n->action;
 						  asu =10;
-						  goto end;
+						  break;
 					  } else {
 						  asu =3;
 						  next0 = 0;
@@ -296,9 +296,6 @@ class_node_fn (vlib_main_t * vm,
 			  } else {
 				  next0 = 11;
 			  }
-
-			  end:
-
 
 
 

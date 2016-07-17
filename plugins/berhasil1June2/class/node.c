@@ -263,8 +263,8 @@ class_node_fn (vlib_main_t * vm,
 	        	  else if ((table_index0-x)==x+field){
 	        		  temp->protoid = e0->id;
 	        		  next_table = 0;
-	        	  } else
-	        		  next_table = e0->next;
+	        	  } /*else
+	        		  next_table = e0->next;*/
 			  } else {
 				  temp->protoid = 0;
 				  next_table = 0;

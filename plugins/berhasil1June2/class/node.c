@@ -250,9 +250,10 @@ class_node_fn (vlib_main_t * vm,
 	            }
 	          process:
 
+			  if
+
 			  // check identifier
 			  if (e0) {
-				  next_table = e0->next;
 	        	  if ((table_index0-x)<=4 && (table_index0-x)>0) {
 	        		  temp->srcid = e0->id;
 	        		  next_table = x+5;
@@ -261,10 +262,11 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->dstid = e0->id;
 	        		  next_table = x+field;
 	        	  }
-	        	  else {
+	        	  else if ((table_index0-x)==x+field){
 	        		  temp->protoid = e0->id;
 	        		  next_table = 0;
-	        	  }
+	        	  } else
+	        		  next_table = e0->next;
 			  } else {
 				  temp->protoid = 0;
 				  next_table = 0;

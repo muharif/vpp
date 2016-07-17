@@ -1896,7 +1896,7 @@ class_new_action (class_main_t *cm)
 {
 	class_next_t * n;
 
-  pool_get_aligned (cm->next, n, CLIB_CACHE_LINE_BYTES);
+  //pool_get_aligned (cm->next, n, CLIB_CACHE_LINE_BYTES);
   memset(n, 0, sizeof (*n));
 
   return (n);
@@ -2205,7 +2205,7 @@ int class_add_del_class (class_main_t * cm,
 					e->key[i] &= t->mask[i];
 				  };
 				  e->id = class_check_avail(t,e);
-				  dstid=e->id;
+				  protoid=e->id;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;

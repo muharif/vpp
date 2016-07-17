@@ -278,7 +278,6 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
 	        	  }
-			  }
 
 				  next_table = 0;
 			  } else {

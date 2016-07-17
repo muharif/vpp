@@ -255,7 +255,6 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (e0) {
-				  temp->proto = 10;
 				  if (table_index0 == 0) {
 					  next_table = 1;
 				  } else {
@@ -266,7 +265,7 @@ class_node_fn (vlib_main_t * vm,
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
 		        	  } else {
-		        		  temp->proto = 11;
+		        		  temp->proto = e->id;
 		        		  next_table = 0;
 		        	  }
 				  }
@@ -283,7 +282,7 @@ class_node_fn (vlib_main_t * vm,
 
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
-					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) /*&& (n->proto == temp->protoid)*/) {
+					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->protoid)) {
 						  next0 = n->action;
 						  break;
 					  } else {

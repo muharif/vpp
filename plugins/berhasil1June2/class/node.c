@@ -268,6 +268,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
+				  e0=0;
 				  temp->proto = 0;
 				  next_table = 0;
 			  } else {

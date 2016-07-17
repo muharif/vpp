@@ -208,7 +208,6 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  table_index0++;
 	            	  checkempty:
-					  t0 = pool_elt_at_index (vcm->tables, table_index0);
 					  if(table_index0 > x+field)
 						  goto process;
 

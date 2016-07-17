@@ -1910,11 +1910,11 @@ void class_delete_action_index (class_main_t *cm,
   if (pool_is_free_index (cm->next, index))
     return;
 
-  t = pool_elt_at_index (cm->next, index);
+  n = pool_elt_at_index (cm->next, index);
 
-  vec_free (n->src);
-  vec_free (n->dst);
-  vec_free (n->proto);
+  //vec_free (n->src);
+  //vec_free (n->dst);
+  //vec_free (n->proto);
 
   pool_put (cm->next, n);
 }

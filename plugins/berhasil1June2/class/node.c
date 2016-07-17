@@ -268,7 +268,7 @@ class_node_fn (vlib_main_t * vm,
 	        	  }
 
 				  if ((table_index0-x) == field) {
-	        		  temp->protoid = e0->id;
+	        		  temp->protoid = 11;
 	        		  next_table = 0;
 	        	  }
 			  } else {

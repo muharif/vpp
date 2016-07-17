@@ -27,12 +27,12 @@ typedef struct {
 	u32 id;
 	u32 next_index;
   u32 table_index;
-  u32 entry_index;
+  //u32 entry_index;
 } class_trace_t;
 
 
 /* packet trace format function */
-static u8 * format_class_trace (u8 * s, va_list * args)
+/*static u8 * format_class_trace (u8 * s, va_list * args)
 {
   CLIB_UNUSED (vlib_main_t * vm) = va_arg (*args, vlib_main_t *);
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
@@ -40,6 +40,17 @@ static u8 * format_class_trace (u8 * s, va_list * args)
   
   s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, entry %d",
               t->id, t->next_index, t->table_index, t->entry_index);
+  return s;
+}*/
+
+static u8 * format_class_trace (u8 * s, va_list * args)
+{
+  CLIB_UNUSED (vlib_main_t * vm) = va_arg (*args, vlib_main_t *);
+  CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
+  class_trace_t * t = va_arg (*args, class_trace_t *);
+
+  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d",
+              t->id, t->next_index, t->table_index);
   return s;
 }
 
@@ -359,10 +370,10 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->id = e0->id;
+	              t->id = next_table;
 	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
-	              t->entry_index = e0 ? e0 - t0->entries : ~0;
+	              //t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

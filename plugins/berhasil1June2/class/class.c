@@ -1700,7 +1700,7 @@ int class_add_del_session (class_main_t * cm,
 	  }
   }
 
-  e->hits=0;
+  e->hits=e->next;
 
   e->last_heard = 0;
   e->flags = 0;

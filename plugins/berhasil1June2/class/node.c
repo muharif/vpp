@@ -188,7 +188,7 @@ class_node_fn (vlib_main_t * vm,
 	              e0 = class_find_entry (t0, (u8 *) h0, hash0,
 	                                             now);
 
-				  if (table_index0 == x+field)
+				  if (table_index0-x == field)
 					  goto process;
 
 	              //Check next table if entry can't be found
@@ -255,7 +255,10 @@ class_node_fn (vlib_main_t * vm,
 
 			  next_table = 0;
 
-			  if (e0) {
+			  if (!e0) {
+				  temp->proto = 0;
+				  next_table = 0;
+			  } else {
 				  if (table_index0 == 0) {
 					  next_table = 1;
 				  } else {
@@ -270,9 +273,6 @@ class_node_fn (vlib_main_t * vm,
 		        		  next_table = 0;
 		        	  }
 				  }
-			  } else {
-				  temp->proto = 0;
-				  next_table = 0;
 			  }
 
 			  vnet_buffer(b0)->l2_classify.table_index=next_table;

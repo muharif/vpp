@@ -253,17 +253,16 @@ class_node_fn (vlib_main_t * vm,
 			  // check identifier
 
 			  next_table = 0;
-			  temp->proto = 12;
+
+			  if ((table_index0-x) == field) {
+        		  temp->proto = 11;
+        		  next_table = 0;
+        	  }
 
 			  if (e0) {
 				  if (table_index0 == 0) {
 					  next_table = 1;
 				  }
-
-				  if ((table_index0-x) == field) {
-	        		  temp->proto = 11;
-	        		  next_table = 0;
-	        	  }
 
 				  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 	        		  temp->srcid = e0->id;

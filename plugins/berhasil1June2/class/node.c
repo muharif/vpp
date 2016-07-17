@@ -291,7 +291,7 @@ class_node_fn (vlib_main_t * vm,
 						  next0 = 0;
 					  }*/
 
-					  if (n->src == 2) {
+					  if (n->src == temp->srcid) {
 						  asu = 10;
 						  next0 = n->action;
 						  break;

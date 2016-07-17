@@ -289,6 +289,7 @@ class_node_fn (vlib_main_t * vm,
 						  next0 = 0;
 					  }
 				  }
+
 				  //clear_temp (temp);
 			  } else {
 				  next0 = 11;

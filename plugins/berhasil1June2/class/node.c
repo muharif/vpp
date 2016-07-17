@@ -315,7 +315,7 @@ class_node_fn (vlib_main_t * vm,
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;*/
 	              t->id = n->src;
-				  t->next_index = n->dst;
+				  t->next_index = n->proto;
 				  t->table_index = n->proto;
 				  t->entry_index = n->action;
 	            }

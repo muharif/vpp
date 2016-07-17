@@ -303,9 +303,9 @@ class_node_fn (vlib_main_t * vm,
 				  i=0;
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
-					  test = n->action;
+					  test = n->src;
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
-						  next0 = test;
+						  next0 = n->action;
 						  clear_temp (temp);
 						  n=0;
 						  goto end;

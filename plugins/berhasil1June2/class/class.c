@@ -1942,7 +1942,7 @@ int class_add_action (class_main_t * cm,
       n->src=srcid;
       n->dst=dstid;
       n->proto=protoid;
-      n->action=11;
+      n->action=action;
       *index = n - cm->next;
 
       return 0;

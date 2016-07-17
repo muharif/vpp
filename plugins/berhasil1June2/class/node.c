@@ -313,8 +313,6 @@ class_node_fn (vlib_main_t * vm,
 					  }
 				  }
 				  clear_temp (temp);
-
-
 			  } else {
 				  next0 = 11;
 			  }

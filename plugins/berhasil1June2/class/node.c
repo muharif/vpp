@@ -305,7 +305,7 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  test = n->action;
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
-						  next0 = n->action;
+						  next0 = test;
 						  clear_temp (temp);
 						  n=0;
 						  goto end;

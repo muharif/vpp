@@ -190,14 +190,14 @@ class_node_fn (vlib_main_t * vm,
 	              //Check next table if entry can't be found
 
 	              if (!e0) {
+					  if (table_index0 == x+field)
+						  goto process;
+
 	            	  table_index0++;
 	            	  checkempty:
 					  t0 = pool_elt_at_index (vcm->tables, table_index0);
 					  if(!t0)
 						  return 0;
-
-					  if (table_index0 == x+field)
-						  goto process;
 
 	            	  if (t0->active_elements==0){
 	            		  table_index0++;

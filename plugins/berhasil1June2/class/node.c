@@ -97,8 +97,6 @@ class_node_fn (vlib_main_t * vm,
 	  class_next_t * n;
 	  u32 id=0;
 
-	  clear_temp (temp);
-
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
 	  else
@@ -296,6 +294,7 @@ class_node_fn (vlib_main_t * vm,
 			  }
 
 			  if (next_table == 0) {
+
 
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);

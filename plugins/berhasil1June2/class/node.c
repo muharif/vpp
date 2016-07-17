@@ -271,13 +271,14 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=0;
 
-				  /*if (temp->srcid == ~0 && temp->dstid == ~0 && temp->proto == ~0)
-					  return 0;
-				  else if (temp->dstid == ~0 && temp->proto == ~0) {
-					  temp->dstid = 0;
-					  temp->proto = 0;
-				  }*/
-
+				  if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
+	        		  temp->srcid = 0;
+	        	  } else if ((table_index0-x) == field) {
+	        		  temp->srcid = 0;
+	        		  temp->dstid = 0;
+	        		  temp->proto = 0;
+	        	  }
+			  }
 
 				  next_table = 0;
 			  } else {

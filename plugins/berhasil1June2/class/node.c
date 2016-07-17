@@ -275,6 +275,7 @@ class_node_fn (vlib_main_t * vm,
 				  next_table = 0;
 			  }
 			  vnet_buffer(b0)->l2_classify.table_index=next_table;
+			  u32 asu = 12;
 
 			  if (next_table == 0) {
 				  if (!e0)
@@ -284,8 +285,10 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  if (n->src == temp->srcid && n->dst == temp->dstid && n->proto == temp->protoid) {
 						  next0 = n->action;
+						  asu =10;
 						  goto end;
 					  } else {
+						  asu =3;
 						  next0 = 0;
 					  }
 				  }
@@ -360,7 +363,7 @@ class_node_fn (vlib_main_t * vm,
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = e0->id;
-	              t->next_index = next0;
+	              t->next_index = asu;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->entry_index = e0 ? e0 - t0->entries : ~0;
 	            }

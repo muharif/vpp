@@ -206,7 +206,7 @@ class_node_fn (vlib_main_t * vm,
 
 	              if (!e0) {
 	            	  checkempty:
-	            	  if ((table_index0 - x) > field-1)
+	            	  if ((table_index0 - x) == 9)
 	            		  return 0;
 
 	            	  table_index0++;

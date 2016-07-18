@@ -2072,7 +2072,8 @@ int class_add_del_class (class_main_t * cm,
 		  c = class_check (cm, e, match);
 
 		  if (c->src ==0 || c->dst == 0 || c->proto == 0) {
-			  return clib_error_return (0, "Complete match value required");
+			  clib_error_return (0, "Complete match value required");
+			  return 0;
 		  }
 
 		  e->next_index = hit_next_index;

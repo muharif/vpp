@@ -207,8 +207,7 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 	            	  if ((table_index0 - x) == 0)
-	            		  return 0;
-	            		  //goto process;
+	            		  goto process;
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -261,7 +260,7 @@ class_node_fn (vlib_main_t * vm,
 	                    }
 	                }
 	            }
-	          //process:
+	          process:
 
 			  // check identifier
 
@@ -272,8 +271,7 @@ class_node_fn (vlib_main_t * vm,
 				  id = 0;
 				  test = 1;
 	        	  next0 = 0;
-	        	  return 0;
-	        	  //goto end;
+	        	  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -375,6 +373,7 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
+	          if (test!=1)
 		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,
 						   bi0, next0);

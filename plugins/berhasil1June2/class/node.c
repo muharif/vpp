@@ -281,7 +281,7 @@ class_node_fn (vlib_main_t * vm,
 
 	        	  if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0) {
 	        		  next0=0;
-	        		  test =1;
+	        		  test = 1;
 	        	  	  goto end;
 	        	  }
 				  next_table = 0;
@@ -415,7 +415,7 @@ class_node_fn (vlib_main_t * vm,
 						   to_next, n_left_to_next,
 						   bi0, next0);
 		}
-	      if (test!=0)
+	      if (test!=1)
 	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 

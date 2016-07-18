@@ -336,7 +336,8 @@ class_node_fn (vlib_main_t * vm,
 						  next0 = n->action;
 						  if (next0 != 0)
 							  goto end;
-					  }
+					  } else
+						  next0=0;
 
 				  }
 			  } else {

@@ -202,14 +202,11 @@ class_node_fn (vlib_main_t * vm,
 
 	              //Check next table if entry can't be found
 
-	              if (!e0) {
+	              if (!e0 && table_index0 !=0) {
 	            	  checkempty:
 
 	            	  if ((table_index0 - x) == 0) {
-	            		  if (t0)
-	            			  goto process;
-	            		  else
-	            			  return 0;
+	            		  goto process
 	            	  }
 
 	            	  table_index0++;

@@ -295,6 +295,7 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  id=e0->id;
+				  not_found = 0;
 			  }
 
 			  if (next_table == 0) {
@@ -388,9 +389,7 @@ class_node_fn (vlib_main_t * vm,
 	          }
 		}
 
-	      //if (not_found != 1) {
 	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
-	      //}
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

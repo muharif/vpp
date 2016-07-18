@@ -207,8 +207,8 @@ class_node_fn (vlib_main_t * vm,
 
 	              if (!e0) {
 	            	  checkempty:
-	            	  //if ((table_index0 - x) == field)
-	            		//  goto process;
+	            	  if ((table_index0 - x) == field)
+	            		  goto process;
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -260,7 +260,7 @@ class_node_fn (vlib_main_t * vm,
 	                    }
 	                }
 	            }
-	          //process:
+	          process:
 
 	          x0=table_index0/field;
 	          x=x0*field;

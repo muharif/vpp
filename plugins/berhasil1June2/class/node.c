@@ -283,7 +283,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  next0=0;
 	        		  test =1;
 	        		  return 0;
-	        	  	  /goto end;
+	        	  	  //goto end;
 	        	  }
 				  next_table = 0;
 			  } else {

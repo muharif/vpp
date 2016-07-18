@@ -275,14 +275,14 @@ class_node_fn (vlib_main_t * vm,
 					  not_found = 1;
 					  next0 = 0;
 					  next_table = 0;
-					  if (!(temp->srcid))
+					  goto end;
+					  /*if (!(temp->srcid))
 						  temp->srcid = 0;
 					  if (!(temp->dstid))
 						  temp->dstid = 0;
-					  temp->proto = 0;
+					  temp->proto = 0;*/
 				  }
 				  //if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
-
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;

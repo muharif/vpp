@@ -306,13 +306,16 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (next_table == 0) {
 				  i=0;
-				  for (i=0;i<=100;i++) {
+				  for (i=0;i<=10;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  if (next0 != 0)
+						  //if (next0 != 0)
 							  goto end;
-					  } /*else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
+					  } else
+						  next0=0;
+
+					  /*else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
 						  next0 = n->action;
 						  if (next0 != 0)
 							  goto end;
@@ -337,8 +340,6 @@ class_node_fn (vlib_main_t * vm,
 						  if (next0 != 0)
 							  goto end;
 					  }*/
-					  else
-						  next0=0;
 
 				  }
 			  } else {

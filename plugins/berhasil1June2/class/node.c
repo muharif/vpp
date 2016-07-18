@@ -275,9 +275,7 @@ class_node_fn (vlib_main_t * vm,
 					  temp->proto = 0;
 				  }
 
-				  if ((temp->srcid == 0) && (temp->dstid == 0) && (temp->proto == 0)) {
-					  not_found = 1;
-				  }
+				  not_found = 1;
 
 				  next0 = 0;
 				  next_table = 0;

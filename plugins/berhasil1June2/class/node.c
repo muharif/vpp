@@ -283,7 +283,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  next0=0;
 	        		  test =1;
 	        		  return 0;
-	        	  	  //goto end;
+	        	  	  goto end;
 	        	  }
 				  next_table = 0;
 			  } else {
@@ -416,6 +416,7 @@ class_node_fn (vlib_main_t * vm,
 						   to_next, n_left_to_next,
 						   bi0, next0);
 		}
+	      if (test!=0)
 	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 

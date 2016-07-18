@@ -199,14 +199,14 @@ class_node_fn (vlib_main_t * vm,
 	              e0 = class_find_entry (t0, (u8 *) h0, hash0,
 	                                             now);
 
-	              //Check next table if entry can't be found
-
-		          x0=floor(table_index0/field);
+		          x0=table_index0/field;
 		          x=x0*field;
+
+	              //Check next table if entry can't be found
 
 	              if (!e0) {
 	            	  checkempty:
-	            	  if ((table_index0 - x) <= 0)
+	            	  if ((table_index0 - x) == 0)
 	            		  goto process;
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -268,16 +268,13 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id = 0;
+				  id=0;
 
-				  if ((table_index0-x) == 0) {
-					  if (!(temp->srcid))
-						  temp->srcid = 0;
-					  if (!(temp->dstid))
-						  temp->dstid = 0;
+				  //if ((table_index0-x) == 0) {
+	        		  temp->srcid = 0;
+	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
-	        	  }
-
+	        	  //}
 				  next0 = 0;
 				  next_table = 0;
 				  goto end;
@@ -291,7 +288,7 @@ class_node_fn (vlib_main_t * vm,
 		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
-		        	  } else if ((table_index0-x) == 0) {
+		        	  } else {
 		        		  temp->proto = e0->id;
 		        		  next_table = 0;
 		        	  }
@@ -371,6 +368,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  	  temp->prev=0;
 	        	  }
 	          }*/
+
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {

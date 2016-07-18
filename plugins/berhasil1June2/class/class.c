@@ -2071,11 +2071,11 @@ int class_add_del_class (class_main_t * cm,
 		  e = (class_entry_t *)&_max_e;
 		  c = class_check (cm, e, match);
 
-		 /* if (c->src ==0 || c->dst == 0 || c->proto == 0) {
+		  if (c->src ==0 || c->dst == 0 || c->proto == 0) {
 			  c->total--;
 			  return 0;
 
-		  }*/
+		  }
 
 		  e->next_index = hit_next_index;
 		  action=e->next_index;
@@ -2225,6 +2225,7 @@ int class_add_del_class (class_main_t * cm,
 		  } else
 			  continue;
 	}
+
 	class_add_action (cm, srcid, dstid, protoid, action, &index, is_add);
 	  return 0;
 

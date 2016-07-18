@@ -273,6 +273,10 @@ class_node_fn (vlib_main_t * vm,
 	        	  } else if ((table_index0-x) == field) {
 	        		  temp->srcid = 0;
 	        		  temp->dstid = 0;
+	        		  //temp->proto = 0;
+	        	  } else {
+	        		  temp->srcid = 0;
+	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
 	        	  }
 

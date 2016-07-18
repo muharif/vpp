@@ -205,9 +205,8 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-	            	  if ((table_index0 - x) == 0) {
+	            	  if ((table_index0 - x) == field)
 	            		  goto process;
-	            	  }
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -263,20 +262,20 @@ class_node_fn (vlib_main_t * vm,
 
 			  // check identifier
 
-			  next_table=0;
+			  next_table = 0;
 
-			  if (table_index0 !=0) {
-				  if (!e0) {
-				  id=0;
+			  if (!e0) {
+				  id=x;
 
 				  if ((table_index0-x) == field) {
-					  temp->srcid = 0;
-					  temp->dstid = 0;
+					  if (!(temp->srcid))
+						  temp->srcid = 0;
+					  if (!(temp->dstid))
+						  temp->dstid = 0;
 	        		  temp->proto = 0;
 				  }
 				  next0 = 0;
 				  next_table = 0;
-				  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -309,10 +308,6 @@ class_node_fn (vlib_main_t * vm,
 				  }
 			  } else {
 				  next0 = 11;
-			  }
-			  } else {
-				  vnet_buffer(b0)->l2_classify.table_index=(e0->next);
-				  next0=11;
 			  }
 
 			  end:
@@ -372,8 +367,6 @@ class_node_fn (vlib_main_t * vm,
 	        	  }
 	          }*/
 
-			  id = 15;
-
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {
@@ -381,8 +374,7 @@ class_node_fn (vlib_main_t * vm,
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = id;
 	              t->next_index = next0;
-	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
-	              t->table_index = 0;
+	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

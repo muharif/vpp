@@ -189,7 +189,7 @@ class_node_fn (vlib_main_t * vm,
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
 
-	          x0=table_index0/field;
+	          x0=floor(table_index0/field);
 	          x=x0*field;
 
 

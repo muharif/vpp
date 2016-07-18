@@ -202,7 +202,7 @@ class_node_fn (vlib_main_t * vm,
 
 	              //Check next table if entry can't be found
 
-	              if (!e0 && table_index0 !=0) {
+	              if (!e0) {
 	            	  checkempty:
 
 	            	  if ((table_index0 - x) == 0) {
@@ -263,7 +263,7 @@ class_node_fn (vlib_main_t * vm,
 
 			  // check identifier
 
-			  next_table = 0;
+			  next_table=0;
 
 			  if (!e0) {
 				  id=x;
@@ -374,7 +374,8 @@ class_node_fn (vlib_main_t * vm,
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = id;
 	              t->next_index = next0;
-	              t->table_index = t0 ? t0 - vcm->tables : ~0;
+	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
+	              t->table_index = 0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

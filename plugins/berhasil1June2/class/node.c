@@ -342,6 +342,7 @@ class_node_fn (vlib_main_t * vm,
 						  id = 19;
 						  next0 = 0;
 					  }
+					  id=n->src;
 
 				  }
 			  } else {

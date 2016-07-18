@@ -207,7 +207,6 @@ class_node_fn (vlib_main_t * vm,
 	            	  checkempty:
 
 	            	  if ((table_index0 - x) == 0) {
-	            		  not_found = 1;
 	            		  goto process;
 	            	  }
 
@@ -272,6 +271,7 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 				  id=0;
+				  return 0;
 				  //if ((table_index0 - x) == 0) {
 
 					  next0 = 0;

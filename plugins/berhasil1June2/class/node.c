@@ -275,8 +275,9 @@ class_node_fn (vlib_main_t * vm,
 					  temp->proto = 0;
 				  }
 
-				  if ((temp->srcid == 0) && (temp->dstid == 0) && (temp->proto == 0))
-				  	  not_found = 1;
+				  if ((temp->srcid == 0) && (temp->dstid == 0) && (temp->proto == 0)) {
+					  not_found = 1;
+				  }
 
 				  next0 = 0;
 				  next_table = 0;
@@ -388,8 +389,9 @@ class_node_fn (vlib_main_t * vm,
 						   bi0, next0);
 		}
 
-	      if (not_found == 0)
+	      if (not_found == 0) {
 	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
+	      }
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

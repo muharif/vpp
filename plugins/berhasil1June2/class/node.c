@@ -266,9 +266,9 @@ class_node_fn (vlib_main_t * vm,
 
 			  next_table = 0;
 
-			  /*if (table_index0 == 0) {
+			  if (table_index0 == 0) {
 				  goto end;
-			  }*/
+			  }
 
 			  if (!e0) {
 				  id=0;
@@ -391,7 +391,7 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-	          if (not_found != 1) {
+	          if (not_found == 2) {
 				  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 								   to_next, n_left_to_next,
 								   bi0, next0);

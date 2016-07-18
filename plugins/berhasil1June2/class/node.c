@@ -284,6 +284,7 @@ class_node_fn (vlib_main_t * vm,
 
 				  if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0) {
 					  test = 1;
+					  next0 = 0;
 					  goto end;
 				  }
 

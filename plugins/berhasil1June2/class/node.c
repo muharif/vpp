@@ -97,6 +97,8 @@ class_node_fn (vlib_main_t * vm,
 	  class_next_t * n;
 	  u32 id=0;
 
+	  temp = 0;
+
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
 	  else

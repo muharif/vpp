@@ -302,7 +302,7 @@ class_node_fn (vlib_main_t * vm,
 				  id=e0->id;
 			  }
 
-			  id = temp->protoid;
+			  id = temp->proto;
 
 			  if (next_table == 0) {
 				  i=0;

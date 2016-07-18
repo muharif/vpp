@@ -211,9 +211,9 @@ class_node_fn (vlib_main_t * vm,
 	            		  goto process;
 
 	            	  if ((table_index0-x) <= 4 && (table_index0-x) > 0)
-	            		  temp->src = 0;
+	            		  temp->srcid = 0;
 	            	  else if ((table_index0-x) <= 8 && (table_index0-x) > 4)
-	            		  temp->dst = 0;
+	            		  temp->dstid = 0;
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);

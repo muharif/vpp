@@ -268,7 +268,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id=0;
+				  //id=0;
 
 				  if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 	        		  temp->srcid = 0;

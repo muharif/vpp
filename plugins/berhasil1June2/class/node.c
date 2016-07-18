@@ -188,8 +188,11 @@ class_node_fn (vlib_main_t * vm,
 	          e0 = 0;
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
-	          x0=table_index0/field;
-	          x=x0*field;
+
+	          if (table_index0 != 0) {
+				  x0=table_index0/field;
+				  x=x0*field;
+	          }
 
 
 	          if (PREDICT_TRUE(table_index0 != ~0))

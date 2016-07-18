@@ -210,6 +210,11 @@ class_node_fn (vlib_main_t * vm,
 	            	  if ((table_index0 - x) == 0)
 	            		  goto process;
 
+	            	  if ((table_index0-x) <= 4 && (table_index0-x) > 0)
+	            		  temp->src = 0;
+	            	  else if ((table_index0-x) <= 8 && (table_index0-x) > 4)
+	            		  temp->dst = 0;
+
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 		              if (t0->active_elements==0){
@@ -269,14 +274,11 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 				  id = table_index0-x;
-				  if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
-	        		  if (!(temp->srcid > 0))
-	        			  temp->srcid = 0;
-				  } else if ((table_index0-x) == 0) {
-	        		  if (!(temp->srcid > 0))
+				  if ((table_index0-x) == 0) {
+	        		  /*if (!(temp->srcid > 0))
 	        			  temp->srcid = 0;
 	        		  if (!(temp->dstid > 0))
-	        			  temp->dstid = 0;
+	        			  temp->dstid = 0;*/
 	        		  temp->proto = 0;
 	        	  }
 

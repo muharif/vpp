@@ -265,6 +265,9 @@ class_node_fn (vlib_main_t * vm,
 
 			  next_table = 0;
 
+			  if (table_index0 == 0)
+				  goto end;
+
 			  if (!e0) {
 				  id=0;
 				  if ((table_index0 - x) == 0) {

@@ -276,6 +276,7 @@ class_node_fn (vlib_main_t * vm,
 				  id = 0;
 				  test = 1;
 	        	  next_table = 0;
+	        	  next0 = 0;
 	        	  goto end;
 			  } else {
 				  if (table_index0 == 0) {

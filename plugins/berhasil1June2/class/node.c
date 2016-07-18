@@ -266,17 +266,17 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 
-				  return 0;
 				  id=0;
 				  if ((table_index0 - x) == 0) {
-					  //if (!(temp->srcid))
+					  if (!(temp->srcid))
 						  temp->srcid = 0;
-					  //if (!(temp->dstid))
+					  if (!(temp->dstid))
 						  temp->dstid = 0;
 					  temp->proto = 0;
 				  }
 				  next0 = 0;
 				  next_table = 0;
+				  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -385,7 +385,7 @@ class_node_fn (vlib_main_t * vm,
 						   bi0, next0);
 		}
 
-	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
+	      //vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

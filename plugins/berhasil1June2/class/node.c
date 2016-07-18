@@ -208,12 +208,14 @@ class_node_fn (vlib_main_t * vm,
 	            	  checkempty:
 	            	  if ((table_index0 - x) > field)
 	            		  goto process;
+	            	  else {
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 		              if (t0->active_elements==0){
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
 	            			  goto loop;
+	            	  }
 	            	  }
 	              }
 
@@ -289,7 +291,7 @@ class_node_fn (vlib_main_t * vm,
 				  } else {
 					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 		        		  temp->srcid = e0->id;
-		        		  next_table = 9;
+		        		  next_table = x+5;
 		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;

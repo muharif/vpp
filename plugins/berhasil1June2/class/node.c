@@ -270,6 +270,8 @@ class_node_fn (vlib_main_t * vm,
 				  id=0;
 				  if ((table_index0 - x) == 0) {
 					  not_found = 1;
+					  next0 = 0;
+					  next_table = 0;
 					  goto end;
 					  if (!(temp->srcid))
 						  temp->srcid = 0;
@@ -279,9 +281,6 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  //if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
 
-
-				  next0 = 0;
-				  next_table = 0;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;

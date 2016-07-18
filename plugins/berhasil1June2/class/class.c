@@ -1,5 +1,4 @@
 #include <vnet/classify/input_acl.h>
-#include <math.h>
 #include <vnet/ip/ip.h>
 #include <vnet/api_errno.h>     /* for API error numbers */
 #include <vnet/l2/l2_classify.h> /* for L2_CLASSIFY_NEXT_xxx */

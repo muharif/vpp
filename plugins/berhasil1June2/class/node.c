@@ -265,14 +265,12 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id=table_index0-x;
-            	  //if ((table_index0 - x) == field) {
-    				  if (!(temp->srcid))
-    					  temp->srcid = 0;
-    				  if (!(temp->dstid))
-    					  temp->dstid = 0;
-    				  temp->proto = 0;
-            	  //}
+				  id=0;
+				  if (!(temp->srcid))
+					  temp->srcid = 0;
+				  if (!(temp->dstid))
+					  temp->dstid = 0;
+				  temp->proto = 0;
 				  next0 = 0;
 				  next_table = 0;
 			  } else {
@@ -291,8 +289,7 @@ class_node_fn (vlib_main_t * vm,
 		        	  }
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
-				  //id=e0->id;
-				  id=table_index0-x;
+				  id=e0->id;
 			  }
 
 			  if (next_table == 0) {

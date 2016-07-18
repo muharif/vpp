@@ -96,7 +96,7 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
-	  u32 not_found = 1;
+	  u32 not_found = 0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -277,7 +277,9 @@ class_node_fn (vlib_main_t * vm,
 						  temp->dstid = 0;
 					  temp->proto = 0;
 				  }
-				  //if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
+				  if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
+					  not_found = 1;
+
 
 				  next0 = 0;
 				  next_table = 0;
@@ -298,7 +300,6 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  id=e0->id;
-				  not_found = 0;
 			  }
 
 			  if (next_table == 0) {

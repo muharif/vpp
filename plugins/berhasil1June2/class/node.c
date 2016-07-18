@@ -188,6 +188,7 @@ class_node_fn (vlib_main_t * vm,
 	          e0 = 0;
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
+
 	          x0=table_index0/field;
 	          x=x0*field;
 
@@ -205,8 +206,9 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-	            	  if ((table_index0 - x) == field)
+	            	  if ((table_index0 - x) == 0)
 	            		  goto process;
+
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 		              if (t0->active_elements==0){
@@ -269,7 +271,7 @@ class_node_fn (vlib_main_t * vm,
 
 				  /*if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 	        		  temp->srcid = 0;
-	        	  } else */ if ((table_index0-x) == field) {
+	        	  } else */ if ((table_index0-x) == 0) {
 	        		  if (temp->srcid == 0)
 	        			  temp->srcid = 0;
 	        		  if (temp->dstid == 0)

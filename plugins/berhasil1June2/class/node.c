@@ -268,6 +268,8 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 
+				  return 0;
+
 				  temp->srcid =0;
 				  temp->dstid =0;
 				  temp->proto = 0;

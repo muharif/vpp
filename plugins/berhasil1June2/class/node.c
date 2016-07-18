@@ -199,7 +199,6 @@ class_node_fn (vlib_main_t * vm,
 	              t0 = pool_elt_at_index (vcm->tables, table_index0);
 	              if (!t0)
 	            	  goto process;
-
 	              e0 = class_find_entry (t0, (u8 *) h0, hash0,
 	                                             now);
 
@@ -211,7 +210,7 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 	            	  table_index0++;
-	            	  if ((table_index0 - x) > field)
+	            	  if ((table_index0 - x) > field-1)
 	            		  goto process;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 		              if (t0->active_elements==0){

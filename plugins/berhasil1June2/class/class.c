@@ -1884,6 +1884,9 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 		}
 	}
 
+	if (src == 0 || dst == 0 || proto == 0)
+		return 0;
+
 	c->src=src;
 	c->dst=dst;
 	c->proto=proto;
@@ -2076,7 +2079,6 @@ int class_add_del_class (class_main_t * cm,
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
 		  e->next = 0;
-		  //e->id=c->total;
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;

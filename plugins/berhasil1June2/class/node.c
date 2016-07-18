@@ -210,7 +210,7 @@ class_node_fn (vlib_main_t * vm,
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
-		              if (t0->active_elements==0){
+		              if (t0->active_elements == 0){
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
 	            			  goto loop;
@@ -266,6 +266,7 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 				  id=0;
+
 				  if (!(temp->srcid))
 					  temp->srcid = 0;
 				  if (!(temp->dstid))
@@ -371,8 +372,7 @@ class_node_fn (vlib_main_t * vm,
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = id;
 	              t->next_index = next0;
-	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
-	              t->table_index = next_table;
+	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

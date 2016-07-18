@@ -207,7 +207,7 @@ class_node_fn (vlib_main_t * vm,
 
 	              if (!e0) {
 	            	  checkempty:
-	            	  if ((table_index0 - x) > field)
+	            	  if ((table_index0 - x) == field)
 	            		  goto process;
 
 	            	  table_index0++;

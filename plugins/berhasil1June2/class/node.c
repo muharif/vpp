@@ -285,7 +285,7 @@ class_node_fn (vlib_main_t * vm,
 					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 		        		  temp->srcid = e0->id;
 		        		  next_table = x+5;
-		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
+		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4 && temp->srcid !=0) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
 		        	  } else {

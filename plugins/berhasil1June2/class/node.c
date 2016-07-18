@@ -196,6 +196,8 @@ class_node_fn (vlib_main_t * vm,
 	              loop:
 	        	  hash0 = vnet_buffer(b0)->l2_classify.hash;
 	              t0 = pool_elt_at_index (vcm->tables, table_index0);
+	              if (!t0)
+	            	  return 0;
 	              e0 = class_find_entry (t0, (u8 *) h0, hash0,
 	                                             now);
 
@@ -276,14 +278,10 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->srcid = 0;
 	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
-	        	  } else {
-	        		  temp->srcid = 0;
-	        		  temp->dstid = 0;
-	        		  temp->proto = 0;
 	        	  }
 
-				  if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0)
-					  return 0;
+				  //if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0)
+				//	  return 0;
 
 				  next_table = 0;
 			  } else {

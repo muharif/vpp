@@ -189,9 +189,6 @@ class_node_fn (vlib_main_t * vm,
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
 
-	          x0=table_index0/field;
-	          x=x0*field;
-
 
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
@@ -203,6 +200,9 @@ class_node_fn (vlib_main_t * vm,
 	                                             now);
 
 	              //Check next table if entry can't be found
+
+		          x0=table_index0/field;
+		          x=x0*field;
 
 	              if (!e0) {
 	            	  checkempty:
@@ -260,8 +260,8 @@ class_node_fn (vlib_main_t * vm,
 	            }
 	          process:
 
-	          //x0=table_index0/field;
-	          //x=x0*field;
+	          x0=table_index0/field;
+	          x=x0*field;
 
 			  // check identifier
 
@@ -288,7 +288,7 @@ class_node_fn (vlib_main_t * vm,
 		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
-		        	  } else {
+		        	  } else if ((table_index0-x) == 0) {
 		        		  temp->proto = e0->id;
 		        		  next_table = 0;
 		        	  }

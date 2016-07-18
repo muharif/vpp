@@ -280,7 +280,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->srcid = 0;
 	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
-	        		  id = 101;
+	        		  id = table_index0;
 	        	  }
 
 

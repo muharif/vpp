@@ -267,7 +267,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (table_index0 == 0) {
-				  not_found = 10;
+				  not_found = 2;
 				  goto end;
 			  }
 
@@ -303,8 +303,11 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  id=e0->id;
-				  not_found = 2;
+				  not_found = 3;
 			  }
+
+			  if (not_found == 1)
+				  goto end;
 
 			  if (next_table == 0) {
 				  i=0;

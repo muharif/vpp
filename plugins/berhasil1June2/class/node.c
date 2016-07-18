@@ -205,7 +205,7 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-	            	  if ((table_index0 - x) == 0)
+	            	  if ((table_index0 - x) == field)
 	            		  goto process;
 
 	            	  table_index0++;
@@ -270,7 +270,7 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=x;
 
-				  if ((table_index0-x) == 0) {
+				  if ((table_index0-x) == field) {
 					  temp->srcid = 0;
 					  temp->dstid = 0;
 	        		  temp->proto = 0;

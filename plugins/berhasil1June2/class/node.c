@@ -272,7 +272,7 @@ class_node_fn (vlib_main_t * vm,
 					  not_found = 1;
 					  next0 = 0;
 					  next_table = 0;
-					  goto end;
+					  goto end2;
 					  if (!(temp->srcid))
 						  temp->srcid = 0;
 					  if (!(temp->dstid))
@@ -332,11 +332,11 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-	          if (id == 0)
 				  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 								   to_next, n_left_to_next,
 								   bi0, next0);
 		}
+	      end2:
 	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 

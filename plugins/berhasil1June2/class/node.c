@@ -96,6 +96,7 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
+	  u32 test=0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -282,7 +283,7 @@ class_node_fn (vlib_main_t * vm,
 	        	  }
 
 				  if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0)
-					  return 0;
+					  test = 1;
 
 				  next_table = 0;
 			  } else {
@@ -387,12 +388,14 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
+	          if (test == 0) {
+	        	  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,
 						   bi0, next0);
+	          }
 		}
-
-	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
+	      if  (test == 0)
+	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

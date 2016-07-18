@@ -371,7 +371,8 @@ class_node_fn (vlib_main_t * vm,
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
 	              t->id = id;
 	              t->next_index = next0;
-	              t->table_index = t0 ? t0 - vcm->tables : ~0;
+	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
+	              t->table_index = table_index0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

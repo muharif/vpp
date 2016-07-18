@@ -217,6 +217,7 @@ class_node_fn (vlib_main_t * vm,
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
+
 		              if (t0->active_elements==0){
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
@@ -273,7 +274,7 @@ class_node_fn (vlib_main_t * vm,
 
 
 			  if (!e0) {
-				  id = table_index0-x;
+				  id = 0;
 				  if ((table_index0-x) == 0) {
 	        		  temp->proto = 0;
 	        	  }
@@ -301,7 +302,7 @@ class_node_fn (vlib_main_t * vm,
 		        	  }
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
-				  //id=e0->id;
+				  id=e0->id;
 			  }
 
 			  if (next_table == 0) {
@@ -400,7 +401,6 @@ class_node_fn (vlib_main_t * vm,
 	        		  	  temp->prev=0;
 	        	  }
 	          }*/
-			  id = next_table;
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {

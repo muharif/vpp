@@ -265,6 +265,8 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
+
+				  return 0;
 				  id=0;
 				  if ((table_index0 - x) == 0) {
 					  //if (!(temp->srcid))
@@ -275,7 +277,6 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  next0 = 0;
 				  next_table = 0;
-				  return 0;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;

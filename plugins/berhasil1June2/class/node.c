@@ -306,9 +306,28 @@ class_node_fn (vlib_main_t * vm,
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
 						  goto end;
+					  } else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
+						  next0 = n->action;
+						  goto end;
+					  } else if ((n->src == temp->srcid) && (n->dst == 0) && (n->proto == temp->proto)) {
+						  next0 = n->action;
+						  goto end;
+					  } else if ((n->src == 0) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
+						  next0 = n->action;
+						  goto end;
+					  } else if ((n->src == temp->srcid) && (n->dst == 0) && (n->proto == 0)) {
+						  next0 = n->action;
+						  goto end;
+					  } else if ((n->src == 0) && (n->dst == temp->dstid) && (n->proto == 0)) {
+						  next0 = n->action;
+						  goto end;
+					  } else if ((n->src == 0) && (n->dst == 0) && (n->proto == temp->proto)) {
+						  next0 = n->action;
+						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
+
 				  }
 			  } else {
 				  next0 = 11;

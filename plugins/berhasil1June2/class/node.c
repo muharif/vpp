@@ -297,11 +297,11 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  id=e0->id;
-				  id=next_table;
 			  }
 
 			  if (next_table == 0) {
 				  i=0;
+				  id=temp->dstid;
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {

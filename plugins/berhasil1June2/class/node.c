@@ -304,7 +304,7 @@ class_node_fn (vlib_main_t * vm,
 		        	  }
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
-				  id=e0->id;
+				  //id=e0->id;
 			  }
 
 			  if (next_table == 0) {

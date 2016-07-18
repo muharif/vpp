@@ -90,8 +90,8 @@ class_node_fn (vlib_main_t * vm,
 	  u32 misses = 0;
 	  u32 chain_hits = 0;
 	  int field=9;
-	  int x0 =0;
-	  int x=0, i;
+	  int x0;
+	  int x, i;
 	  u32 next_table;
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
@@ -188,11 +188,8 @@ class_node_fn (vlib_main_t * vm,
 	          e0 = 0;
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
-
-	          if (table_index0 != 0) {
-				  x0=table_index0/field;
-				  x=x0*field;
-	          }
+	          x0=table_index0/field;
+	          x=x0*field;
 
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
@@ -208,7 +205,7 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-	            	  if ((table_index0 - x) == 0)
+	            	  if ((table_index0 - x) == field)
 	            		  goto process;
 
 	            	  table_index0++;
@@ -270,7 +267,7 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=x;
 
-				  if ((table_index0-x) == 0) {
+				  if ((table_index0-x) == field) {
 					  if (!(temp->srcid))
 						  temp->srcid = 0;
 					  if (!(temp->dstid))

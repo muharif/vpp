@@ -260,7 +260,7 @@ class_node_fn (vlib_main_t * vm,
 	            }
 	          process:
 
-	          x0=table_index0/field;
+	          x0=floor(table_index0/field);
 	          x=x0*field;
 
 			  // check identifier
@@ -268,7 +268,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id=x;
+				  id=0;
 
 				  if ((table_index0-x) == 0) {
 					  temp->srcid = 0;
@@ -285,7 +285,7 @@ class_node_fn (vlib_main_t * vm,
 					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 		        		  temp->srcid = e0->id;
 		        		  next_table = x+5;
-		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4 && temp->srcid !=0) {
+		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
 		        	  } else {

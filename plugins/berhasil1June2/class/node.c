@@ -265,7 +265,8 @@ class_node_fn (vlib_main_t * vm,
 
 			  next_table=0;
 
-			  if (!e0) {
+			  if (table_index0 !=0) {
+				  if (!e0) {
 				  id=x;
 
 				  if ((table_index0-x) == field) {
@@ -309,6 +310,8 @@ class_node_fn (vlib_main_t * vm,
 			  } else {
 				  next0 = 11;
 			  }
+			  } else
+				  vnet_buffer(b0)->l2_classify.table_index=(e0->next);
 
 			  end:
 
@@ -366,6 +369,8 @@ class_node_fn (vlib_main_t * vm,
 	        		  	  temp->prev=0;
 	        	  }
 	          }*/
+
+			  id = 15;
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))

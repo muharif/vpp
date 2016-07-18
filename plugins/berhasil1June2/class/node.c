@@ -274,8 +274,9 @@ class_node_fn (vlib_main_t * vm,
 						  temp->dstid = 0;
 					  temp->proto = 0;
 				  }
+				  if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
+					  not_found = 1;
 
-				  not_found = 1;
 				  next0 = 0;
 				  next_table = 0;
 			  } else {
@@ -381,9 +382,11 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-		  /*vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
-						   to_next, n_left_to_next,
-						   bi0, next0);*/
+	          if (not_found == 0) {
+				  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
+								   to_next, n_left_to_next,
+								   bi0, next0);
+	          }
 		}
 
 	      if (not_found == 0) {

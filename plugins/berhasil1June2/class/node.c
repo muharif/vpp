@@ -276,7 +276,6 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  next0 = 0;
 				  next_table = 0;
-				  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -385,7 +384,7 @@ class_node_fn (vlib_main_t * vm,
 						   bi0, next0);
 		}
 
-	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
+	      //vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

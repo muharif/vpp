@@ -2225,7 +2225,12 @@ int class_add_del_class (class_main_t * cm,
 		  } else
 			  continue;
 	}
-
+	if (c->src == 0)
+		srcid = 0;
+	if (c->dst == 0)
+		dstid = 0;
+	if (c->proto == 0)
+		protoid =0;
 	class_add_action (cm, srcid, dstid, protoid, action, &index, is_add);
 	  return 0;
 

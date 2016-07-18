@@ -306,16 +306,13 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (next_table == 0) {
 				  i=0;
-				  for (i=0;i<=10;i++) {
+				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  //if (next0 != 0)
+						  if (next0 != 0)
 							  goto end;
-					  } else
-						  next0=0;
-
-					  /*else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
+					  } else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
 						  next0 = n->action;
 						  if (next0 != 0)
 							  goto end;
@@ -339,7 +336,7 @@ class_node_fn (vlib_main_t * vm,
 						  next0 = n->action;
 						  if (next0 != 0)
 							  goto end;
-					  }*/
+					  }
 
 				  }
 			  } else {
@@ -408,7 +405,7 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->id = id;
+	              t->id = test;
 	              t->next_index = next0;
 	              t->table_index = t0 ? t0 - vcm->tables : ~0;
 	            }
@@ -418,9 +415,7 @@ class_node_fn (vlib_main_t * vm,
 						   to_next, n_left_to_next,
 						   bi0, next0);
 		}
-	      if (test != 0)
-	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
-
+	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

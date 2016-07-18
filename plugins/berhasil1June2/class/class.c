@@ -1888,12 +1888,6 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	c->dst=dst;
 	c->proto=proto;
 
-	if (!src || !dst || !proto) {
-		clib_error_return (0, "One of the field is empty, rejecting input");
-		return 0;
-	}
-
-
 	return c;
 }
 
@@ -2038,6 +2032,13 @@ int class_add_del_class (class_main_t * cm,
   }
   	//increment for the identifier
 
+  c = class_check (cm, e, match);
+
+  if (c->src ==0 || c->dst == 0 || c->proto == 0) {
+	  return 0;
+  }
+
+
   	c->total++;
 
 	for (add=0;add<=(field-1);add=add+1){
@@ -2075,7 +2076,6 @@ int class_add_del_class (class_main_t * cm,
 
 		  t = pool_elt_at_index (cm->tables, next_table_index);
 		  e = (class_entry_t *)&_max_e;
-		  c = class_check (cm, e, match);
 
 		  e->next_index = hit_next_index;
 		  action=e->next_index;
@@ -2089,6 +2089,8 @@ int class_add_del_class (class_main_t * cm,
 		  e->last_heard = 0;
 		  e->flags = 0;
 		  e->hits=0;
+
+
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));

@@ -21,6 +21,8 @@
 #include <vnet/vnet.h>
 #include <vnet/ip/ip.h>
 #include <vnet/ethernet/ethernet.h>
+#include <math.h>
+
 //#include <vnet/classify/vnet_classify.h>
 
 #include <vppinfra/hash.h>

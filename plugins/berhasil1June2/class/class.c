@@ -2032,6 +2032,12 @@ int class_add_del_class (class_main_t * cm,
   }
   	//increment for the identifier
 
+  c = class_check (cm, e, match);
+
+  if (c->src ==0 || c->dst == 0 || c->proto == 0) {
+	  return 0;
+  }
+
   	c->total++;
 
 	for (add=0;add<=(field-1);add=add+1){
@@ -2069,19 +2075,12 @@ int class_add_del_class (class_main_t * cm,
 
 		  t = pool_elt_at_index (cm->tables, next_table_index);
 		  e = (class_entry_t *)&_max_e;
-		  c = class_check (cm, e, match);
-
-		  if (c->src ==0 || c->dst == 0 || c->proto == 0) {
-			  clib_error_return (0, "Complete match value required");
-			  return 0;
-		  }
 
 		  e->next_index = hit_next_index;
 		  action=e->next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
 		  e->next = 0;
-		  //e->id=c->total;
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;

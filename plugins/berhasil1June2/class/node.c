@@ -208,14 +208,12 @@ class_node_fn (vlib_main_t * vm,
 	            	  checkempty:
 	            	  if ((table_index0 - x) > field)
 	            		  goto process;
-	            	  else {
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 		              if (t0->active_elements==0){
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
 	            			  goto loop;
-	            	  }
 	            	  }
 	              }
 
@@ -302,7 +300,7 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  id=e0->id;
-				  id=next_table;
+				  id=x;
 			  }
 
 			  if (next_table == 0) {

@@ -277,7 +277,7 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->proto = 0;
 	        	  }
 
-				  id = temp->srcid;
+				  id = 0;
 
 
 				  next0 = 0;
@@ -301,6 +301,7 @@ class_node_fn (vlib_main_t * vm,
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  id=e0->id;
 			  }
+			  id = temp->protoid;
 
 			  if (next_table == 0) {
 				  i=0;
@@ -375,7 +376,6 @@ class_node_fn (vlib_main_t * vm,
 	        		  	  temp->prev=0;
 	        	  }
 	          }*/
-
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {

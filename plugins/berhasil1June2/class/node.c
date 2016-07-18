@@ -279,7 +279,6 @@ class_node_fn (vlib_main_t * vm,
 				  next0 = 0;
 				  next_table = 0;
 			  } else {
-				  not_found = 0;
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
 				  } else {

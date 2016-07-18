@@ -2071,24 +2071,18 @@ int class_add_del_class (class_main_t * cm,
 		  e = (class_entry_t *)&_max_e;
 		  c = class_check (cm, e, match);
 
-		  if (c->src ==0 || c->dst == 0 || c->proto == 0) {
-			  c->total--;
-			  return 0;
-		  }
-
 		  e->next_index = hit_next_index;
 		  action=e->next_index;
 		  e->opaque_index=opaque_index;
 		  e->advance = advance;
 		  e->next = 0;
+		  //e->id=c->total;
 		  e->src=c->src;
 		  e->dst=c->dst;
 		  e->proto=c->proto;
 		  e->last_heard = 0;
 		  e->flags = 0;
 		  e->hits=0;
-
-
 
 		  clib_memcpy (&e->key, match + t->skip_n_vectors * sizeof (u32x4),
 				  t->match_n_vectors * sizeof (u32x4));

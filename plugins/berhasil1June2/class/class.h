@@ -21,8 +21,6 @@
 #include <vnet/vnet.h>
 #include <vnet/ip/ip.h>
 #include <vnet/ethernet/ethernet.h>
-#include <math.h>
-
 //#include <vnet/classify/vnet_classify.h>
 
 #include <vppinfra/hash.h>
@@ -140,7 +138,6 @@ typedef struct {
 	u32 action;
 } class_next_t;
 
-
 typedef struct {
 	u32 srcid;
 	u32 dstid;
@@ -150,7 +147,6 @@ typedef struct {
 class_check_input_t class_check_input;
 class_temp_t class_temp;
 class_next_t class_next;
-
 
 typedef struct {
   /* Mask to apply after skipping N vectors */

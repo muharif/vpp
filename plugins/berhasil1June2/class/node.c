@@ -398,7 +398,7 @@ class_node_fn (vlib_main_t * vm,
 								   bi0, next0);
 	          }
 		}
-
+	      if (not_found == 2)
 	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 

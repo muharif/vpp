@@ -270,15 +270,19 @@ class_node_fn (vlib_main_t * vm,
 
 				  if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 	        		  temp->srcid = 0;
+	        		  id = 103;
 	        	  } else if ((table_index0-x) == field) {
 	        		  temp->srcid = 0;
 	        		  temp->dstid = 0;
-	        		  //temp->proto = 0;
+	        		  temp->proto = 0;
+	        		  id = 102;
 	        	  } else {
 	        		  temp->srcid = 0;
 	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
+	        		  id = 101;
 	        	  }
+
 
 				  next0 = 0;
 				  goto end;
@@ -301,7 +305,6 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 				  id=e0->id;
-				  id = temp->proto;
 			  }
 
 			  if (next_table == 0) {

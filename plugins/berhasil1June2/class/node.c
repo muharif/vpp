@@ -265,7 +265,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id=temp->dst;
+				  id=temp->dstid;
 				  if (!(temp->srcid))
 					  temp->srcid = 0;
 				  if (!(temp->dstid))

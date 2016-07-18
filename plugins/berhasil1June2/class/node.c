@@ -305,25 +305,32 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  goto end;
+						  if (next0 != 0)
+							  goto end;
 					  } else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
 						  next0 = n->action;
-						  goto end;
+						  if (next0 != 0)
+							  goto end;
 					  } else if ((n->src == temp->srcid) && (n->dst == 0) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  goto end;
+						  if (next0 != 0)
+							  goto end;
 					  } else if ((n->src == 0) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  goto end;
+						  if (next0 != 0)
+							  goto end;
 					  } else if ((n->src == temp->srcid) && (n->dst == 0) && (n->proto == 0)) {
 						  next0 = n->action;
-						  goto end;
+						  if (next0 != 0)
+							  goto end;
 					  } else if ((n->src == 0) && (n->dst == temp->dstid) && (n->proto == 0)) {
 						  next0 = n->action;
-						  goto end;
+						  if (next0 != 0)
+							  goto end;
 					  } else if ((n->src == 0) && (n->dst == 0) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  goto end;
+						  if (next0 != 0)
+							  goto end;
 					  } else {
 						  next0 = 0;
 					  }

@@ -274,7 +274,7 @@ class_node_fn (vlib_main_t * vm,
 						  temp->dstid = 0;
 					  temp->proto = 0;
 				  }
-				  if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
+				  //if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
 					  not_found = 1;
 
 				  next0 = 0;

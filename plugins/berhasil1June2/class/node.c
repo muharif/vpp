@@ -276,10 +276,8 @@ class_node_fn (vlib_main_t * vm,
 				  }
 
 				  not_found = 1;
-
 				  next0 = 0;
 				  next_table = 0;
-				  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -383,9 +381,9 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
+		  /*vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,
-						   bi0, next0);
+						   bi0, next0);*/
 		}
 
 	      if (not_found == 0) {

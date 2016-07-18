@@ -261,7 +261,7 @@ class_node_fn (vlib_main_t * vm,
 	                    }
 	                }
 	            }
-	          process:
+	          //process:
 
 			  // check identifier
 

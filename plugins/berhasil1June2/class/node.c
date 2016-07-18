@@ -201,7 +201,7 @@ class_node_fn (vlib_main_t * vm,
 
 	              //Check next table if entry can't be found
 
-		          x0=table_index0/field;
+		          x0=floor(table_index0/field);
 		          x=x0*field;
 
 	              if (!e0) {

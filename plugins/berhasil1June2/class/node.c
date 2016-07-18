@@ -282,8 +282,8 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->proto = 0;
 	        	  }
 
-				  //if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0)
-				//	  return 0;
+				  if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0)
+					  return 0;
 
 				  next_table = 0;
 			  } else {

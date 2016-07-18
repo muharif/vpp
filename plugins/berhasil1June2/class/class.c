@@ -2072,6 +2072,7 @@ int class_add_del_class (class_main_t * cm,
 		  c = class_check (cm, e, match);
 
 		  if (c->src ==0 || c->dst == 0 || c->proto == 0) {
+			  c->total--;
 			  return 0;
 		  }
 

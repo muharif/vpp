@@ -96,6 +96,7 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
+	  u32 test = 0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -280,6 +281,7 @@ class_node_fn (vlib_main_t * vm,
 
 	        	  if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0) {
 	        		  next0=0;
+	        		  test =1;
 	        	  	  goto end;
 	        	  }
 				  next_table = 0;
@@ -310,7 +312,7 @@ class_node_fn (vlib_main_t * vm,
 						  next0 = n->action;
 						  if (next0 != 0)
 							  goto end;
-					  } else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
+					  } /*else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
 						  next0 = n->action;
 						  if (next0 != 0)
 							  goto end;
@@ -334,7 +336,9 @@ class_node_fn (vlib_main_t * vm,
 						  next0 = n->action;
 						  if (next0 != 0)
 							  goto end;
-					  }
+					  }*/
+					  else
+						  next0=0;
 
 				  }
 			  } else {
@@ -413,8 +417,9 @@ class_node_fn (vlib_main_t * vm,
 						   to_next, n_left_to_next,
 						   bi0, next0);
 		}
+	      if (test != 0)
+	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 
-	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

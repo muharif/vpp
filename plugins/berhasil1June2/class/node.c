@@ -265,7 +265,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id=temp->src;
+				  id=x;
 
 				  if ((table_index0-x) == field) {
 					  if (!(temp->srcid))

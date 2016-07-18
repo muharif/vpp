@@ -280,8 +280,6 @@ class_node_fn (vlib_main_t * vm,
 
 
 				  next0 = 0;
-				  goto end;
-
 				  next_table = 0;
 			  } else {
 				  if (table_index0 == 0) {

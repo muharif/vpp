@@ -206,8 +206,10 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-	            	  if ((table_index0 - x) == 0)
+	            	  if ((table_index0 - x) == 0) {
+
 	            		  goto process;
+	            	  }
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -265,8 +267,9 @@ class_node_fn (vlib_main_t * vm,
 
 			  next_table = 0;
 
-			  if (table_index0 == 0)
+			  if (table_index0 == 0) {
 				  goto end;
+			  }
 
 			  if (!e0) {
 				  id=0;
@@ -277,7 +280,7 @@ class_node_fn (vlib_main_t * vm,
 						  temp->dstid = 0;
 					  temp->proto = 0;
 				  }
-				  if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
+				  //if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
 					  not_found = 1;
 
 

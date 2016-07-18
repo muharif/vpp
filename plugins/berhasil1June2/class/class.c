@@ -1,4 +1,5 @@
 #include <vnet/classify/input_acl.h>
+#include <math.h>
 #include <vnet/ip/ip.h>
 #include <vnet/api_errno.h>     /* for API error numbers */
 #include <vnet/l2/l2_classify.h> /* for L2_CLASSIFY_NEXT_xxx */
@@ -1886,6 +1887,12 @@ class_check_input_t * class_check (class_main_t * cm, class_entry_t * e, u8 * ma
 	c->src=src;
 	c->dst=dst;
 	c->proto=proto;
+
+	if (!src || !dst || !proto) {
+		clib_error_return (0, "One of the field is empty, rejecting input");
+		return 0;
+	}
+
 
 	return c;
 }

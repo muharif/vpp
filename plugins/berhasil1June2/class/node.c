@@ -268,12 +268,12 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id=0;
+				  id=x;
 
 				  if ((table_index0-x) == 0) {
-					  if (!(temp->srcid))
+					  //if (!(temp->srcid))
 						  temp->srcid = 0;
-					  if (!(temp->dstid))
+					  //if (!(temp->dstid))
 						  temp->dstid = 0;
 	        		  temp->proto = 0;
 				  }

@@ -270,19 +270,14 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=0;
 
-				  if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
-	        		  temp->srcid = 0;
-	        	  } else if ((table_index0-x) == field) {
-	        		  temp->srcid = 0;
-	        		  temp->dstid = 0;
-	        		  temp->proto = 0;
-	        	  } else {
+				  if ((table_index0-x) == field) {
 	        		  temp->srcid = 0;
 	        		  temp->dstid = 0;
 	        		  temp->proto = 0;
 	        	  }
-
+				  next0 = 0;
 				  next_table = 0;
+				  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;

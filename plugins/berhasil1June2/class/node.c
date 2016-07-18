@@ -268,8 +268,9 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 				  id=0;
-				  not_found = 1;
 				  if ((table_index0 - x) == 0) {
+					  not_found = 1;
+					  goto end;
 					  if (!(temp->srcid))
 						  temp->srcid = 0;
 					  if (!(temp->dstid))

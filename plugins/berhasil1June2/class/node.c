@@ -271,19 +271,14 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (!e0) {
 				  id=0;
-				  return 0;
-				  //if ((table_index0 - x) == 0) {
 
 					  next0 = 0;
 					  next_table = 0;
-					  goto end;
-					  /*if (!(temp->srcid))
+					  if (!(temp->srcid))
 						  temp->srcid = 0;
 					  if (!(temp->dstid))
 						  temp->dstid = 0;
-					  temp->proto = 0;*/
-				  //}
-				  //if (!(temp->srcid) &&!(temp->dstid)&&!(temp->proto))
+					  temp->proto = 0;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -308,6 +303,10 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (next_table == 0) {
 				  i=0;
+
+				  if ((temp->srcid == 0) &&(temp->dstid == 0)&&(temp->proto == 0))
+					  return 0;
+
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
@@ -336,13 +335,10 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-	          if (not_found != 1) {
 				  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 								   to_next, n_left_to_next,
 								   bi0, next0);
-	          }
 		}
-	      if (not_found != 1)
 	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 

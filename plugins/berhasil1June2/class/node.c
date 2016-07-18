@@ -267,7 +267,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (table_index0 == 0) {
-				  not_found = 1;
+				  not_found = 10;
 				  goto end;
 			  }
 

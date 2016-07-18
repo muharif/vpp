@@ -207,13 +207,12 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-	            	  if ((table_index0 - x) == 0)
-	            		  goto process;
-
 	            	  if ((table_index0-x) <= 4 && (table_index0-x) > 0)
 	            		  temp->srcid = 0;
 	            	  else if ((table_index0-x) <= 8 && (table_index0-x) > 4)
 	            		  temp->dstid = 0;
+	            	  if ((table_index0 - x) == 0)
+	            		  goto process;
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -311,32 +310,7 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  if (next0 != 0)
-							  goto end;
-					  } else if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == 0)) {
-						  next0 = n->action;
-						  if (next0 != 0)
-							  goto end;
-					  } else if ((n->src == temp->srcid) && (n->dst == 0) && (n->proto == temp->proto)) {
-						  next0 = n->action;
-						  if (next0 != 0)
-							  goto end;
-					  } else if ((n->src == 0) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
-						  next0 = n->action;
-						  if (next0 != 0)
-							  goto end;
-					  } else if ((n->src == temp->srcid) && (n->dst == 0) && (n->proto == 0)) {
-						  next0 = n->action;
-						  if (next0 != 0)
-							  goto end;
-					  } else if ((n->src == 0) && (n->dst == temp->dstid) && (n->proto == 0)) {
-						  next0 = n->action;
-						  if (next0 != 0)
-							  goto end;
-					  } else if ((n->src == 0) && (n->dst == 0) && (n->proto == temp->proto)) {
-						  next0 = n->action;
-						  if (next0 != 0)
-							  goto end;
+						  goto end;
 					  } else
 						  next0=0;
 

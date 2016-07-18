@@ -272,9 +272,11 @@ class_node_fn (vlib_main_t * vm,
 	        		  temp->srcid = 0;
 	        	  } else */ if ((table_index0-x) == 0) {
 	        		  if (temp->srcid > 0)
+	        			  temp->srcid = temp->srcid;
 	        		  else
 	        			  temp->srcid =0;
 	        		  if (temp->dstid > 0)
+	        			  temp->dstid = temp->dstid;
 	        		  else
 	        			  temp->dstid =0;
 	        		  temp->proto = 0;

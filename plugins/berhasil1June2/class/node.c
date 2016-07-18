@@ -96,7 +96,6 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
-	  u32 test=0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -207,9 +206,8 @@ class_node_fn (vlib_main_t * vm,
 
 	              if (!e0) {
 	            	  checkempty:
-	            	  if ((table_index0 - x) == field)
+	            	  if ((table_index0 - x) > field)
 	            		  goto process;
-
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
 		              if (t0->active_elements==0){
@@ -272,15 +270,17 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=0;
 
-				  temp->srcid = 0;
-				  temp->dstid = 0;
-				  temp->proto = 0;
-
-				  if (temp->srcid == 0 && temp->dstid == 0 && temp->proto == 0) {
-					  test = 1;
-					  next0 = 0;
-					  goto end;
-				  }
+				  if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
+	        		  temp->srcid = 0;
+	        	  } else if ((table_index0-x) > field) {
+	        		  temp->srcid = 0;
+	        		  temp->dstid = 0;
+	        		  temp->proto = 0;
+	        	  } else {
+	        		  temp->srcid = 0;
+	        		  temp->dstid = 0;
+	        		  temp->proto = 0;
+	        	  }
 
 				  next_table = 0;
 			  } else {
@@ -385,12 +385,12 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-	        	  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
+		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,
 						   bi0, next0);
 		}
-	      if  (test == 0)
-	    	  vlib_put_next_frame (vm, node, next_index, n_left_to_next);
+
+	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);
 	    }
 
 	  vlib_node_increment_counter (vm, node->node_index,

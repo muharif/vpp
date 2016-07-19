@@ -326,7 +326,10 @@ class_node_fn (vlib_main_t * vm,
 			  }
 
 			  end:
-			  time_spent = end_time.tv_usec - begin_time.tv_usec;
+			  if (next_table == 0)
+				  time_spent = end_time.tv_usec - begin_time.tv_usec;
+			  else
+				  time_spent = 0;
 
               //Check only the field that want to be checked
 

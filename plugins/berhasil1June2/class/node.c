@@ -390,9 +390,11 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-		  /*vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
+	         if (e0) {
+		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,
-						   bi0, next0);*/
+						   bi0, next0);
+	         }
 		}
 
 	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);

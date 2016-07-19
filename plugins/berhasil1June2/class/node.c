@@ -274,7 +274,7 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=x;
 
-				  if ((table_index0-x) == 0) {
+				  if ((table_index0-x) == field) {
 					  //if (!(temp->srcid))
 						  temp->srcid = 0;
 					  //if (!(temp->dstid))

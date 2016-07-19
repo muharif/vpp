@@ -96,7 +96,6 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
-	  u32 not_found = 0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -203,21 +202,19 @@ class_node_fn (vlib_main_t * vm,
 
 	              //Check next table if entry can't be found
 
-	              if (table_index0 != 0) {
-					  if (!e0) {
-						  checkempty:
+	              if (!e0) {
+	            	  checkempty:
 
-						  if ((table_index0 - x) == field)
-							  goto process;
+	            	  if ((table_index0 - x) == field)
+	            		  goto process;
 
-						  table_index0++;
-						  t0 = pool_elt_at_index (vcm->tables, table_index0);
-						  if (t0->active_elements==0){
-							  goto checkempty;
-						  } else if (t0->active_elements>0) {
-								  goto loop;
-						  }
-					  }
+	            	  table_index0++;
+		              t0 = pool_elt_at_index (vcm->tables, table_index0);
+		              if (t0->active_elements==0){
+	            		  goto checkempty;
+	            	  } else if (t0->active_elements>0) {
+	            			  goto loop;
+	            	  }
 	              }
 
 	              if (e0)
@@ -262,27 +259,23 @@ class_node_fn (vlib_main_t * vm,
 	                }
 	            }
 	          process:
-			  not_found = 0;
 
 			  // check identifier
 
 			  next_table = 0;
 
-
 			  if (!e0) {
 				  id=x;
 
 				  if ((table_index0-x) == field) {
-					  //if (!(temp->srcid))
+					  if (!(temp->srcid))
 						  temp->srcid = 0;
-					  //if (!(temp->dstid))
+					  if (!(temp->dstid))
 						  temp->dstid = 0;
 	        		  temp->proto = 0;
 				  }
 				  next0 = 0;
 				  next_table = 0;
-				  not_found = 1;
-				  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -304,7 +297,6 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (next_table == 0) {
 				  i=0;
-
 				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
@@ -317,7 +309,6 @@ class_node_fn (vlib_main_t * vm,
 			  } else {
 				  next0 = 11;
 			  }
-
 
 			  end:
 
@@ -387,11 +378,9 @@ class_node_fn (vlib_main_t * vm,
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
-	          if (not_found == 0) {
 		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,
 						   bi0, next0);
-	          }
 		}
 
 	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);

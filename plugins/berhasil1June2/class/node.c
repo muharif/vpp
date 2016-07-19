@@ -211,7 +211,7 @@ class_node_fn (vlib_main_t * vm,
 		              test = (table_index0 - x);
 
 
-					  if ((table_index0 - x) == field)
+					  if ((table_index0 - x) == 0)
 					  	            		  goto process;
 
 	            	  table_index0++;

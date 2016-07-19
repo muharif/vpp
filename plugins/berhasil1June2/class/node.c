@@ -217,6 +217,8 @@ class_node_fn (vlib_main_t * vm,
 	            	  }
 	              }
 
+	              process:
+
 	              if (e0)
 	                {
 	                  vnet_buffer(b0)->l2_classify.opaque_index
@@ -258,7 +260,7 @@ class_node_fn (vlib_main_t * vm,
 	                    }
 	                }
 	            }
-	          process:
+
 
 			  // check identifier
 

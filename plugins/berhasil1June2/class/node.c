@@ -323,7 +323,7 @@ class_node_fn (vlib_main_t * vm,
 
 			  end:
 			  end_time= clock ();
-			  time_spent = end_time - begin_time;
+			  time_spent = (end_time - begin_time)/ CLOCKS_PER_SEC;
 
               //Check only the field that want to be checked
 

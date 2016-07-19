@@ -189,7 +189,7 @@ class_node_fn (vlib_main_t * vm,
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
 
-	          x0=floor(table_index0/field) + 1;
+	          x0=table_index0/field;
 	          x=x0*field;
 
 
@@ -271,7 +271,7 @@ class_node_fn (vlib_main_t * vm,
 			  if (!e0) {
 				  id=x;
 
-				  if ((x-table_index0) == 0) {
+				  if ((table_index0-x) == field) {
 					  if (!(temp->srcid))
 						  temp->srcid = 0;
 					  if (!(temp->dstid))
@@ -284,10 +284,10 @@ class_node_fn (vlib_main_t * vm,
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
 				  } else {
-					  if ((x-table_index0) <=4 && (x-table_index0)>0) {
+					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 		        		  temp->srcid = e0->id;
 		        		  next_table = x+5;
-		        	  } else if ((x-table_index0) <= 8 && (x-table_index0) > 4) {
+		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
 		        	  } else {

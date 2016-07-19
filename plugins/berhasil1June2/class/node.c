@@ -264,8 +264,6 @@ class_node_fn (vlib_main_t * vm,
 	          process:
 			  not_found = 0;
 
-			  if (table_index0 !=0) {
-
 			  // check identifier
 
 			  next_table = 0;
@@ -319,9 +317,7 @@ class_node_fn (vlib_main_t * vm,
 			  } else {
 				  next0 = 11;
 			  }
-			  } else {
-				  vnet_buffer(b0)->l2_classify.table_index=(e0->next);
-			  }
+
 
 			  end:
 

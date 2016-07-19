@@ -95,7 +95,7 @@ class_node_fn (vlib_main_t * vm,
 	  u32 next_table;
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
-	  //u32 id=0;
+	  u32 id=0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -268,7 +268,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 			  if (table_index0 != 0) {
 				  if (!e0) {
-					  //id=x;
+					  id=0;
 					  if ((table_index0-x) == field) {
 						  if (!(temp->srcid))
 							  temp->srcid = 0;
@@ -294,7 +294,7 @@ class_node_fn (vlib_main_t * vm,
 						  }
 					  }
 					  vnet_buffer(b0)->l2_classify.table_index=next_table;
-					  //id=e0->id;
+					  id=e0->id;
 				  }
 
 				  if (next_table == 0) {

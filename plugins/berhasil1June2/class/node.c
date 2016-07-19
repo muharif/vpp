@@ -220,9 +220,6 @@ class_node_fn (vlib_main_t * vm,
 					  }
 	              }
 
-			      return 0;
-
-
 	              if (e0)
 	                {
 	                  vnet_buffer(b0)->l2_classify.opaque_index
@@ -317,6 +314,8 @@ class_node_fn (vlib_main_t * vm,
 			  } else {
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 			  }
+
+			  return 0;
 
 			  end:
 

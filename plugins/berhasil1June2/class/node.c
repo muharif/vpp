@@ -292,16 +292,19 @@ class_node_fn (vlib_main_t * vm,
 					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 		        		  temp->srcid = e0->id;
 		        		  next_table = x+5;
+		        		  id = 100;
 		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
+		        		  id = 200;
 		        	  } else {
 		        		  temp->proto = e0->id;
 		        		  next_table = 0;
+		        		  id =300;
 		        	  }
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
-				  id=e0->id;
+				  //id=e0->id;
 			  }
 
 			  if (next_table == 0) {

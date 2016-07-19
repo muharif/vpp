@@ -27,7 +27,7 @@ typedef struct {
 	u32 id;
 	u32 next_index;
   u32 table_index;
-  //u32 entry_index;
+  double time;
 } class_trace_t;
 
 
@@ -49,8 +49,8 @@ static u8 * format_class_trace (u8 * s, va_list * args)
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
   class_trace_t * t = va_arg (*args, class_trace_t *);
 
-  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d",
-              t->id, t->next_index, t->table_index);
+  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, time %f",
+              t->id, t->next_index, t->table_index, t->time);
   return s;
 }
 
@@ -96,6 +96,8 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
+	  clock_t begin_time = clock ();
+	  clock_t end_time = clock ();
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -319,6 +321,8 @@ class_node_fn (vlib_main_t * vm,
 			  }
 
 			  end:
+			  end_time= clock ();
+			  time_spent = end_time - begin_time;
 
               //Check only the field that want to be checked
 
@@ -385,6 +389,7 @@ class_node_fn (vlib_main_t * vm,
 	              t->next_index = next0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->table_index = table_index0;
+	              t->time=time_spent;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

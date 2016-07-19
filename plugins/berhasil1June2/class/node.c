@@ -269,6 +269,9 @@ class_node_fn (vlib_main_t * vm,
 
 			  // check identifier
 	          process:
+	          x0=table_index0/field;
+	          x=x0*field;
+
 
 
 			  next_table = 0;

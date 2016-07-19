@@ -37,7 +37,7 @@ static u8 * format_ip_classify2_trace (u8 * s, va_list * args)
 vlib_node_registration_t ip4_classify_node;
 vlib_node_registration_t ip6_classify_node;
 
-#define foreach_ip_classify_error               \
+#define foreach_ip_classify2_error               \
 _(MISS, "Classify2 misses")                      \
 _(HIT, "Classify2 hits")                         \
 _(CHAIN_HIT, "Classify2 hits after chain walk")
@@ -317,7 +317,7 @@ ip4_classify2 (vlib_main_t * vm,
               vlib_node_runtime_t * node,
               vlib_frame_t * frame)
 {
-  return ip_classify_inline (vm, node, frame, 1 /* is_ip4 */);
+  return ip_classifyw_inline (vm, node, frame, 1 /* is_ip4 */);
 }
 
 

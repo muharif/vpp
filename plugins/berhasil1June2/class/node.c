@@ -217,7 +217,6 @@ class_node_fn (vlib_main_t * vm,
 	            	  }
 	              }
 
-	              process:
 
 	              if (e0)
 	                {
@@ -263,6 +262,8 @@ class_node_fn (vlib_main_t * vm,
 
 
 			  // check identifier
+              process:
+
 
 			  next_table = 0;
 

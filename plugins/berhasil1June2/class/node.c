@@ -374,8 +374,8 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->id = id;
-	              t->next_index = next0;
+	              t->id = 0;
+	              t->next_index = 0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->table_index = 0;
 	            }

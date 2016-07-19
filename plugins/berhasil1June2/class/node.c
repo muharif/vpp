@@ -96,7 +96,6 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
-	  int test=0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -190,7 +189,7 @@ class_node_fn (vlib_main_t * vm,
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
 
-	          x0=floor(table_index0/field);
+	          x0=floor(table_index0/field) + 1;
 	          x=x0*field;
 
 
@@ -201,17 +200,14 @@ class_node_fn (vlib_main_t * vm,
 	              t0 = pool_elt_at_index (vcm->tables, table_index0);
 	              e0 = class_find_entry (t0, (u8 *) h0, hash0,
 	                                             now);
-	              test = (table_index0 - x);
 
 	              //Check next table if entry can't be found
 
 	              if (!e0) {
 	            	  checkempty:
 
-
-
-					  if (test == 0)
-					  	            		  goto mbut;
+					  if ((x-table_index0) == field)
+					  	  goto process;
 
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -221,8 +217,6 @@ class_node_fn (vlib_main_t * vm,
 	            			  goto loop;
 	            	  }
 	              }
-
-	              mbut:
 
 	              if (e0)
 	                {
@@ -268,7 +262,7 @@ class_node_fn (vlib_main_t * vm,
 
 
 			  // check identifier
-	          //process:
+	          process:
 
 
 

@@ -192,7 +192,6 @@ class_node_fn (vlib_main_t * vm,
 				  x0=table_index0/field;
 				  x=x0*field;
 	          }
-		      return 0;
 
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
@@ -220,6 +219,9 @@ class_node_fn (vlib_main_t * vm,
 						  }
 					  }
 	              }
+
+			      return 0;
+
 
 	              if (e0)
 	                {

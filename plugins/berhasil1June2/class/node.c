@@ -274,8 +274,11 @@ class_node_fn (vlib_main_t * vm,
 						  temp->dstid = 0;
 	        		  temp->proto = 0;
 				  }
+				  next_index == 0;
 				  next0 = 0;
 				  next_table = 0;
+				  to_next == 0;
+				  n_left_to_next == 0;
 				  goto end;
 			  } else {
 				  if (table_index0 == 0) {
@@ -374,10 +377,10 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->id = 0;
-	              t->next_index = 0;
+	              t->id = id;
+	              t->next_index = next0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
-	              t->table_index = 0;
+	              t->table_index = next_table;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

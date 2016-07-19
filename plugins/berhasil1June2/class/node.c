@@ -96,6 +96,7 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
+	  u32 test=0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -205,7 +206,7 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-					  u32 test = (table_index0 - x);
+					  test = (table_index0 - x);
 
 	            	  if ( test == 0) {
 						  goto process;
@@ -266,7 +267,7 @@ class_node_fn (vlib_main_t * vm,
 
 
 			  // check identifier
-              //process:
+              process:
 
 
 			  next_table = 0;

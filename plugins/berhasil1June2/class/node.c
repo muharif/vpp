@@ -98,7 +98,7 @@ class_node_fn (vlib_main_t * vm,
 	  u32 id=0;
 	  clock_t begin_time = clock ();
 	  clock_t end_time = clock ();
-	  double time = 0;
+	  double time_spent = 0;
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;

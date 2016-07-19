@@ -49,7 +49,7 @@ static u8 * format_class_trace (u8 * s, va_list * args)
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
   class_trace_t * t = va_arg (*args, class_trace_t *);
 
-  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, time %f",
+  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, time %f usec",
               t->id, t->next_index, t->table_index, t->time);
   return s;
 }
@@ -98,7 +98,6 @@ class_node_fn (vlib_main_t * vm,
 	  u32 id=0;
 	  struct timeval begin_time, end_time;
 	  double time_spent = 0;
-	  gettimeofday(&begin_time, NULL);
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -192,6 +191,9 @@ class_node_fn (vlib_main_t * vm,
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
 
+	          if (table_index0 == 0)
+	        	  gettimeofday(&begin_time, NULL);
+
 	          x0=table_index0/field;
 	          x=x0*field;
 
@@ -269,8 +271,6 @@ class_node_fn (vlib_main_t * vm,
 			  // check identifier
 	          process:
 
-
-
 			  next_table = 0;
 
 			  if (!e0) {
@@ -285,8 +285,10 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  next0 = 0;
 				  next_table = 0;
-				  if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0)
+				  if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0) {
+					  gettimeofday(&end_time, NULL);
 					  goto end;
+				  }
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -312,17 +314,18 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
+						  gettimeofday(&end_time, NULL);
 						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
 				  }
+				  gettimeofday(&end_time, NULL);
 			  } else {
 				  next0 = 11;
 			  }
 
 			  end:
-			  gettimeofday(&end_time, NULL);
 			  time_spent = end_time.tv_usec - begin_time.tv_usec;
 
               //Check only the field that want to be checked

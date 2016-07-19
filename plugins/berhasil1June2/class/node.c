@@ -96,9 +96,9 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
-	  clock_t begin_time = clock ();
-	  clock_t end_time = clock ();
+	  struct timeval begin_time, end_time;
 	  double time_spent = 0;
+	  gettimeofday(&begin_time, NULL);
 
 	  /*if (is_ip4)
 	    lm = &ip4_main.lookup_main;
@@ -322,8 +322,8 @@ class_node_fn (vlib_main_t * vm,
 			  }
 
 			  end:
-			  end_time= clock ();
-			  time_spent = (double) (end_time - begin_time)/ CLOCKS_PER_SEC;
+			  gettimeofday(&end_time, NULL);
+			  time_spent = end_time.tv_usec - begin_time.tv_usec;
 
               //Check only the field that want to be checked
 

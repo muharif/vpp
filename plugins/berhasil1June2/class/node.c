@@ -90,8 +90,8 @@ class_node_fn (vlib_main_t * vm,
 	  u32 misses = 0;
 	  u32 chain_hits = 0;
 	  int field=9;
-	  int x0;
-	  int x, i;
+	  u32 x0,x;
+	  int i;
 	  u32 next_table;
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
@@ -188,7 +188,7 @@ class_node_fn (vlib_main_t * vm,
 	          e0 = 0;
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
-	          x0=table_index0/field;
+	          x0=floor(table_index0/field);
 	          x=x0*field;
 
 

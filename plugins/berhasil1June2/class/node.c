@@ -331,62 +331,6 @@ class_node_fn (vlib_main_t * vm,
 			  else
 				  time_spent = 0;
 
-              //Check only the field that want to be checked
-
-	          /*if (table_index0==0) {
-	        	  if (e0->src==0) {
-	        		  if (e0->dst==0){
-						  if (e0->proto==0) {
-							  next_table=0;
-						  } else
-							  next_table=x+field;
-					  } else
-						  next_table=x+5;
-	        	  } else
-	        		  next_table = x+1;
-	          } else if ((table_index0-x)<=4 && (table_index0-x)>0) {
-	        	  if (e0->dst==0){
-	        		  if (e0->proto==0) {
-	        			  next_table=0;
-	        		  } else
-	        			  next_table=x+field;
-	        	  } else
-	        		  next_table=x+5;
-	          } else if ((table_index0-x)<=8 && (table_index0-x)>4) {
-	        	  if (e0->proto==0)
-	        		  next_table=0;
-	        	  else
-	        		  next_table=x+field;
-	          }*/
-
-	          //Deciding next step
-
-	          /*if (next_table !=0) {
-
-	        	  vnet_buffer(b0)->l2_classify.table_index=next_table;
-	        	  if (table_index0 !=0){
-					  if (temp->prev==0) {
-						  next0=11;
-						  temp->prev=e0->id;
-					  }
-					  else if (temp->prev!=e0->id) {
-						  next0=0;
-						  temp->prev=0;
-
-					  }
-					  else
-						  next0=11;
-	        	  }
-
-	          } else {
-	        	  if (((e0->src)+(e0->dst)+(e0->proto)) != 1){
-	        		  if (temp->prev != e0->id)
-	        			  next0=0;
-	        		  	  temp->prev=0;
-	        	  }
-	          }*/
-
-
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {

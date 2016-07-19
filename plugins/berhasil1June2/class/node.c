@@ -205,11 +205,10 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-	            	  if (!(table_index0 - x)) {
-	            		  id = 0;
-	            		  next0=0;
-	            		  next_table = 0;
-						  goto end;
+					  u32 test = (table_index0 - x);
+
+	            	  if ( test == 0) {
+						  goto process;
 	            	  }
 
 

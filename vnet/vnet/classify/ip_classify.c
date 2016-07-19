@@ -20,6 +20,7 @@ typedef struct {
   u32 next_index;
   u32 table_index;
   u32 entry_index;
+  double time;
 } ip_classify_trace_t;
 
 /* packet trace format function */
@@ -29,8 +30,8 @@ static u8 * format_ip_classify_trace (u8 * s, va_list * args)
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
   ip_classify_trace_t * t = va_arg (*args, ip_classify_trace_t *);
   
-  s = format (s, "IP_CLASSIFY: next_index %d, table %d, entry %d",
-              t->next_index, t->table_index, t->entry_index);
+  s = format (s, "IP_CLASSIFY: next_index %d, table %d, entry %d time %f usec",
+              t->next_index, t->table_index, t->entry_index, t->time);
   return s;
 }
 
@@ -69,6 +70,9 @@ ip_classify_inline (vlib_main_t * vm,
   u32 misses = 0;
   u32 chain_hits = 0;
   u32 n_next;
+  struct timeval begin_time, end_time;
+  double time_spent = 0;
+  gettimeofday(&begin_time, NULL);
 
   if (is_ip4) {
     lm = &ip4_main.lookup_main;
@@ -247,6 +251,7 @@ ip_classify_inline (vlib_main_t * vm,
                   next0 = (e0->next_index < node->n_next_nodes)?
                            e0->next_index:next0;
                   hits++;
+				  gettimeofday(&end_time, NULL);
                 }
               else
                 {
@@ -260,6 +265,7 @@ ip_classify_inline (vlib_main_t * vm,
                           next0 = (t0->miss_next_index < n_next) ?
                                    t0->miss_next_index : next0;
                           misses++;
+    					  gettimeofday(&end_time, NULL);
                           break;
                         }
 
@@ -275,12 +281,14 @@ ip_classify_inline (vlib_main_t * vm,
                                    e0->next_index:next0;
                           hits++;
                           chain_hits++;
+    					  gettimeofday(&end_time, NULL);
                           break;
                         }
                     }
                 }
             }
 
+          time_spent = end_time.tv_usec - begin_time.tv_usec;
           if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE) 
                             && (b0->flags & VLIB_BUFFER_IS_TRACED))) 
             {
@@ -289,6 +297,7 @@ ip_classify_inline (vlib_main_t * vm,
               t->next_index = next0;
               t->table_index = t0 ? t0 - vcm->tables : ~0;
               t->entry_index = e0 ? e0 - t0->entries : ~0;
+              t->time = time_spent;
             }
 
           /* verify speculative enqueue, maybe switch current next frame */

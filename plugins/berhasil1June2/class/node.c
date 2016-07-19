@@ -208,7 +208,7 @@ class_node_fn (vlib_main_t * vm,
 
 					  test = (table_index0 - x);
 
-	            	  if ( test == 0) {
+	            	  if ( test = 0) {
 						  goto process;
 	            	  }
 

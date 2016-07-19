@@ -317,7 +317,7 @@ ip4_classify2 (vlib_main_t * vm,
               vlib_node_runtime_t * node,
               vlib_frame_t * frame)
 {
-  return ip_classifyw_inline (vm, node, frame, 1 /* is_ip4 */);
+  return ip_classify2_inline (vm, node, frame, 1 /* is_ip4 */);
 }
 
 

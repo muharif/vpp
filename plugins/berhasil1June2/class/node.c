@@ -133,6 +133,7 @@ class_node_fn (vlib_main_t * vm,
 
 	      from++;
 	      n_left_from--;
+	      return 0;
 	    }
 
 	  next_index = node->cached_next_index;

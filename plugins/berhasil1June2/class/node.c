@@ -188,8 +188,10 @@ class_node_fn (vlib_main_t * vm,
 	          e0 = 0;
 	          t0 = 0;
 	          vnet_buffer(b0)->l2_classify.opaque_index = ~0;
-	          x0=table_index0/field;
-	          x=x0*field;
+	          if (table_index0 != 0) {
+				  x0=table_index0/field;
+				  x=x0*field;
+	          }
 
 
 	          if (PREDICT_TRUE(table_index0 != ~0))
@@ -201,20 +203,21 @@ class_node_fn (vlib_main_t * vm,
 	                                             now);
 
 	              //Check next table if entry can't be found
+	              if (table_index0 != 0) {
+					  if (!e0) {
+						  checkempty:
 
-	              if (!e0) {
-	            	  checkempty:
+						  if ((table_index0 - x) == field)
+							  goto process;
 
-	            	  if ((table_index0 - x) == field)
-	            		  goto process;
-
-	            	  table_index0++;
-		              t0 = pool_elt_at_index (vcm->tables, table_index0);
-		              if (t0->active_elements==0){
-	            		  goto checkempty;
-	            	  } else if (t0->active_elements>0) {
-	            			  goto loop;
-	            	  }
+						  table_index0++;
+						  t0 = pool_elt_at_index (vcm->tables, table_index0);
+						  if (t0->active_elements==0){
+							  goto checkempty;
+						  } else if (t0->active_elements>0) {
+								  goto loop;
+						  }
+					  }
 	              }
 
 	              if (e0)
@@ -263,51 +266,53 @@ class_node_fn (vlib_main_t * vm,
 			  // check identifier
 
 			  next_table = 0;
-
-			  if (!e0) {
-				  id=x;
-
-				  if ((table_index0-x) == field) {
-					  if (!(temp->srcid))
-						  temp->srcid = 0;
-					  if (!(temp->dstid))
-						  temp->dstid = 0;
-	        		  temp->proto = 0;
-				  }
-				  next0 = 0;
-				  next_table = 0;
-			  } else {
-				  if (table_index0 == 0) {
-					  next_table = e0->next;
-				  } else {
-					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
-		        		  temp->srcid = e0->id;
-		        		  next_table = x+5;
-		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
-		        		  temp->dstid = e0->id;
-		        		  next_table = x+field;
-		        	  } else {
-		        		  temp->proto = e0->id;
-		        		  next_table = 0;
-		        	  }
-				  }
-				  vnet_buffer(b0)->l2_classify.table_index=next_table;
-				  id=e0->id;
-			  }
-
-			  if (next_table == 0) {
-				  i=0;
-				  for (i=0;i<=100;i++) {
-					  n = pool_elt_at_index (vcm->next, i);
-					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
-						  next0 = n->action;
-						  goto end;
-					  } else {
-						  next0 = 0;
+			  if (table_index0 != 0) {
+				  if (!e0) {
+					  id=x;
+					  if ((table_index0-x) == field) {
+						  if (!(temp->srcid))
+							  temp->srcid = 0;
+						  if (!(temp->dstid))
+							  temp->dstid = 0;
+						  temp->proto = 0;
 					  }
+					  next0 = 0;
+					  next_table = 0;
+				  } else {
+					  if (table_index0 == 0) {
+						  next_table = e0->next;
+					  } else {
+						  if ((table_index0-x) <=4 && (table_index0-x)>0) {
+							  temp->srcid = e0->id;
+							  next_table = x+5;
+						  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
+							  temp->dstid = e0->id;
+							  next_table = x+field;
+						  } else {
+							  temp->proto = e0->id;
+							  next_table = 0;
+						  }
+					  }
+					  vnet_buffer(b0)->l2_classify.table_index=next_table;
+					  id=e0->id;
+				  }
+
+				  if (next_table == 0) {
+					  i=0;
+					  for (i=0;i<=100;i++) {
+						  n = pool_elt_at_index (vcm->next, i);
+						  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
+							  next0 = n->action;
+							  goto end;
+						  } else {
+							  next0 = 0;
+						  }
+					  }
+				  } else {
+					  next0 = 11;
 				  }
 			  } else {
-				  next0 = 11;
+				  vnet_buffer(b0)->l2_classify.table_index=next_table;
 			  }
 
 			  end:

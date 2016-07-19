@@ -90,7 +90,7 @@ class_node_fn (vlib_main_t * vm,
 	  u32 misses = 0;
 	  u32 chain_hits = 0;
 	  int field=9;
-	  int x0,x;
+	  int x0 = 0,x = 0;
 	  int i;
 	  u32 next_table;
 	  class_temp_t * temp = &class_temp;

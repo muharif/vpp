@@ -373,7 +373,7 @@ class_node_fn (vlib_main_t * vm,
 	        	  }
 	          }*/
 
-	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
+	         /* if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {
 	              class_trace_t *t =
@@ -387,7 +387,7 @@ class_node_fn (vlib_main_t * vm,
 					  t->next_index = 100;
 					  t->table_index = 100;
 	              }
-	            }
+	            }*/
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,

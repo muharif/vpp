@@ -263,9 +263,10 @@ class_node_fn (vlib_main_t * vm,
 			  // check identifier
 
 			  next_table = 0;
+			  u32 test=0;
 
 			  if (!e0) {
-				  id=x;
+				  id=0;
 
 				  if ((table_index0-x) == 0) {
 					  if (!(temp->srcid))
@@ -277,6 +278,7 @@ class_node_fn (vlib_main_t * vm,
 				  //next_index == 0;
 				  next0 = 0;
 				  next_table = 0;
+				  test = 1;
 				  //to_next == 0;
 				  //n_left_to_next == 0;
 				  goto end;
@@ -385,11 +387,9 @@ class_node_fn (vlib_main_t * vm,
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 
-			  next_index = 0;
-
-		  vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
+		  if (test == 0) {vlib_validate_buffer_enqueue_x1 (vm, node, next_index,
 						   to_next, n_left_to_next,
-						   bi0, next0);
+						   bi0, next0);}
 		}
 
 	      vlib_put_next_frame (vm, node, next_index, n_left_to_next);

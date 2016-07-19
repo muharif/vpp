@@ -380,7 +380,7 @@ class_node_fn (vlib_main_t * vm,
 	              if (table_index0 != 0) {
 					  t->id = id;
 					  t->next_index = next0;
-					  t->table_index = next_label;
+					  t->table_index = table_index0;
 	              } else {
 					  t->id = 100;
 					  t->next_index = 100;

@@ -206,11 +206,10 @@ class_node_fn (vlib_main_t * vm,
 	              if (!e0) {
 	            	  checkempty:
 
-					  //if ((table_index0 - x) <= field && (table_index0 - x) > 0 ) {
-					  if ((table_index0 - x) != field ) {
+					  if ((table_index0 - x) <= field && (table_index0 - x) > 0 ) {
 		            	  table_index0++;
 			              t0 = pool_elt_at_index (vcm->tables, table_index0);
-			              if (t0->active_elements == 0){
+			              if (t0->active_elements == ~0 || t0->active_elements == 0){
 		            		  goto checkempty;
 		            	  } else if (t0->active_elements>0) {
 		            			  goto loop;
@@ -283,8 +282,8 @@ class_node_fn (vlib_main_t * vm,
 				  }
 				  next0 = 0;
 				  next_table = 0;
-				  //if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0)
-				//	  goto end;
+				  if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0)
+					  goto end;
 			  } else {
 				  if (table_index0 == 0) {
 					  next_table = e0->next;
@@ -292,15 +291,12 @@ class_node_fn (vlib_main_t * vm,
 					  if ((table_index0-x) <=4 && (table_index0-x)>0) {
 		        		  temp->srcid = e0->id;
 		        		  next_table = x+5;
-		        		  id = 100+next_table;
 		        	  } else if ((table_index0-x) <= 8 && (table_index0-x) > 4) {
 		        		  temp->dstid = e0->id;
 		        		  next_table = x+field;
-		        		  id = 200+x;
 		        	  } else {
 		        		  temp->proto = e0->id;
 		        		  next_table = 0;
-		        		  id =300+x;
 		        	  }
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
@@ -388,7 +384,7 @@ class_node_fn (vlib_main_t * vm,
 	              t->id = id;
 	              t->next_index = next0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
-	              t->table_index = next_table;
+	              t->table_index = table_index0;
 	            }
 
 	          /* verify speculative enqueue, maybe switch current next frame */

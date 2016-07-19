@@ -261,13 +261,14 @@ class_node_fn (vlib_main_t * vm,
 	                }
 	            }
 	          process:
+			  u32 not_found = 0;
 
 			  if (table_index0 !=0) {
 
 			  // check identifier
 
 			  next_table = 0;
-			  u32 not_found = 0;
+
 
 			  if (!e0) {
 				  id=x;

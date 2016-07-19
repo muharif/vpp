@@ -133,7 +133,6 @@ class_node_fn (vlib_main_t * vm,
 
 	      from++;
 	      n_left_from--;
-	      return 0;
 	    }
 
 	  next_index = node->cached_next_index;
@@ -193,6 +192,7 @@ class_node_fn (vlib_main_t * vm,
 				  x0=table_index0/field;
 				  x=x0*field;
 	          }
+		      return 0;
 
 
 	          if (PREDICT_TRUE(table_index0 != ~0))

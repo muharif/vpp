@@ -208,18 +208,14 @@ class_node_fn (vlib_main_t * vm,
 
 					  test = (table_index0 - x);
 
-	            	  if ( (test = 0)) {
-						  goto process;
-	            	  }
-
-
 	            	  table_index0++;
 		              t0 = pool_elt_at_index (vcm->tables, table_index0);
-		              if (t0->active_elements==0){
+		              if (t0->active_elements==0 && test !=0){
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
 	            			  goto loop;
-	            	  }
+	            	  } else if ((test =0))
+	            		  goto process;
 	              }
 
 
@@ -267,7 +263,6 @@ class_node_fn (vlib_main_t * vm,
 
 
 			  // check identifier
-              process:
 
 
 			  next_table = 0;

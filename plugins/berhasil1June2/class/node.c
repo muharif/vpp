@@ -214,7 +214,7 @@ class_node_fn (vlib_main_t * vm,
 	            		  goto checkempty;
 	            	  } else if (t0->active_elements>0) {
 	            			  goto loop;
-	            	  } else if ((test =0))
+	            	  } else if ((test = field))
 	            		  goto process;
 	              }
 
@@ -299,6 +299,8 @@ class_node_fn (vlib_main_t * vm,
 				  //id=e0->id;
 				  id = 100;
 			  }
+
+			  id =test;
 
 			  if (next_table == 0) {
 				  i=0;

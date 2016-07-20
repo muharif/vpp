@@ -99,10 +99,66 @@ class_node_fn (vlib_main_t * vm,
 	  struct timeval begin_time, end_time;
 	  double time_spent = 0;
 
+	  clear_temp (temp);
+
       begin:
 
 	  from = vlib_frame_vector_args (frame);
 	  n_left_from = frame->n_vectors;
+
+	  while (n_left_from > 2)
+	      {
+	        vlib_buffer_t * b0, * b1;
+	        u32 bi0, bi1;
+	        u8 * h0, * h1;
+	        u32 table_index0, table_index1;
+	        class_table_t * t0, * t1;
+
+	        /* prefetch next iteration */
+	          {
+	            vlib_buffer_t * p1, * p2;
+
+	            p1 = vlib_get_buffer (vm, from[1]);
+	            p2 = vlib_get_buffer (vm, from[2]);
+
+	            vlib_prefetch_buffer_header (p1, STORE);
+	            CLIB_PREFETCH (p1->data, CLIB_CACHE_LINE_BYTES, STORE);
+	            vlib_prefetch_buffer_header (p2, STORE);
+	            CLIB_PREFETCH (p2->data, CLIB_CACHE_LINE_BYTES, STORE);
+	          }
+
+	        bi0 = from[0];
+	        b0 = vlib_get_buffer (vm, bi0);
+	        h0 = (void *)vlib_buffer_get_current(b0) -
+	                  ethernet_buffer_header_size(b0);
+
+	        bi1 = from[1];
+	        b1 = vlib_get_buffer (vm, bi1);
+	        h1 = (void *)vlib_buffer_get_current(b1) -
+	                  ethernet_buffer_header_size(b1);
+
+	        table_index0 = vnet_buffer(b0)->l2_classify.table_index;
+	        table_index1 = vnet_buffer(b1)->l2_classify.table_index;
+
+
+	        t0 = pool_elt_at_index (vcm->tables, table_index0);
+	        t1 = pool_elt_at_index (vcm->tables, table_index1);
+
+	        vnet_buffer(b0)->l2_classify.hash =
+	          class_hash_packet (t0, (u8 *) h0);
+	        class_prefetch_bucket (t0, vnet_buffer(b0)->l2_classify.hash);
+
+	        vnet_buffer(b1)->l2_classify.hash =
+	          class_hash_packet (t1, (u8 *) h1);
+	        class_prefetch_bucket (t1, vnet_buffer(b1)->l2_classify.hash);
+
+	        vnet_buffer(b0)->l2_classify.table_index = table_index0;
+
+	        vnet_buffer(b1)->l2_classify.table_index = table_index1;
+
+	        from += 2;
+	        n_left_from -= 2;
+	      }
 
 
 

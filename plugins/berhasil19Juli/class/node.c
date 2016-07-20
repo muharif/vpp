@@ -139,7 +139,7 @@ class_node_fn (vlib_main_t * vm,
 	      vlib_get_next_frame (vm, node, next_index,
 				   to_next, n_left_to_next);
 
-	      loop:
+	      begin:
 
 	      while (n_left_from > 0 && n_left_to_next > 0)
 		{

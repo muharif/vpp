@@ -192,6 +192,7 @@ ip_classify_inline (vlib_main_t * vm,
 			   to_next, n_left_to_next);
 
       /* Not enough load/store slots to dual loop... */
+      loop:
       while (n_left_from > 0 && n_left_to_next > 0)
 	{
           u32 bi0;

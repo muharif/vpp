@@ -99,11 +99,6 @@ class_node_fn (vlib_main_t * vm,
 	  struct timeval begin_time, end_time;
 	  double time_spent = 0;
 
-	  /*if (is_ip4)
-	    lm = &ip4_main.lookup_main;
-	  else
-	    lm = &ip6_main.lookup_main;*/
-
 	  from = vlib_frame_vector_args (frame);
 	  n_left_from = frame->n_vectors;
 
@@ -112,8 +107,6 @@ class_node_fn (vlib_main_t * vm,
 	      vlib_buffer_t * b0;
 	      u32 bi0;
 	      u8 * h0;
-	      //u32 adj_index0;
-	      //ip_adjacency_t * adj0;
 	      u32 table_index0;
 	      class_table_t * t0;
 
@@ -122,8 +115,6 @@ class_node_fn (vlib_main_t * vm,
 	      h0 = (void *)vlib_buffer_get_current(b0) -
 	                ethernet_buffer_header_size(b0);
 
-	      //adj_index0 = vnet_buffer (b0)->ip.adj_index[VLIB_TX];
-	      //adj0 = ip_get_adjacency (lm, adj_index0);
 	      table_index0 = vnet_buffer(b0)->l2_classify.table_index;
 
 	      t0 = pool_elt_at_index (vcm->tables, table_index0);
@@ -147,6 +138,8 @@ class_node_fn (vlib_main_t * vm,
 
 	      vlib_get_next_frame (vm, node, next_index,
 				   to_next, n_left_to_next);
+
+	      loop:
 
 	      while (n_left_from > 0 && n_left_to_next > 0)
 		{
@@ -328,8 +321,10 @@ class_node_fn (vlib_main_t * vm,
 			  end:
 			  if (next_table == 0)
 				  time_spent = end_time.tv_usec - begin_time.tv_usec;
-			  else
+			  else {
+				  goto begin;
 				  time_spent = 0;
+			  }
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))

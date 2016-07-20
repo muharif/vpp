@@ -100,8 +100,7 @@ class_node_fn (vlib_main_t * vm,
 	  double time_spent = 0;
 
 	  clear_temp (temp);
-      if (table_index0 == 0)
-    	  gettimeofday(&begin_time, NULL);
+	  gettimeofday(&begin_time, NULL);
 
       begin:
 

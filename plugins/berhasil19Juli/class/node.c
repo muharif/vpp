@@ -106,6 +106,8 @@ class_node_fn (vlib_main_t * vm,
 	  from = vlib_frame_vector_args (frame);
 	  n_left_from = frame->n_vectors;
 
+	  //adding dual loop
+
 	  while (n_left_from > 2)
 	      {
 	        vlib_buffer_t * b0, * b1;

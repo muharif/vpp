@@ -99,8 +99,12 @@ class_node_fn (vlib_main_t * vm,
 	  struct timeval begin_time, end_time;
 	  double time_spent = 0;
 
+      begin:
+
 	  from = vlib_frame_vector_args (frame);
 	  n_left_from = frame->n_vectors;
+
+
 
 	  while (n_left_from > 0)
 	    {
@@ -139,7 +143,6 @@ class_node_fn (vlib_main_t * vm,
 	      vlib_get_next_frame (vm, node, next_index,
 				   to_next, n_left_to_next);
 
-	      //begin:
 
 	      while (n_left_from > 0 && n_left_to_next > 0)
 		{
@@ -322,7 +325,7 @@ class_node_fn (vlib_main_t * vm,
 			  if (next_table == 0)
 				  time_spent = end_time.tv_usec - begin_time.tv_usec;
 			  else {
-				  //goto begin;
+				  goto begin;
 				  time_spent = 0;
 			  }
 

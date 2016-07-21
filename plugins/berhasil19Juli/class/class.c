@@ -1987,7 +1987,9 @@ int class_add_del_class (class_main_t * cm,
                                    i32 advance,
                                    int is_add,
 								   u32 srcmask,
-								   u32 dstmask)
+								   u32 dstmask/*,
+								   u32 srcport,
+								   u32 dstport*/)
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
@@ -2287,7 +2289,7 @@ class_class_command_fn (vlib_main_t * vm,
   int i, rv;
   u32 table_index=0;
   u32 srcmask=32, dstmask=32;
-  //u32 srcport=0, dstport=0;
+  u32 srcport=0, dstport=0;
 
   while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
     {
@@ -2308,10 +2310,10 @@ class_class_command_fn (vlib_main_t * vm,
     	  ;
       else if (unformat (input, "dstmask %d", &dstmask))
         ;
-      /*else if (unformat (input, "srcport %d", &srcport))
+      else if (unformat (input, "srcport %d", &srcport))
         ;
       else if (unformat (input, "dstport %d", &dstport))
-        ;*/
+        ;
       else if (unformat (input, "match %U", unformat_class2_match,
                          cm, &match, table_index))
     	  ;
@@ -2336,7 +2338,7 @@ class_class_command_fn (vlib_main_t * vm,
 
   rv = class_add_del_class (cm, match,
                                       hit_next_index,
-                                      opaque_index, advance, is_add, srcmask, dstmask);
+                                      opaque_index, advance, is_add, srcmask, dstmask, srcport, dstport);
 
   switch(rv)
     {
@@ -2354,7 +2356,7 @@ VLIB_CLI_COMMAND (class_class, static) = {
     .path = "class-new class",
     .short_help =
     "class-new class [hit-next|l2-hit-next|acl-hit-next <next_index>]"
-    "\n [srcmask <mask>] [dstmask <mask>] [check <int> <int> <int>] match [hex] [l2] [l3 ip4] [opaque-index <index>]",
+    "\n [srcmask <mask>] [dstmask <mask>] [check <int> <int> <int>] match [hex] [l2] [l3 ip4] [srcport <port>] [dstport <port>] [opaque-index <index>]",
     .function = class_class_command_fn,
 };
 

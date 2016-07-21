@@ -2163,7 +2163,7 @@ int class_add_del_class (class_main_t * cm,
 				  mult=32-dstmask;
 				  u32 temp=e->key[1][0];
 				  e->key[1][2] =0;
-				  e->key[1][2] =e->key[1][2]+(256*dstport);
+				  e->key[1][2] =e->key[1][2]+(1*dstport);
 				  for (j=0;j<(pow(2,mult));j++) {
 					  e->key[1][0] = temp+(256*j);
 					  for (i = 0; i < t->match_n_vectors; i++) {

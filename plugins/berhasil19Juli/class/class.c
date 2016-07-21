@@ -1987,9 +1987,9 @@ int class_add_del_class (class_main_t * cm,
                                    i32 advance,
                                    int is_add,
 								   u32 srcmask,
-								   u32 dstmask/*,
+								   u32 dstmask,
 								   u32 srcport,
-								   u32 dstport*/)
+								   u32 dstport)
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));

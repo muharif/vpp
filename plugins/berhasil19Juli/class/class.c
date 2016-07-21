@@ -1987,7 +1987,9 @@ int class_add_del_class (class_main_t * cm,
                                    i32 advance,
                                    int is_add,
 								   u32 srcmask,
-								   u32 dstmask)
+								   u32 dstmask,
+								   u32 srcport,
+								   u32 dstport)
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
@@ -2000,7 +2002,7 @@ int class_add_del_class (class_main_t * cm,
   u64 hash0;
   f64 now = 0.00;
   u32 max=4;
-  u32 field=3;
+  u32 field=5;
   u32 add=0;
   u32 add2=0;
   u32 srcid=0, dstid=0, protoid=0, action=0;
@@ -2060,8 +2062,12 @@ int class_add_del_class (class_main_t * cm,
 				add2=7;
 			else
 				continue;
-		} else {
+		} else if (add == 2){
 			add2=8;
+		} else if (add == 3) {
+			add2 = 9;
+		} else {
+			add2 = 10;
 		}
 
 			next_table_index=(table_index+add2);
@@ -2219,6 +2225,28 @@ int class_add_del_class (class_main_t * cm,
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
+		  } else if (add == 3) {
+			  u32 temp=e->key[1][1];
+			  e->key[1][1] =temp+(1*srcport);
+			  for (i = 0; i < t->match_n_vectors; i++) {
+					e->key[i] &= t->mask[i];
+				  };
+				  e->id = class_check_avail(t,e);
+				  protoid=e->id;
+				  rv = class_add_del (t, e, is_add,table_index);
+				  if (rv)
+					return VNET_API_ERROR_NO_SUCH_ENTRY;
+		  } else if (add = 4) {
+			  u32 temp=e->key[1][1];
+			  e->key[1][1] =temp+(256*srcport);
+			  for (i = 0; i < t->match_n_vectors; i++) {
+					e->key[i] &= t->mask[i];
+				  };
+				  e->id = class_check_avail(t,e);
+				  protoid=e->id;
+				  rv = class_add_del (t, e, is_add,table_index);
+				  if (rv)
+					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else
 			  continue;
 	}
@@ -2242,6 +2270,7 @@ class_class_command_fn (vlib_main_t * vm,
   int i, rv;
   u32 table_index=0;
   u32 srcmask=32, dstmask=32;
+  u32 srcport=0, dstport=0;
 
   while (unformat_check_input (input) != UNFORMAT_END_OF_INPUT)
     {
@@ -2261,6 +2290,10 @@ class_class_command_fn (vlib_main_t * vm,
       else if (unformat (input, "srcmask %d", &srcmask))
     	  ;
       else if (unformat (input, "dstmask %d", &dstmask))
+        ;
+      else if (unformat (input, "srcport %d", &srcport))
+        ;
+      else if (unformat (input, "dstport %d", &dstport))
         ;
       else if (unformat (input, "match %U", unformat_class2_match,
                          cm, &match, table_index))
@@ -2286,7 +2319,7 @@ class_class_command_fn (vlib_main_t * vm,
 
   rv = class_add_del_class (cm, match,
                                       hit_next_index,
-                                      opaque_index, advance, is_add, srcmask, dstmask);
+                                      opaque_index, advance, is_add, srcmask, dstmask, srcport, dstport);
 
   switch(rv)
     {
@@ -2304,7 +2337,7 @@ VLIB_CLI_COMMAND (class_class, static) = {
     .path = "class-new class",
     .short_help =
     "class-new class [hit-next|l2-hit-next|acl-hit-next <next_index>]"
-    "\n [srcmask <mask>] [dstmask <mask>] [check <int> <int> <int>] match [hex] [l2] [l3 ip4] [opaque-index <index>]",
+    "\n [srcmask <mask>] [dstmask <mask>] [check <int> <int> <int>] match [hex] [l2] [l3 ip4] [srcport <port>] [dstport <port>] [opaque-index <index>]",
     .function = class_class_command_fn,
 };
 

@@ -2228,24 +2228,24 @@ int class_add_del_class (class_main_t * cm,
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else if (add == 3) {
-			  u32 temp=e->key[1][1];
-			  e->key[1][1] =temp+(256*srcport);
+			  //u32 temp=e->key[1][1];
+			  //e->key[1][1] =temp+(256*srcport);
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
-				  e->id = class_check_avail(t,e);
-				  protoid=e->id;
+				  //e->id = class_check_avail(t,e);
+				  //protoid=e->id;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else if (add == 4) {
-			  u32 temp=e->key[1][1];
-			  e->key[1][1] =temp+(16777216*dstport);
+			  //u32 temp=e->key[1][1];
+			  //e->key[1][1] =temp+(16777216*dstport);
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
-				  e->id = class_check_avail(t,e);
-				  protoid=e->id;
+				  //e->id = class_check_avail(t,e);
+				  //protoid=e->id;
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;

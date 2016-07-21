@@ -1987,9 +1987,7 @@ int class_add_del_class (class_main_t * cm,
                                    i32 advance,
                                    int is_add,
 								   u32 srcmask,
-								   u32 dstmask,
-								   /*u32 srcport,
-								   u32 dstport*/)
+								   u32 dstmask)
 {
   class_table_t * t;
   class_entry_5_t _max_e __attribute__((aligned (16)));
@@ -2338,7 +2336,7 @@ class_class_command_fn (vlib_main_t * vm,
 
   rv = class_add_del_class (cm, match,
                                       hit_next_index,
-                                      opaque_index, advance, is_add, srcmask, dstmask/*, srcport, dstport*/);
+                                      opaque_index, advance, is_add, srcmask, dstmask);
 
   switch(rv)
     {

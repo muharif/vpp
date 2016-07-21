@@ -2161,7 +2161,7 @@ int class_add_del_class (class_main_t * cm,
 
 			  if (add2==4) {
 				  mult=32-dstmask;
-				  e->key[1][1] =e->key[1][0]+255;
+				  e->key[1][0] =e->key[1][0]+255;
 				  u32 temp=e->key[1][0];
 				  for (j=0;j<(pow(2,mult));j++) {
 					  e->key[1][0] = temp+(256*j);

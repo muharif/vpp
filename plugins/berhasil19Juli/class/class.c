@@ -2161,13 +2161,24 @@ int class_add_del_class (class_main_t * cm,
 
 			  if (add2==4) {
 				  mult=32-dstmask;
+				  u32 mod =0;
 
+				  if (srcport < 256) {
+					  e->key[1][1] =0;
+					  e->key[1][1] =e->key[1][1]+(16777216*srcport);
+				  } else {
+					  mod = floor (srcport/256);
+					  e->key[1][1] =0;
+					  e->key[1][1] =e->key[1][1]+(65536*mod);
+					  mod = srcport - (256*mod);
+					  e->key[1][1] =e->key[1][1]+(16777216*mod);
+				  }
 
 				  if (dstport < 256) {
 					  e->key[1][2] =0;
 					  e->key[1][2] =e->key[1][2]+(256*dstport);
 				  } else {
-					  u32 mod = floor (dstport/256);
+					  mod = floor (dstport/256);
 					  e->key[1][2] =0;
 					  e->key[1][2] =e->key[1][2]+(1*mod);
 					  mod = dstport - (256*mod);

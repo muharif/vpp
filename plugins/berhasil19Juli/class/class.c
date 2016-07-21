@@ -2217,6 +2217,27 @@ int class_add_del_class (class_main_t * cm,
 				  }
 			  }
 		  } else if (add==2 && e->proto==1){
+			  u32 mod =0;
+			  if (srcport < 256) {
+				  e->key[1][1] =0;
+				  e->key[1][1] =e->key[1][1]+(16777216*srcport);
+			  } else {
+				  mod = floor (srcport/256);
+				  e->key[1][1] =0;
+				  e->key[1][1] =e->key[1][1]+(65536*mod);
+				  mod = srcport - (256*mod);
+				  e->key[1][1] =e->key[1][1]+(16777216*mod);
+			  }
+			  if (dstport < 256) {
+			  				  e->key[1][2] =0;
+			  				  e->key[1][2] =e->key[1][2]+(256*dstport);
+			  			  } else {
+			  				  mod = floor (dstport/256);
+			  				  e->key[1][2] =0;
+			  				  e->key[1][2] =e->key[1][2]+(1*mod);
+			  				  mod = dstport - (256*mod);
+			  				  e->key[1][2] =e->key[1][2]+(256*mod);
+			  			  }
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
@@ -2225,7 +2246,7 @@ int class_add_del_class (class_main_t * cm,
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
-		  } else if (add == 3) {
+		  } /*else if (add == 3) {
 			  u32 mod =0;
 			  if (srcport < 256) {
 				  e->key[1][1] =0;
@@ -2266,7 +2287,7 @@ int class_add_del_class (class_main_t * cm,
 				  rv = class_add_del (t, e, is_add,table_index);
 				  if (rv)
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
-		  } else
+		  } */else
 			  continue;
 	}
 

@@ -2002,7 +2002,7 @@ int class_add_del_class (class_main_t * cm,
   u64 hash0;
   f64 now = 0.00;
   u32 max=4;
-  u32 field=5;
+  u32 field=3;
   u32 add=0;
   u32 add2=0;
   u32 srcid=0, dstid=0, protoid=0, action=0;
@@ -2064,11 +2064,11 @@ int class_add_del_class (class_main_t * cm,
 				continue;
 		} else if (add == 2){
 			add2=8;
-		} else if (add == 3) {
+		} /*else if (add == 3) {
 			add2 = 9;
 		} else {
 			add2 = 10;
-		}
+		}*/
 
 			next_table_index=(table_index+add2);
 
@@ -2217,27 +2217,6 @@ int class_add_del_class (class_main_t * cm,
 				  }
 			  }
 		  } else if (add==2 && e->proto==1){
-			  u32 mod =0;
-			  if (srcport < 256) {
-				  e->key[1][1] =0;
-				  e->key[1][1] =e->key[1][1]+(16777216*srcport);
-			  } else {
-				  mod = floor (srcport/256);
-				  e->key[1][1] =0;
-				  e->key[1][1] =e->key[1][1]+(65536*mod);
-				  mod = srcport - (256*mod);
-				  e->key[1][1] =e->key[1][1]+(16777216*mod);
-			  }
-			  if (dstport < 256) {
-			  				  e->key[1][2] =0;
-			  				  e->key[1][2] =e->key[1][2]+(256*dstport);
-			  			  } else {
-			  				  mod = floor (dstport/256);
-			  				  e->key[1][2] =0;
-			  				  e->key[1][2] =e->key[1][2]+(1*mod);
-			  				  mod = dstport - (256*mod);
-			  				  e->key[1][2] =e->key[1][2]+(256*mod);
-			  			  }
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };

@@ -2232,6 +2232,7 @@ int class_add_del_class (class_main_t * cm,
 		  } else if (add == 3) {
 			  e->key[1][1] =0;
 			  e->key[1][1] =e->key[1][1]+(65536*srcport);
+			  e->key[1][1] =e->key[1][1]+(16777216*srcport);
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };
@@ -2243,6 +2244,7 @@ int class_add_del_class (class_main_t * cm,
 		  } else if (add == 4) {
 			  e->key[1][2] =0;
 			  e->key[1][2] =e->key[1][2]+(1*dstport);
+			  e->key[1][2] =e->key[1][2]+(256*dstport);
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };

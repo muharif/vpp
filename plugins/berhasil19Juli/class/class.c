@@ -2168,7 +2168,7 @@ int class_add_del_class (class_main_t * cm,
 					  e->key[1][2] =e->key[1][2]+(256*dstport);
 				  } else {
 					  u32 mod = floor (dstport/256);
-					  //e->key[1][2] =0;
+					  e->key[1][2] =0;
 					  e->key[1][2] =e->key[1][2]+(1*mod);
 					  mod = dstport - (256*mod);
 					  e->key[1][2] =e->key[1][2]+(256*mod);

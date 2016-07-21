@@ -2238,7 +2238,7 @@ int class_add_del_class (class_main_t * cm,
 					return VNET_API_ERROR_NO_SUCH_ENTRY;
 		  } else if (add == 4) {
 			  u32 temp=e->key[1][1];
-			  e->key[1][1] =temp+(256*dst);
+			  e->key[1][1] =temp+(256*dstport);
 			  for (i = 0; i < t->match_n_vectors; i++) {
 					e->key[i] &= t->mask[i];
 				  };

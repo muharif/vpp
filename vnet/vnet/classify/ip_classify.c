@@ -73,7 +73,11 @@ ip_classify_inline (vlib_main_t * vm,
   u32 n_next;
   struct timeval begin_time, end_time;
   double time_spent = 0;
+  vnet_classify_temp_t * temp = &vnet_classify_temp;
+  temp->num = 0;
+
   gettimeofday(&begin_time, NULL);
+
 
   if (is_ip4) {
     lm = &ip4_main.lookup_main;
@@ -97,8 +101,7 @@ ip_classify_inline (vlib_main_t * vm,
       ip_adjacency_t * adj0, * adj1;
       u32 table_index0, table_index1;
       vnet_classify_table_t * t0, * t1;
-      vnet_classify_temp_t * temp = &vnet_classify_temp;
-      temp->num = 0;
+
 
       /* prefetch next iteration */
         {

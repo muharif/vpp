@@ -381,7 +381,7 @@ class_node_fn (vlib_main_t * vm,
 			  if (next_table == 0)
 				  time_spent = end_time.tv_usec - begin_time.tv_usec;
 			  else {
-				  goto begin;
+				  //goto begin;
 				  time_spent = 0;
 			  }
 
@@ -398,6 +398,8 @@ class_node_fn (vlib_main_t * vm,
 	              t->table_index = table_index0;
 	              t->time=time_spent;
 	            }
+
+	          goto begin;
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 

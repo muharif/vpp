@@ -31,7 +31,7 @@ static u8 * format_ip_classify_trace (u8 * s, va_list * args)
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
   ip_classify_trace_t * t = va_arg (*args, ip_classify_trace_t *);
   
-  s = format (s, "IP_CLASSIFY: next_index %d, table %d, session_checked %d, entry %d time %f usec",
+  s = format (s, "IP_CLASSIFY: next_index %d, table %d, entry %d, session_checked %d, time %f usec",
               t->next_index, t->table_index, t->entry_index, t->session_checked ,t->time);
   return s;
 }

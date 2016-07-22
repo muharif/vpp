@@ -156,7 +156,7 @@ typedef struct {
 
 typedef struct {
 	u32 num;
-}vnet_classify_temp_t;
+} vnet_classify_temp_t;
 vnet_classify_temp_t vnet_classify_temp;
 
 struct _vnet_classify_main {
@@ -401,6 +401,7 @@ vnet_classify_find_entry_inline (vnet_classify_table_t * t,
     u32 skip_u64 = t->skip_n_vectors * 2;
     u64 *data64 = (u64 *)h;
     for (i = 0; i < t->entries_per_page; i++) {
+    	temp->num++;
       key = v->key;
 
       result.as_u64[0] = (data64[0 + skip_u64] & ((u64 *)mask)[0]) ^ ((u64 *)key)[0];

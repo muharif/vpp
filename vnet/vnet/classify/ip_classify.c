@@ -20,6 +20,7 @@ typedef struct {
   u32 next_index;
   u32 table_index;
   u32 entry_index;
+  u32 session_checked;
   double time;
 } ip_classify_trace_t;
 
@@ -30,8 +31,8 @@ static u8 * format_ip_classify_trace (u8 * s, va_list * args)
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
   ip_classify_trace_t * t = va_arg (*args, ip_classify_trace_t *);
   
-  s = format (s, "IP_CLASSIFY: next_index %d, table %d, entry %d time %f usec",
-              t->next_index, t->table_index, t->entry_index, t->time);
+  s = format (s, "IP_CLASSIFY: next_index %d, table %d, session_checked %d, entry %d time %f usec",
+              t->next_index, t->table_index, t->entry_index, t->session_checked ,t->time);
   return s;
 }
 
@@ -96,6 +97,8 @@ ip_classify_inline (vlib_main_t * vm,
       ip_adjacency_t * adj0, * adj1;
       u32 table_index0, table_index1;
       vnet_classify_table_t * t0, * t1;
+      vnet_classify_temp_t * temp = &vnet_classify_temp;
+      temp->num = 0;
 
       /* prefetch next iteration */
         {
@@ -297,6 +300,7 @@ ip_classify_inline (vlib_main_t * vm,
               t->next_index = next0;
               t->table_index = t0 ? t0 - vcm->tables : ~0;
               t->entry_index = e0 ? e0 - t0->entries : ~0;
+              t->session_checked = temp->num;
               t->time = time_spent;
             }
 

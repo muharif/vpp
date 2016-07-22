@@ -154,6 +154,11 @@ typedef struct {
   
 } vnet_classify_table_t;
 
+typedef struct {
+	u32 num;
+}vnet_classify_temp_t;
+vnet_classify_temp_t vnet_classify_temp;
+
 struct _vnet_classify_main {
   /* Table pool */
   vnet_classify_table_t * tables;
@@ -339,6 +344,7 @@ vnet_classify_find_entry_inline (vnet_classify_table_t * t,
   u32 value_index;
   u32 bucket_index;
   int i;
+  vnet_classify_temp_t * temp = &vnet_classify_temp;
 
   bucket_index = hash & (t->nbuckets-1);
   b = &t->buckets[bucket_index];
@@ -357,6 +363,7 @@ vnet_classify_find_entry_inline (vnet_classify_table_t * t,
   if (U32X4_ALIGNED(h)) {
     u32x4 *data = (u32x4 *) h;
     for (i = 0; i < t->entries_per_page; i++) {
+      temp->num++;
       key = v->key;
       result.as_u32x4 = (data[0 + t->skip_n_vectors] & mask[0]) ^ key[0];
       switch (t->match_n_vectors)

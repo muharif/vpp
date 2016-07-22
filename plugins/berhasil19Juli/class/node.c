@@ -27,6 +27,7 @@ typedef struct {
 	u32 id;
 	u32 next_index;
   u32 table_index;
+  u32 session_checked;
   double time;
 } class_trace_t;
 
@@ -49,8 +50,8 @@ static u8 * format_class_trace (u8 * s, va_list * args)
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
   class_trace_t * t = va_arg (*args, class_trace_t *);
 
-  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, time %f usec",
-              t->id, t->next_index, t->table_index, t->time);
+  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, session_checked %d ,time %f usec",
+              t->id, t->next_index, t->table_index, t->session_checked ,t->time);
   return s;
 }
 
@@ -381,11 +382,9 @@ class_node_fn (vlib_main_t * vm,
 			  if (next_table == 0)
 				  time_spent = end_time.tv_usec - begin_time.tv_usec;
 			  else {
-				  //goto begin;
+				  goto begin;
 				  time_spent = 0;
 			  }
-
-			  id = temp->num;
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
@@ -396,13 +395,9 @@ class_node_fn (vlib_main_t * vm,
 	              t->next_index = next0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->table_index = table_index0;
+	              t->session_checked = temp->num;
 	              t->time=time_spent;
 	            }
-
-	          if (next_table !=0) {
-	        	  temp->num = 0;
-	        	  goto begin;
-	          }
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 

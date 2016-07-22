@@ -385,12 +385,14 @@ class_node_fn (vlib_main_t * vm,
 				  time_spent = 0;
 			  }
 
+			  id = temp->num;
+
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              t->id = temp->num;
+	              t->id = id;
 	              t->next_index = next0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
 	              t->table_index = table_index0;

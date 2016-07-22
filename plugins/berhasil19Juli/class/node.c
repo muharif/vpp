@@ -399,7 +399,8 @@ class_node_fn (vlib_main_t * vm,
 	              t->time=time_spent;
 	            }
 
-	          goto begin;
+	          if (next_table !=0)
+	        	  goto begin;
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 

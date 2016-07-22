@@ -144,6 +144,7 @@ typedef struct {
 	u32 srcid;
 	u32 dstid;
 	u32 proto;
+	u32 num;
 } class_temp_t;
 
 class_check_input_t class_check_input;
@@ -366,6 +367,7 @@ class_find_entry_inline (class_table_t * t,
                                  u8 * h, u64 hash, f64 now)
   {
   class_entry_t * v;
+  class_temp_t * temp = &class_temp;
   u32x4 *mask, *key;
   union {
     u32x4 as_u32x4;
@@ -393,6 +395,7 @@ class_find_entry_inline (class_table_t * t,
   if (U32X4_ALIGNED(h)) {
     u32x4 *data = (u32x4 *) h;
     for (i = 0; i < t->entries_per_page; i++) {
+      temp->num++;
       key = v->key;
       result.as_u32x4 = (data[0 + t->skip_n_vectors] & mask[0]) ^ key[0];
       switch (t->match_n_vectors)

@@ -1894,6 +1894,7 @@ void clear_temp (class_temp_t * temp) {
 	temp->srcid = 0;
 	temp->dstid = 0;
 	temp->proto = 0;
+	temp->num=0;
 }
 
 class_next_t *

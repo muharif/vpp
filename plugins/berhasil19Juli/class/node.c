@@ -101,8 +101,7 @@ class_node_fn (vlib_main_t * vm,
 	  double time_spent = 0;
 
 	  clear_temp (temp);
-	  begin_time = timer_start();
-
+	  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin_time);
       begin:
 
 	  from = vlib_frame_vector_args (frame);

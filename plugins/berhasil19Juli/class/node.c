@@ -328,7 +328,7 @@ class_node_fn (vlib_main_t * vm,
 			  next_table = 0;
 
 			  if (!e0) {
-				  id=x;
+				  id=0;
 
 				  if ((table_index0-x) == 0) {
 					  if (!(temp->srcid))
@@ -341,7 +341,7 @@ class_node_fn (vlib_main_t * vm,
 				  next_table = 0;
 				  if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0) {
 					  //gettimeofday(&end_time, NULL);
-					  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+					  //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 					  goto end;
 				  }
 			  } else {
@@ -370,14 +370,14 @@ class_node_fn (vlib_main_t * vm,
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
 						  //gettimeofday(&end_time, NULL);
-						  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+						  //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
 				  }
 				  //gettimeofday(&end_time, NULL);
-				  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+				  //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 			  } else {
 				  next0 = 11;
 			  }
@@ -395,6 +395,7 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
+	              clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 	              time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 	              t->id = id;
 	              t->next_index = next0;

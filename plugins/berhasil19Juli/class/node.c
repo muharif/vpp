@@ -337,11 +337,9 @@ class_node_fn (vlib_main_t * vm,
 						  temp->dstid = 0;
 	        		  temp->proto = 0;
 				  }
-				  next0 = 0;
-				  next_table = 0;
 				  if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0) {
-					  //gettimeofday(&end_time, NULL);
-					  //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+					  next0 = 0;
+					  next_table = 0;
 					  goto end;
 				  }
 			  } else {
@@ -360,7 +358,7 @@ class_node_fn (vlib_main_t * vm,
 		        	  }
 				  }
 				  vnet_buffer(b0)->l2_classify.table_index=next_table;
-				  //id=e0->id;
+				  id=e0->id;
 			  }
 
 			  if (next_table == 0) {
@@ -369,15 +367,11 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  //gettimeofday(&end_time, NULL);
-						  //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
 				  }
-				  //gettimeofday(&end_time, NULL);
-				  //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 			  } else {
 				  next0 = 11;
 			  }

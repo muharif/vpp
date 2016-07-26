@@ -376,7 +376,7 @@ class_node_fn (vlib_main_t * vm,
 
 			  end:
 			  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
-			  if (next_table == 0) {
+			  if (next_table == 0)
 				  time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 			  else {
 				  goto begin;

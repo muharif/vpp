@@ -259,7 +259,7 @@ ip_classify_inline (vlib_main_t * vm,
                            e0->next_index:next0;
                   hits++;
 				  //gettimeofday(&end_time, NULL);
-                  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+                  //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
                 }
               else
                 {
@@ -274,7 +274,7 @@ ip_classify_inline (vlib_main_t * vm,
                                    t0->miss_next_index : next0;
                           misses++;
     					  //gettimeofday(&end_time, NULL);
-                          clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+                         // clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
                           break;
                         }
 
@@ -291,19 +291,21 @@ ip_classify_inline (vlib_main_t * vm,
                           hits++;
                           chain_hits++;
     					  //gettimeofday(&end_time, NULL);
-                          clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+                         // clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
                           break;
                         }
                     }
                 }
             }
 
-          time_spent = end_time.tv_nsec - begin_time.tv_nsec;
+         // time_spent = end_time.tv_nsec - begin_time.tv_nsec;
           if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE) 
                             && (b0->flags & VLIB_BUFFER_IS_TRACED))) 
             {
               ip_classify_trace_t *t = 
                 vlib_add_trace (vm, node, b0, sizeof (*t));
+              clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+              time_spent = end_time.tv_nsec - begin_time.tv_nsec;
               t->next_index = next0;
               t->table_index = t0 ? t0 - vcm->tables : ~0;
               t->entry_index = e0 ? e0 - t0->entries : ~0;

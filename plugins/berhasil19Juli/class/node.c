@@ -377,11 +377,10 @@ class_node_fn (vlib_main_t * vm,
 
 			  end:
 			  if (next_table == 0)
-				  //time_spent = end_time.tv_nsec - begin_time.tv_nsec;
-				  time_spent = timer_end(begin_time);
+				  time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 			  else {
 				  goto begin;
-				  //time_spent = 0;
+				  time_spent = 0;
 			  }
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)

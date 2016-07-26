@@ -338,6 +338,7 @@ class_node_fn (vlib_main_t * vm,
 				  if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0) {
 					  next0 = 0;
 					  next_table = 0;
+					  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 					  goto end;
 				  }
 			  } else {
@@ -361,21 +362,22 @@ class_node_fn (vlib_main_t * vm,
 
 			  if (next_table == 0) {
 				  i=0;
-				  for (i=0;i<=1000;i++) {
+				  for (i=0;i<=100;i++) {
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
+						  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
 				  }
+				  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 			  } else {
 				  next0 = 11;
 			  }
 
 			  end:
-			  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 			  if (next_table == 0)
 				  time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 			  else {

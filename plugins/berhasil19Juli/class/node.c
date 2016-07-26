@@ -101,7 +101,8 @@ class_node_fn (vlib_main_t * vm,
 	  double time_spent = 0;
 
 	  clear_temp (temp);
-	  gettimeofday(&begin_time, NULL);
+	  //gettimeofday(&begin_time, NULL);
+	  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin_time);
 
       begin:
 
@@ -339,7 +340,8 @@ class_node_fn (vlib_main_t * vm,
 				  next0 = 0;
 				  next_table = 0;
 				  if (temp->srcid == 0 || temp->dstid == 0 || temp->proto ==0) {
-					  gettimeofday(&end_time, NULL);
+					  //gettimeofday(&end_time, NULL);
+					  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 					  goto end;
 				  }
 			  } else {
@@ -367,13 +369,15 @@ class_node_fn (vlib_main_t * vm,
 					  n = pool_elt_at_index (vcm->next, i);
 					  if ((n->src == temp->srcid) && (n->dst == temp->dstid) && (n->proto == temp->proto)) {
 						  next0 = n->action;
-						  gettimeofday(&end_time, NULL);
+						  //gettimeofday(&end_time, NULL);
+						  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 						  goto end;
 					  } else {
 						  next0 = 0;
 					  }
 				  }
-				  gettimeofday(&end_time, NULL);
+				  //gettimeofday(&end_time, NULL);
+				  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
 			  } else {
 				  next0 = 11;
 			  }

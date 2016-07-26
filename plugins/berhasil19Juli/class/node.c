@@ -101,8 +101,7 @@ class_node_fn (vlib_main_t * vm,
 	  double time_spent = 0;
 
 	  clear_temp (temp);
-	  //gettimeofday(&begin_time, NULL);
-	  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin_time);
+	  begin_time = timer_start();
 
       begin:
 
@@ -378,10 +377,11 @@ class_node_fn (vlib_main_t * vm,
 
 			  end:
 			  if (next_table == 0)
-				  time_spent = end_time.tv_nsec - begin_time.tv_nsec;
+				  //time_spent = end_time.tv_nsec - begin_time.tv_nsec;
+				  time_spent = timer_end(begin_time);
 			  else {
 				  goto begin;
-				  time_spent = 0;
+				  //time_spent = 0;
 			  }
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
@@ -389,8 +389,8 @@ class_node_fn (vlib_main_t * vm,
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
-	              clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
-	              time_spent = end_time.tv_nsec - begin_time.tv_nsec;
+	              //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
+	              //time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 	              t->id = id;
 	              t->next_index = next0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;

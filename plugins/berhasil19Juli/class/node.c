@@ -97,7 +97,7 @@ class_node_fn (vlib_main_t * vm,
 	  class_temp_t * temp = &class_temp;
 	  class_next_t * n;
 	  u32 id=0;
-	  struct timeval begin_time, end_time;
+	  struct timespec begin_time, end_time;
 	  double time_spent = 0;
 
 	  clear_temp (temp);
@@ -380,7 +380,7 @@ class_node_fn (vlib_main_t * vm,
 
 			  end:
 			  if (next_table == 0)
-				  time_spent = end_time.tv_usec - begin_time.tv_usec;
+				  time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 			  else {
 				  goto begin;
 				  time_spent = 0;

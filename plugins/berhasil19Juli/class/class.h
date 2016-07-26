@@ -395,7 +395,7 @@ class_find_entry_inline (class_table_t * t,
   if (U32X4_ALIGNED(h)) {
     u32x4 *data = (u32x4 *) h;
     for (i = 0; i < t->entries_per_page; i++) {
-      temp->num++;
+      temp->num = i;
       key = v->key;
       result.as_u32x4 = (data[0 + t->skip_n_vectors] & mask[0]) ^ key[0];
       switch (t->match_n_vectors)

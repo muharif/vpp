@@ -383,18 +383,19 @@ class_node_fn (vlib_main_t * vm,
 			  }
 
 			  end:
-			  if (next_table == 0)
+			  /*if (next_table == 0)
 				  time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 			  else {
 				  goto begin;
 				  time_spent = 0;
-			  }
+			  }*/
 
 	          if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE)
 	                            && (b0->flags & VLIB_BUFFER_IS_TRACED)))
 	            {
 	              class_trace_t *t =
 	                vlib_add_trace (vm, node, b0, sizeof (*t));
+	              time_spent = end_time.tv_nsec - begin_time.tv_nsec;
 	              t->id = id;
 	              t->next_index = next0;
 	              //t->table_index = t0 ? t0 - vcm->tables : ~0;
@@ -402,6 +403,9 @@ class_node_fn (vlib_main_t * vm,
 	              t->session_checked = temp->num;
 	              t->time=time_spent;
 	            }
+
+	          if (next_table != 0)
+	        	  goto begin;
 
 	          /* verify speculative enqueue, maybe switch current next frame */
 

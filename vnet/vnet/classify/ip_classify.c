@@ -71,12 +71,13 @@ ip_classify_inline (vlib_main_t * vm,
   u32 misses = 0;
   u32 chain_hits = 0;
   u32 n_next;
-  struct timeval begin_time, end_time;
+  struct timespec begin_time, end_time;
   double time_spent = 0;
   vnet_classify_temp_t * temp = &vnet_classify_temp;
   temp->num = 0;
 
-  gettimeofday(&begin_time, NULL);
+  //gettimeofday(&begin_time, NULL);
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin_time);
 
 
   if (is_ip4) {
@@ -257,7 +258,8 @@ ip_classify_inline (vlib_main_t * vm,
                   next0 = (e0->next_index < node->n_next_nodes)?
                            e0->next_index:next0;
                   hits++;
-				  gettimeofday(&end_time, NULL);
+				  //gettimeofday(&end_time, NULL);
+                  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
                 }
               else
                 {
@@ -271,7 +273,8 @@ ip_classify_inline (vlib_main_t * vm,
                           next0 = (t0->miss_next_index < n_next) ?
                                    t0->miss_next_index : next0;
                           misses++;
-    					  gettimeofday(&end_time, NULL);
+    					  //gettimeofday(&end_time, NULL);
+                          clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
                           break;
                         }
 
@@ -287,14 +290,15 @@ ip_classify_inline (vlib_main_t * vm,
                                    e0->next_index:next0;
                           hits++;
                           chain_hits++;
-    					  gettimeofday(&end_time, NULL);
+    					  //gettimeofday(&end_time, NULL);
+                          clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end_time);
                           break;
                         }
                     }
                 }
             }
 
-          time_spent = end_time.tv_usec - begin_time.tv_usec;
+          time_spent = end_time.tv_nsec - begin_time.tv_nsec;
           if (PREDICT_FALSE((node->flags & VLIB_NODE_FLAG_TRACE) 
                             && (b0->flags & VLIB_BUFFER_IS_TRACED))) 
             {

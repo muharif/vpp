@@ -50,7 +50,7 @@ static u8 * format_class_trace (u8 * s, va_list * args)
   CLIB_UNUSED (vlib_node_t * node) = va_arg (*args, vlib_node_t *);
   class_trace_t * t = va_arg (*args, class_trace_t *);
 
-  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, session_checked %d ,time %f usec",
+  s = format (s, "IP_CLASS: session_id %d, next_index %d, table %d, session_checked %d ,time %f nsec",
               t->id, t->next_index, t->table_index, t->session_checked ,t->time);
   return s;
 }

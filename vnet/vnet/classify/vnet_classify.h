@@ -363,7 +363,7 @@ vnet_classify_find_entry_inline (vnet_classify_table_t * t,
   if (U32X4_ALIGNED(h)) {
     u32x4 *data = (u32x4 *) h;
     for (i = 0; i < t->entries_per_page; i++) {
-      temp->num++;
+      (temp->num)++;
       key = v->key;
       result.as_u32x4 = (data[0 + t->skip_n_vectors] & mask[0]) ^ key[0];
       switch (t->match_n_vectors)
@@ -401,8 +401,8 @@ vnet_classify_find_entry_inline (vnet_classify_table_t * t,
     u32 skip_u64 = t->skip_n_vectors * 2;
     u64 *data64 = (u64 *)h;
     for (i = 0; i < t->entries_per_page; i++) {
-    	temp->num++;
-      key = v->key;
+    	(temp->num)++;
+    	key = v->key;
 
       result.as_u64[0] = (data64[0 + skip_u64] & ((u64 *)mask)[0]) ^ ((u64 *)key)[0];
       result.as_u64[1] = (data64[1 + skip_u64] & ((u64 *)mask)[1]) ^ ((u64 *)key)[1];
